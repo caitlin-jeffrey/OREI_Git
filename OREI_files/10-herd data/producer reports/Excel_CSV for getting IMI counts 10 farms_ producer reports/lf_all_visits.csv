@@ -1,0 +1,165 @@
+"","cow_id","quarter","first_IMI_species","first_SCC","first_X","first_X.1","first_X.2","first_X.3","first_X.4","second_IMI_species","second_SCC","second_X","second_X.1","second_X.2","second_X.3","second_X.4","third_IMI_species","third_SCC","third_X","third_X.1","third_X.2","third_X.3","third_X.4"
+"1","Amarillo","LF","Staph. species","7000",NA,NA,NA,NA,NA,"","39000",NA,NA,NA,NA,NA,"","43000",NA,NA,NA,NA,NA
+"2","Amarillo","LH","Strep. species","61000",NA,NA,NA,NA,NA,"Staph. species","180000",NA,NA,NA,NA,NA,"Staph. species","190000",NA,NA,NA,NA,NA
+"3","Amarillo","RF","Staph. species","88000",NA,NA,NA,NA,NA,"Staph. species","310000",NA,NA,NA,NA,NA,"Staph. species","150000",NA,NA,NA,NA,NA
+"4","Amarillo","RH","","5000",NA,NA,NA,NA,NA,"","29000",NA,NA,NA,NA,NA,"","28000",NA,NA,NA,NA,NA
+"5","Ambrosia","LF","","74000",NA,NA,NA,NA,NA,"","2300000",NA,NA,NA,NA,NA,"Blind quarter","Not analyzed",NA,NA,NA,NA,NA
+"6","Ambrosia","LH","Staph. species","71000",NA,NA,NA,NA,NA,"Staph. species","110000",NA,NA,NA,NA,NA,"Staph. species","91000",NA,NA,NA,NA,NA
+"7","Ambrosia","RF","","5000",NA,NA,NA,NA,NA,"","9000",NA,NA,NA,NA,NA,"","27000",NA,NA,NA,NA,NA
+"8","Ambrosia","RH","","7000",NA,NA,NA,NA,NA,"","49000",NA,NA,NA,NA,NA,"","16000",NA,NA,NA,NA,NA
+"9","Atlantic","LF","","4000",NA,NA,NA,NA,NA,"","33000",NA,NA,NA,NA,NA,"","19000",NA,NA,NA,NA,NA
+"10","Atlantic","LH","","5000",NA,NA,NA,NA,NA,"","4000",NA,NA,NA,NA,NA,"","15000",NA,NA,NA,NA,NA
+"11","Atlantic","RF","","5000",NA,NA,NA,NA,NA,"","5000",NA,NA,NA,NA,NA,"","23000",NA,NA,NA,NA,NA
+"12","Atlantic","RH","Staph. species","5000",NA,NA,NA,NA,NA,"","5000",NA,NA,NA,NA,NA,"","17000",NA,NA,NA,NA,NA
+"13","Chaloopa","LF","Staph. species","130000",NA,NA,NA,NA,NA,"Staph. species","220000",NA,NA,NA,NA,NA,"Staph. species","130000",NA,NA,NA,NA,NA
+"14","Chaloopa","LH","Staph. species","231000",NA,NA,NA,NA,NA,"Staph. species","240000",NA,NA,NA,NA,NA,"Staph. species","220000",NA,NA,NA,NA,NA
+"15","Chaloopa","RF","","16000",NA,NA,NA,NA,NA,"Staph. species","96000",NA,NA,NA,NA,NA,"","53000",NA,NA,NA,NA,NA
+"16","Chaloopa","RH","Staph. species","169000",NA,NA,NA,NA,NA,"Unknown organism","100000",NA,NA,NA,NA,NA,"Staph. species","320000",NA,NA,NA,NA,NA
+"17","Chartreuse","LF","","5000",NA,NA,NA,NA,NA,"","9000",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"18","Chartreuse","LH","","71000",NA,NA,NA,NA,NA,"","81000",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"19","Chartreuse","RF","","412000",NA,NA,NA,NA,NA,"","1800000",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"20","Chartreuse","RH","","23000",NA,NA,NA,NA,NA,"","6000",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"21","Cheese","LF","Staph. aureus","227000",NA,NA,NA,NA,NA,"Staph. aureus","2600000",NA,NA,NA,NA,NA,"Blind quarter","Not analyzed",NA,NA,NA,NA,NA
+"22","Cheese","LH","","6000",NA,NA,NA,NA,NA,"","2000",NA,NA,NA,NA,NA,"","7000",NA,NA,NA,NA,NA
+"23","Cheese","RF","Blind quarter","Not analyzed",NA,NA,NA,NA,NA,"Blind quarter","Not analyzed",NA,NA,NA,NA,NA,"Blind quarter","Not Analyzed",NA,NA,NA,NA,NA
+"24","Cheese","RH","","10000",NA,NA,NA,NA,NA,"","2000000",NA,NA,NA,NA,NA,"","9000",NA,NA,NA,NA,NA
+"25","Chive","LF","","26000",NA,NA,NA,NA,NA,"","35000",NA,NA,NA,NA,NA,"Sample contaminated","2900000",NA,NA,NA,NA,NA
+"26","Chive","LH","","37000",NA,NA,NA,NA,NA,"","130000",NA,NA,NA,NA,NA,"Klebsiella","Not analyzed: abnormal",NA,NA,NA,NA,NA
+"27","Chive","RF","","181000",NA,NA,NA,NA,NA,"","130000",NA,NA,NA,NA,NA,"","560000",NA,NA,NA,NA,NA
+"28","Chive","RH","","67000",NA,NA,NA,NA,NA,"","83000",NA,NA,NA,NA,NA,"Klebsiella","730000",NA,NA,NA,NA,NA
+"29","Darla","LF","Sample contaminated","10000",NA,NA,NA,NA,NA,"","45000",NA,NA,NA,NA,NA,"","76000",NA,NA,NA,NA,NA
+"30","Darla","LH","","222000",NA,NA,NA,NA,NA,"","2900000",NA,NA,NA,NA,NA,"","3900000",NA,NA,NA,NA,NA
+"31","Darla","RF","","10000",NA,NA,NA,NA,NA,"","21000",NA,NA,NA,NA,NA,"Sample contaminated","33000",NA,NA,NA,NA,NA
+"32","Darla","RH","","4000",NA,NA,NA,NA,NA,"Strep. species","250000",NA,NA,NA,NA,NA,"","790000",NA,NA,NA,NA,NA
+"33","Diamond","LF","","52000",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"34","Diamond","LH","","10000",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"35","Diamond","RF","","84000",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"36","Diamond","RH","","44000",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"37","Faith","LF",NA,NA,NA,NA,NA,NA,NA,"","13000",NA,NA,NA,NA,NA,"","25000",NA,NA,NA,NA,NA
+"38","Faith","LH",NA,NA,NA,NA,NA,NA,NA,"Staph. species","200000",NA,NA,NA,NA,NA,"Staph. species","350000",NA,NA,NA,NA,NA
+"39","Faith","RF",NA,NA,NA,NA,NA,NA,NA,"","130000",NA,NA,NA,NA,NA,"","95000",NA,NA,NA,NA,NA
+"40","Faith","RH",NA,NA,NA,NA,NA,NA,NA,"Gram-negative, coliform organism (Serratia)","6800000",NA,NA,NA,NA,NA,"","3500000",NA,NA,NA,NA,NA
+"41","Freddie","LF","","33000",NA,NA,NA,NA,NA,"","32000",NA,NA,NA,NA,NA,"","39000",NA,NA,NA,NA,NA
+"42","Freddie","LH","","43000",NA,NA,NA,NA,NA,"","50000",NA,NA,NA,NA,NA,"","47000",NA,NA,NA,NA,NA
+"43","Freddie","RF","","18000",NA,NA,NA,NA,NA,"","24000",NA,NA,NA,NA,NA,"","17000",NA,NA,NA,NA,NA
+"44","Freddie","RH","","25000",NA,NA,NA,NA,NA,"","25000",NA,NA,NA,NA,NA,"","24000",NA,NA,NA,NA,NA
+"45","Fresno","LF","","6000",NA,NA,NA,NA,NA,"","6000",NA,NA,NA,NA,NA,"","22000",NA,NA,NA,NA,NA
+"46","Fresno","LH","","7000",NA,NA,NA,NA,NA,"","6000",NA,NA,NA,NA,NA,"","13000",NA,NA,NA,NA,NA
+"47","Fresno","RF","","6000",NA,NA,NA,NA,NA,"","4000",NA,NA,NA,NA,NA,"","14000",NA,NA,NA,NA,NA
+"48","Fresno","RH","","8000",NA,NA,NA,NA,NA,"","5000",NA,NA,NA,NA,NA,"","13000",NA,NA,NA,NA,NA
+"49","Jitterbug","LF","","6000",NA,NA,NA,NA,NA,"","9000",NA,NA,NA,NA,NA,"","28000",NA,NA,NA,NA,NA
+"50","Jitterbug","LH","Staph. species","6000",NA,NA,NA,NA,NA,"","18000",NA,NA,NA,NA,NA,"","26000",NA,NA,NA,NA,NA
+"51","Jitterbug","RF","","14000",NA,NA,NA,NA,NA,"","28000",NA,NA,NA,NA,NA,"","71000",NA,NA,NA,NA,NA
+"52","Jitterbug","RH","Staph. species","40000",NA,NA,NA,NA,NA,"Staph. species","120000",NA,NA,NA,NA,NA,"Staph. species","170000",NA,NA,NA,NA,NA
+"53","Khakibeige","LF","Staph. species","33000",NA,NA,NA,NA,NA,"Staph. species","48000",NA,NA,NA,NA,NA,"Staph. species","54000",NA,NA,NA,NA,NA
+"54","Khakibeige","LH","","12000",NA,NA,NA,NA,NA,"","13000",NA,NA,NA,NA,NA,"","31000",NA,NA,NA,NA,NA
+"55","Khakibeige","RF","","4000",NA,NA,NA,NA,NA,"","9000",NA,NA,NA,NA,NA,"","23000",NA,NA,NA,NA,NA
+"56","Khakibeige","RH","","13000",NA,NA,NA,NA,NA,"","18000",NA,NA,NA,NA,NA,"","35000",NA,NA,NA,NA,NA
+"57","Klondike","LF","","4000",NA,NA,NA,NA,NA,"","4000",NA,NA,NA,NA,NA,"","6000",NA,NA,NA,NA,NA
+"58","Klondike","LH","","2000",NA,NA,NA,NA,NA,"","3000",NA,NA,NA,NA,NA,"","7000",NA,NA,NA,NA,NA
+"59","Klondike","RF","Staph. species","90000",NA,NA,NA,NA,NA,"Staph. species","83000",NA,NA,NA,NA,NA,"Staph. species","230000",NA,NA,NA,NA,NA
+"60","Klondike","RH","","19000",NA,NA,NA,NA,NA,"","12000",NA,NA,NA,NA,NA,"","18000",NA,NA,NA,NA,NA
+"61","Kodiak","LF","","259000",NA,NA,NA,NA,NA,"","86000",NA,NA,NA,NA,NA,"","130000",NA,NA,NA,NA,NA
+"62","Kodiak","LH","","61000",NA,NA,NA,NA,NA,"Strep. species","150000",NA,NA,NA,NA,NA,"Strep. species","110000",NA,NA,NA,NA,NA
+"63","Kodiak","RF","","266000",NA,NA,NA,NA,NA,"","34000",NA,NA,NA,NA,NA,"","41000",NA,NA,NA,NA,NA
+"64","Kodiak","RH","","69000",NA,NA,NA,NA,NA,"","9000",NA,NA,NA,NA,NA,"","18000",NA,NA,NA,NA,NA
+"65","Kowabunga","LF","Staph. species","15000",NA,NA,NA,NA,NA,"Staph. species","74000",NA,NA,NA,NA,NA,"Staph. species","230000",NA,NA,NA,NA,NA
+"66","Kowabunga","LH","","4000",NA,NA,NA,NA,NA,"","41000",NA,NA,NA,NA,NA,"Sample contaminated","17000",NA,NA,NA,NA,NA
+"67","Kowabunga","RF","Staph. species","55000",NA,NA,NA,NA,NA,"Staph. species","420000",NA,NA,NA,NA,NA,"Staph. species","160000",NA,NA,NA,NA,NA
+"68","Kowabunga","RH","","2210000",NA,NA,NA,NA,NA,"","3500000",NA,NA,NA,NA,NA,"Staph. species","880000",NA,NA,NA,NA,NA
+"69","Krone","LF","Staph. species","52000",NA,NA,NA,NA,NA,"Staph. species","88000",NA,NA,NA,NA,NA,"Staph. species","120000",NA,NA,NA,NA,NA
+"70","Krone","LH","Sample contaminated","18000",NA,NA,NA,NA,NA,"","20000",NA,NA,NA,NA,NA,"","910000",NA,NA,NA,NA,NA
+"71","Krone","RF","Staph. species","51000",NA,NA,NA,NA,NA,"Staph. species","89000",NA,NA,NA,NA,NA,"Staph. species","130000",NA,NA,NA,NA,NA
+"72","Krone","RH","Staph. species","71000",NA,NA,NA,NA,NA,"Staph. species","160000",NA,NA,NA,NA,NA,"Staph. species","180000",NA,NA,NA,NA,NA
+"73","Ladyfinger","LF","","2000",NA,NA,NA,NA,NA,"","12000",NA,NA,NA,NA,NA,"","10000",NA,NA,NA,NA,NA
+"74","Ladyfinger","LH","","4000",NA,NA,NA,NA,NA,"","16000",NA,NA,NA,NA,NA,"","21000",NA,NA,NA,NA,NA
+"75","Ladyfinger","RF","","3000",NA,NA,NA,NA,NA,"","15000",NA,NA,NA,NA,NA,"","14000",NA,NA,NA,NA,NA
+"76","Ladyfinger","RH","Staph. species","68000",NA,NA,NA,NA,NA,"Staph. species","82000",NA,NA,NA,NA,NA,"Staph. species","81000",NA,NA,NA,NA,NA
+"77","Laugh","LF","","573000",NA,NA,NA,NA,NA,"","20000",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"78","Laugh","LH","","39000",NA,NA,NA,NA,NA,"Gram-negative, coliform organism (Enterobacter)","200000",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"79","Laugh","RF","Staph. species","48000",NA,NA,NA,NA,NA,"Staph. species","100000",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"80","Laugh","RH","","36000",NA,NA,NA,NA,NA,"","13000",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"81","Leap","LF","Blind quarter","2000",NA,NA,NA,NA,NA,"Blind quarter","Not analyzed",NA,NA,NA,NA,NA,"Blind quarter","Not analyzed",NA,NA,NA,NA,NA
+"82","Leap","LH","","4000",NA,NA,NA,NA,NA,"","3000",NA,NA,NA,NA,NA,"","9000",NA,NA,NA,NA,NA
+"83","Leap","RF","","4000",NA,NA,NA,NA,NA,"Staph. species","18000",NA,NA,NA,NA,NA,"","32000",NA,NA,NA,NA,NA
+"84","Leap","RH","","5000",NA,NA,NA,NA,NA,"","5000",NA,NA,NA,NA,NA,"","13000",NA,NA,NA,NA,NA
+"85","Lego","LF",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"","12000000",NA,NA,NA,NA,NA
+"86","Lego","LH",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"","17000000",NA,NA,NA,NA,NA
+"87","Lego","RF",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"","36000000",NA,NA,NA,NA,NA
+"88","Lego","RH",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"Klebsiella pneumoniae","Not analyzed: abnormal",NA,NA,NA,NA,NA
+"89","Licorice","LF","Blind quarter","Not analyzed",NA,NA,NA,NA,NA,"Blind quarter","Not analyzed",NA,NA,NA,NA,NA,"Blind quarter","21000",NA,NA,NA,NA,NA
+"90","Licorice","LH","Staph. species","36000",NA,NA,NA,NA,NA,"Sample contaminated","23000",NA,NA,NA,NA,NA,"","44000",NA,NA,NA,NA,NA
+"91","Licorice","RF","","11000",NA,NA,NA,NA,NA,"","10000",NA,NA,NA,NA,NA,"","Not analyzed",NA,NA,NA,NA,NA
+"92","Licorice","RH","Staph. species","63000",NA,NA,NA,NA,NA,"Staph. species","70000",NA,NA,NA,NA,NA,"Staph. species","73000",NA,NA,NA,NA,NA
+"93","Life","LF","Staph. species","37000",NA,NA,NA,NA,NA,"Staph. species","27000",NA,NA,NA,NA,NA,"Staph. species","74000",NA,NA,NA,NA,NA
+"94","Life","LH","Strep. species","80000",NA,NA,NA,NA,NA,"Strep. species","51000",NA,NA,NA,NA,NA,"Strep. species","50000",NA,NA,NA,NA,NA
+"95","Life","RF","","9000",NA,NA,NA,NA,NA,"","6000",NA,NA,NA,NA,NA,"","5000",NA,NA,NA,NA,NA
+"96","Life","RH","Sample contaminated","9000",NA,NA,NA,NA,NA,"","6000",NA,NA,NA,NA,NA,"","4000",NA,NA,NA,NA,NA
+"97","Lilac","LF","","4000",NA,NA,NA,NA,NA,"","15000",NA,NA,NA,NA,NA,"","9000",NA,NA,NA,NA,NA
+"98","Lilac","LH","","10000",NA,NA,NA,NA,NA,"","12000",NA,NA,NA,NA,NA,"","10000",NA,NA,NA,NA,NA
+"99","Lilac","RF","","4000",NA,NA,NA,NA,NA,"","7000",NA,NA,NA,NA,NA,"","8000",NA,NA,NA,NA,NA
+"100","Lilac","RH","Staph. species","20000",NA,NA,NA,NA,NA,"Staph. species","21000",NA,NA,NA,NA,NA,"Staph. species","38000",NA,NA,NA,NA,NA
+"101","Lioness","LF","","4000",NA,NA,NA,NA,NA,"","2000",NA,NA,NA,NA,NA,"","16000",NA,NA,NA,NA,NA
+"102","Lioness","LH","","5000",NA,NA,NA,NA,NA,"","6000",NA,NA,NA,NA,NA,"","13000",NA,NA,NA,NA,NA
+"103","Lioness","RF","","17000",NA,NA,NA,NA,NA,"","9000",NA,NA,NA,NA,NA,"","43000",NA,NA,NA,NA,NA
+"104","Lioness","RH","Sample contaminated","59000",NA,NA,NA,NA,NA,"Staph. species","250000",NA,NA,NA,NA,NA,"Staph. species","130000",NA,NA,NA,NA,NA
+"105","Lop","LF","","5000",NA,NA,NA,NA,NA,"","7000",NA,NA,NA,NA,NA,"","31000",NA,NA,NA,NA,NA
+"106","Lop","LH","Staph. species","56000",NA,NA,NA,NA,NA,"Staph. species","62000",NA,NA,NA,NA,NA,"Staph. species","71000",NA,NA,NA,NA,NA
+"107","Lop","RF","","4000",NA,NA,NA,NA,NA,"","12000",NA,NA,NA,NA,NA,"","3000",NA,NA,NA,NA,NA
+"108","Lop","RH","Blind quarter","Not analyzed",NA,NA,NA,NA,NA,"Blind quarter","Not analyzed",NA,NA,NA,NA,NA,"Blind quarter","Not analyzed",NA,NA,NA,NA,NA
+"109","Lordwalk","LF",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"","100000",NA,NA,NA,NA,NA
+"110","Lordwalk","LH",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"","27000",NA,NA,NA,NA,NA
+"111","Lordwalk","RF",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"Staph. species","78000",NA,NA,NA,NA,NA
+"112","Lordwalk","RH",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"","31000",NA,NA,NA,NA,NA
+"113","Lovage","LF","Strep. species","3910000",NA,NA,NA,NA,NA,"Staph. species","180000",NA,NA,NA,NA,NA,"Staph. species","94000",NA,NA,NA,NA,NA
+"114","Lovage","LH","Strep. species","12827000",NA,NA,NA,NA,NA,"","21000",NA,NA,NA,NA,NA,"","24000",NA,NA,NA,NA,NA
+"115","Lovage","RF","Strep. species","6754000",NA,NA,NA,NA,NA,"Gram-negative, coliform organism (Serratia)","2300000",NA,NA,NA,NA,NA,"Blind quarter","Not analyzed",NA,NA,NA,NA,NA
+"116","Lovage","RH","","970000",NA,NA,NA,NA,NA,"","23000",NA,NA,NA,NA,NA,"","20000",NA,NA,NA,NA,NA
+"117","LuxuryTax","LF","Staph. species","84000",NA,NA,NA,NA,NA,"Staph. species","85000",NA,NA,NA,NA,NA,"Staph. species","81000",NA,NA,NA,NA,NA
+"118","LuxuryTax","LH","","70000",NA,NA,NA,NA,NA,"","110000",NA,NA,NA,NA,NA,"","69000",NA,NA,NA,NA,NA
+"119","LuxuryTax","RF","","13000",NA,NA,NA,NA,NA,"","17000",NA,NA,NA,NA,NA,"","21000",NA,NA,NA,NA,NA
+"120","LuxuryTax","RH","","29000",NA,NA,NA,NA,NA,"","39000",NA,NA,NA,NA,NA,"","43000",NA,NA,NA,NA,NA
+"121","Madge","LF","","15000",NA,NA,NA,NA,NA,"","11000",NA,NA,NA,NA,NA,"","16000",NA,NA,NA,NA,NA
+"122","Madge","LH","","12000",NA,NA,NA,NA,NA,"","10000",NA,NA,NA,NA,NA,"","12000",NA,NA,NA,NA,NA
+"123","Madge","RF","","13000",NA,NA,NA,NA,NA,"","11000",NA,NA,NA,NA,NA,"","13000",NA,NA,NA,NA,NA
+"124","Madge","RH","","125000",NA,NA,NA,NA,NA,"","91000",NA,NA,NA,NA,NA,"","31000",NA,NA,NA,NA,NA
+"125","Magenta","LF",NA,NA,NA,NA,NA,NA,NA,"Staph. aureus","240000",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"126","Magenta","LH",NA,NA,NA,NA,NA,NA,NA,"Strep. species","3700000",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"127","Magenta","RF",NA,NA,NA,NA,NA,NA,NA,"","5000",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"128","Magenta","RH",NA,NA,NA,NA,NA,NA,NA,"","17000",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"129","Martina","LF","Strep. species","1445000",NA,NA,NA,NA,NA,"","21000",NA,NA,NA,NA,NA,"","31000",NA,NA,NA,NA,NA
+"130","Martina","LH","Staph. species","168000",NA,NA,NA,NA,NA,"Staph. species","600000",NA,NA,NA,NA,NA,"Staph. species","500000",NA,NA,NA,NA,NA
+"131","Martina","RF","Blind quarter","Not Analyzed",NA,NA,NA,NA,NA,"Blind quarter","Not analyzed",NA,NA,NA,NA,NA,"Blind quarter","Not analyzed",NA,NA,NA,NA,NA
+"132","Martina","RH","Gram-negative, non-coliform organism (Pseudomonas)","24000",NA,NA,NA,NA,NA,"","5000",NA,NA,NA,NA,NA,"","7000",NA,NA,NA,NA,NA
+"133","Minigolf","LF","","31000",NA,NA,NA,NA,NA,"","76000",NA,NA,NA,NA,NA,"","640000",NA,NA,NA,NA,NA
+"134","Minigolf","LH","","13000",NA,NA,NA,NA,NA,"","9000",NA,NA,NA,NA,NA,"","13000",NA,NA,NA,NA,NA
+"135","Minigolf","RF","Sample contaminated","27000",NA,NA,NA,NA,NA,"","58000",NA,NA,NA,NA,NA,"","65000",NA,NA,NA,NA,NA
+"136","Minigolf","RH","","30000",NA,NA,NA,NA,NA,"","33000",NA,NA,NA,NA,NA,"","40000",NA,NA,NA,NA,NA
+"137","Moonwalk","LF","","26000",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"138","Moonwalk","LH","Staph. aureus","1407000",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"139","Moonwalk","RF","Staph. aureus","122000",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"140","Moonwalk","RH","","563000",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"141","Mustache","LF","","4000",NA,NA,NA,NA,NA,"","8000",NA,NA,NA,NA,NA,"","12000",NA,NA,NA,NA,NA
+"142","Mustache","LH","","6000",NA,NA,NA,NA,NA,"","10000",NA,NA,NA,NA,NA,"","8000",NA,NA,NA,NA,NA
+"143","Mustache","RF","","5000",NA,NA,NA,NA,NA,"","11000",NA,NA,NA,NA,NA,"","12000",NA,NA,NA,NA,NA
+"144","Mustache","RH","","4000",NA,NA,NA,NA,NA,"","9000",NA,NA,NA,NA,NA,"","8000",NA,NA,NA,NA,NA
+"145","Webster","LF","","5000",NA,NA,NA,NA,NA,"","8000",NA,NA,NA,NA,NA,"","14000",NA,NA,NA,NA,NA
+"146","Webster","LH","","4000",NA,NA,NA,NA,NA,"","4000",NA,NA,NA,NA,NA,"","35000",NA,NA,NA,NA,NA
+"147","Webster","RF","Staph. species","187000",NA,NA,NA,NA,NA,"Staph. species","140000",NA,NA,NA,NA,NA,"Staph. species","240000",NA,NA,NA,NA,NA
+"148","Webster","RH","","4000",NA,NA,NA,NA,NA,"","7000",NA,NA,NA,NA,NA,"","14000",NA,NA,NA,NA,NA
+"149","Willy","LF","","41000",NA,NA,NA,NA,NA,"","140000",NA,NA,NA,NA,NA,"","330000",NA,NA,NA,NA,NA
+"150","Willy","LH","","9000",NA,NA,NA,NA,NA,"","25000",NA,NA,NA,NA,NA,"","41000",NA,NA,NA,NA,NA
+"151","Willy","RF","Staph. species","47000",NA,NA,NA,NA,NA,"Staph. species","250000",NA,NA,NA,NA,NA,"Staph. species","120000",NA,NA,NA,NA,NA
+"152","Willy","RH","","17000",NA,NA,NA,NA,NA,"","45000",NA,NA,NA,NA,NA,"","69000",NA,NA,NA,NA,NA
+"153","WMCA","LF","","7000",NA,NA,NA,NA,NA,"","28000",NA,NA,NA,NA,NA,"","43000",NA,NA,NA,NA,NA
+"154","WMCA","LH","","8000",NA,NA,NA,NA,NA,"","26000",NA,NA,NA,NA,NA,"","28000",NA,NA,NA,NA,NA
+"155","WMCA","RF","","7000",NA,NA,NA,NA,NA,"","16000",NA,NA,NA,NA,NA,"Corynebacterium species","38000",NA,NA,NA,NA,NA
+"156","WMCA","RH","","7000",NA,NA,NA,NA,NA,"","27000",NA,NA,NA,NA,NA,"","34000",NA,NA,NA,NA,NA
+"157","Zoe","LF","","3000",NA,NA,NA,NA,NA,"","2000",NA,NA,NA,NA,NA,"","5000",NA,NA,NA,NA,NA
+"158","Zoe","LH","","3000",NA,NA,NA,NA,NA,"","5000",NA,NA,NA,NA,NA,"","13000",NA,NA,NA,NA,NA
+"159","Zoe","RF","Strep. species","3000",NA,NA,NA,NA,NA,"Strep. species","180000",NA,NA,NA,NA,NA,"","6000",NA,NA,NA,NA,NA
+"160","Zoe","RH","","2000",NA,NA,NA,NA,NA,"","2000",NA,NA,NA,NA,NA,"","4000",NA,NA,NA,NA,NA
+"161","ZsaZsa","LF","","4000",NA,NA,NA,NA,NA,"","3000",NA,NA,NA,NA,NA,"","14000",NA,NA,NA,NA,NA
+"162","ZsaZsa","LH","","3000",NA,NA,NA,NA,NA,"","2000",NA,NA,NA,NA,NA,"","6000",NA,NA,NA,NA,NA
+"163","ZsaZsa","RF","","34000",NA,NA,NA,NA,NA,"","37000",NA,NA,NA,NA,NA,"","47000",NA,NA,NA,NA,NA
+"164","ZsaZsa","RH","Strep. species","146000",NA,NA,NA,NA,NA,"Strep. species","380000",NA,NA,NA,NA,NA,"Strep. species","350000",NA,NA,NA,NA,NA

@@ -1,0 +1,421 @@
+visit,Cow_ID,Quarter,IMI_species,SCC,cow_quarter,visit_cow_quarter
+first,757,LH,,"13,000",757_LH,first_757_LH
+first,757,LF,Staph. species,"3,000",757_LF,first_757_LF
+first,757,RH,,"5,000",757_RH,first_757_RH
+first,757,RF,,"2,000",757_RF,first_757_RF
+first,585,LH,,"7,000",585_LH,first_585_LH
+first,585,LF,,"10,000",585_LF,first_585_LF
+first,585,RH,,"13,000",585_RH,first_585_RH
+first,585,RF,Staph. species,"697,000",585_RF,first_585_RF
+first,754,LH,,"23,000",754_LH,first_754_LH
+first,754,LF,,"8,000",754_LF,first_754_LF
+first,754,RH,Sample contaminated,"8,000",754_RH,first_754_RH
+first,754,RF,,"5,000",754_RF,first_754_RF
+first,716,LH,Staph. species,"152,000",716_LH,first_716_LH
+first,716,LF,,"8,000",716_LF,first_716_LF
+first,716,RH,,"5,000",716_RH,first_716_RH
+first,716,RF,,"9,000",716_RF,first_716_RF
+first,CB5,LH,Staph. species,"62,000",CB5_LH,first_CB5_LH
+first,CB5,LF,Staph. species,"15,000",CB5_LF,first_CB5_LF
+first,CB5,RH,Strep. species,"4,000",CB5_RH,first_CB5_RH
+first,CB5,RF,,"6,000",CB5_RF,first_CB5_RF
+first,656,LH,Strep. species,"799,000",656_LH,first_656_LH
+first,656,LF,,"24,000",656_LF,first_656_LF
+first,656,RH,,"7,000",656_RH,first_656_RH
+first,656,RF,,"37,000",656_RF,first_656_RF
+first,719,LH,Staph. species,"244,000",719_LH,first_719_LH
+first,719,LF,,"15,000",719_LF,first_719_LF
+first,719,RH,,"18,000",719_RH,first_719_RH
+first,719,RF,,"12,000",719_RF,first_719_RF
+first,739,LH,Staph. species,"36,000",739_LH,first_739_LH
+first,739,LF,,0,739_LF,first_739_LF
+first,739,RH,,0,739_RH,first_739_RH
+first,739,RF,,"6,000",739_RF,first_739_RF
+first,670,LH,Blind quarter,Not analyzed,670_LH,first_670_LH
+first,670,LF,,"13,000",670_LF,first_670_LF
+first,670,RH,,"16,000",670_RH,first_670_RH
+first,670,RF,,"12,000",670_RF,first_670_RF
+first,720,LH,,0,720_LH,first_720_LH
+first,720,LF,Staph. aureus,"227,000",720_LF,first_720_LF
+first,720,RH,Staph. species,"74,000",720_RH,first_720_RH
+first,720,RF,,"209,000",720_RF,first_720_RF
+first,727,LH,,"9,000",727_LH,first_727_LH
+first,727,LF,,"51,000",727_LF,first_727_LF
+first,727,RH,,"15,000",727_RH,first_727_RH
+first,727,RF,,"10,000",727_RF,first_727_RF
+first,693,LH,,"6,000",693_LH,first_693_LH
+first,693,LF,,"8,000",693_LF,first_693_LF
+first,693,RH,,"5,000",693_RH,first_693_RH
+first,693,RF,,"4,000",693_RF,first_693_RF
+first,741,LH,,"58,000",741_LH,first_741_LH
+first,741,LF,,"14,000",741_LF,first_741_LF
+first,741,RH,,"28,000",741_RH,first_741_RH
+first,741,RF,,"12,000",741_RF,first_741_RF
+first,749,LH,,"5,000",749_LH,first_749_LH
+first,749,LF,,"6,000",749_LF,first_749_LF
+first,749,RH,,"10,000",749_RH,first_749_RH
+first,749,RF,,"3,000",749_RF,first_749_RF
+first,733,LH,,"15,000",733_LH,first_733_LH
+first,733,LF,Staph. species,"286,000",733_LF,first_733_LF
+first,733,RH,,"14,000",733_RH,first_733_RH
+first,733,RF,Staph. aureus,"277,000",733_RF,first_733_RF
+first,738,LH,,"10,000",738_LH,first_738_LH
+first,738,LF,,"3,000",738_LF,first_738_LF
+first,738,RH,,"5,000",738_RH,first_738_RH
+first,738,RF,,"4,000",738_RF,first_738_RF
+first,753,LH,,"12,000",753_LH,first_753_LH
+first,753,LF,,"9,000",753_LF,first_753_LF
+first,753,RH,,"11,000",753_RH,first_753_RH
+first,753,RF,,"9,000",753_RF,first_753_RF
+first,701,LH,Staph. aureus,"762,000",701_LH,first_701_LH
+first,701,LF,,"31,000",701_LF,first_701_LF
+first,701,RH,,"98,000",701_RH,first_701_RH
+first,701,RF,,"139,000",701_RF,first_701_RF
+first,731,LH,,"4,000",731_LH,first_731_LH
+first,731,LF,Staph. species,"1,739,000",731_LF,first_731_LF
+first,731,RH,,"35,000",731_RH,first_731_RH
+first,731,RF,,"3,000",731_RF,first_731_RF
+first,763,LH,,0,763_LH,first_763_LH
+first,763,LF,,"3,000",763_LF,first_763_LF
+first,763,RH,,"3,000",763_RH,first_763_RH
+first,763,RF,Other Gram-positive bacteria,"7,000",763_RF,first_763_RF
+first,697,LH,Sample contaminated,"9,000",697_LH,first_697_LH
+first,697,LF,Sample contaminated,"9,000",697_LF,first_697_LF
+first,697,RH,Sample contaminated,"5,000",697_RH,first_697_RH
+first,697,RF,,"7,000",697_RF,first_697_RF
+first,708,LH,,"9,000",708_LH,first_708_LH
+first,708,LF,,"13,000",708_LF,first_708_LF
+first,708,RH,,"10,000",708_RH,first_708_RH
+first,708,RF,,"6,000",708_RF,first_708_RF
+first,744,LH,,"12,000",744_LH,first_744_LH
+first,744,LF,,"9,000",744_LF,first_744_LF
+first,744,RH,,"12,000",744_RH,first_744_RH
+first,744,RF,,"6,000",744_RF,first_744_RF
+first,675,LH,,"6,000",675_LH,first_675_LH
+first,675,LF,,"15,000",675_LF,first_675_LF
+first,675,RH,,"10,000",675_RH,first_675_RH
+first,675,RF,,"7,000",675_RF,first_675_RF
+first,745,LH,,"7,000",745_LH,first_745_LH
+first,745,LF,,"4,000",745_LF,first_745_LF
+first,745,RH,,"14,000",745_RH,first_745_RH
+first,745,RF,,"6,000",745_RF,first_745_RF
+first,666,LH,Sample contaminated,"21,000",666_LH,first_666_LH
+first,666,LF,,"44,000",666_LF,first_666_LF
+first,666,RH,,"35,000",666_RH,first_666_RH
+first,666,RF,,"42,000",666_RF,first_666_RF
+first,730,LH,,"75,000",730_LH,first_730_LH
+first,730,LF,,"29,000",730_LF,first_730_LF
+first,730,RH,,"44,000",730_RH,first_730_RH
+first,730,RF,,"3,000",730_RF,first_730_RF
+first,713,LH,,"72,000",713_LH,first_713_LH
+first,713,LF,,"100,000",713_LF,first_713_LF
+first,713,RH,,"49,000",713_RH,first_713_RH
+first,713,RF,,"73,000",713_RF,first_713_RF
+first,722,LH,,"5,000",722_LH,first_722_LH
+first,722,LF,,"5,000",722_LF,first_722_LF
+first,722,RH,,"3,000",722_RH,first_722_RH
+first,722,RF,,"2,000",722_RF,first_722_RF
+first,761,LH,Staph. species,"246,000",761_LH,first_761_LH
+first,761,LF,,"8,000",761_LF,first_761_LF
+first,761,RH,,"2,000",761_RH,first_761_RH
+first,761,RF,,"6,000",761_RF,first_761_RF
+first,755,LH,Unknown organism,"8,000",755_LH,first_755_LH
+first,755,LF,,"10,000",755_LF,first_755_LF
+first,755,RH,Corynebacterium species,"9,000",755_RH,first_755_RH
+first,755,RF,Corynebacterium species,"5,000",755_RF,first_755_RF
+first,664,LH,Staph. species,"506,000",664_LH,first_664_LH
+first,664,LF,,"16,000",664_LF,first_664_LF
+first,664,RH,Corynebacterium species,"14,000",664_RH,first_664_RH
+first,664,RF,Corynebacterium species,"5,000",664_RF,first_664_RF
+first,743,LH,,"5,000",743_LH,first_743_LH
+first,743,LF,,"2,000",743_LF,first_743_LF
+first,743,RH,,"5,000",743_RH,first_743_RH
+first,743,RF,,"3,000",743_RF,first_743_RF
+first,748,LH,,"13,000",748_LH,first_748_LH
+first,748,LF,,"83,000",748_LF,first_748_LF
+first,748,RH,,"20,000",748_RH,first_748_RH
+first,748,RF,,"2,000",748_RF,first_748_RF
+first,685,LH,,"9,000",685_LH,first_685_LH
+first,685,LF,,"9,000",685_LF,first_685_LF
+first,685,RH,,"8,000",685_RH,first_685_RH
+first,685,RF,,"7,000",685_RF,first_685_RF
+second,757,LH,,"9,000",757_LH,second_757_LH
+second,757,LF,,"2,000",757_LF,second_757_LF
+second,757,RH,,"6,000",757_RH,second_757_RH
+second,757,RF,,"2,000",757_RF,second_757_RF
+second,656,LH,"Staph. aureus, Strep. species","810,000",656_LH,second_656_LH
+second,656,LF,,"27,000",656_LF,second_656_LF
+second,656,RH,,"17,000",656_RH,second_656_RH
+second,656,RF,,"29,000",656_RF,second_656_RF
+second,585,LH,,"14,000",585_LH,second_585_LH
+second,585,LF,,"11,000",585_LF,second_585_LF
+second,585,RH,,"14,000",585_RH,second_585_RH
+second,585,RF,Staph. species,"940,000",585_RF,second_585_RF
+second,758,LH,,"22,000",758_LH,second_758_LH
+second,758,LF,,"7,000",758_LF,second_758_LF
+second,758,RH,,"8,000",758_RH,second_758_RH
+second,758,RF,,"4,000",758_RF,second_758_RF
+second,754,LH,,"14,000",754_LH,second_754_LH
+second,754,LF,,"5,000",754_LF,second_754_LF
+second,754,RH,,"5,000",754_RH,second_754_RH
+second,754,RF,,"4,000",754_RF,second_754_RF
+second,CB5,LH,Staph. species,"74,000",CB5_LH,second_CB5_LH
+second,CB5,LF,Staph. species,"35,000",CB5_LF,second_CB5_LF
+second,CB5,RH,,"6,000",CB5_RH,second_CB5_RH
+second,CB5,RF,,"46,000",CB5_RF,second_CB5_RF
+second,720,LH,,"5,000",720_LH,second_720_LH
+second,720,LF,Staph. aureus,"650,000",720_LF,second_720_LF
+second,720,RH,Staph. species,"64,000",720_RH,second_720_RH
+second,720,RF,Staph. aureus,"62,000",720_RF,second_720_RF
+second,719,LH,Staph. species,"120,000",719_LH,second_719_LH
+second,719,LF,,"23,000",719_LF,second_719_LF
+second,719,RH,"Gram-negative, non-coliform organism","42,000",719_RH,second_719_RH
+second,719,RF,,"18,000",719_RF,second_719_RF
+second,716,LH,Staph. species,"67,000",716_LH,second_716_LH
+second,716,LF,,"6,000",716_LF,second_716_LF
+second,716,RH,,"6,000",716_RH,second_716_RH
+second,716,RF,Corynebacterium species,"2,000",716_RF,second_716_RF
+second,670,LH,Blind quarter,Not analyzed,670_LH,second_670_LH
+second,670,LF,,"23,000",670_LF,second_670_LF
+second,670,RH,Corynebacterium species,"37,000",670_RH,second_670_RH
+second,670,RF,,"25,000",670_RF,second_670_RF
+second,739,LH,Staph. species,"23,000",739_LH,second_739_LH
+second,739,LF,,"3,000",739_LF,second_739_LF
+second,739,RH,Unknown organism,"13,000",739_RH,second_739_RH
+second,739,RF,,0,739_RF,second_739_RF
+second,727,LH,,"3,000",727_LH,second_727_LH
+second,727,LF,,0,727_LF,second_727_LF
+second,727,RH,,"2,000",727_RH,second_727_RH
+second,727,RF,,"4,000",727_RF,second_727_RF
+second,693,LH,Unknown organism,"8,000",693_LH,second_693_LH
+second,693,LF,,"13,000",693_LF,second_693_LF
+second,693,RH,,"4,000",693_RH,second_693_RH
+second,693,RF,,"5,000",693_RF,second_693_RF
+second,741,LH,,"42,000",741_LH,second_741_LH
+second,741,LF,,"6,000",741_LF,second_741_LF
+second,741,RH,,"9,000",741_RH,second_741_RH
+second,741,RF,,"4,000",741_RF,second_741_RF
+second,731,LH,,"8,000",731_LH,second_731_LH
+second,731,LF,Staph. species,"140,000",731_LF,second_731_LF
+second,731,RH,,"21,000",731_RH,second_731_RH
+second,731,RF,,"4,000",731_RF,second_731_RF
+second,749,LH,,"3,000",749_LH,second_749_LH
+second,749,LF,,"2,000",749_LF,second_749_LF
+second,749,RH,,"12,000",749_RH,second_749_RH
+second,749,RF,,0,749_RF,second_749_RF
+second,753,LH,,0,753_LH,second_753_LH
+second,753,LF,,"5,000",753_LF,second_753_LF
+second,753,RH,,"4,000",753_RH,second_753_RH
+second,753,RF,,"2,000",753_RF,second_753_RF
+second,738,LH,,"4,000",738_LH,second_738_LH
+second,738,LF,,"3,000",738_LF,second_738_LF
+second,738,RH,,"11,000",738_RH,second_738_RH
+second,738,RF,,0,738_RF,second_738_RF
+second,733,LH,,"6,000",733_LH,second_733_LH
+second,733,LF,Staph. species,"42,000",733_LF,second_733_LF
+second,733,RH,,"7,000",733_RH,second_733_RH
+second,733,RF,Staph. aureus,"270,000",733_RF,second_733_RF
+second,701,LH,,"30,000",701_LH,second_701_LH
+second,701,LF,,"6,000",701_LF,second_701_LF
+second,701,RH,,"22,000",701_RH,second_701_RH
+second,701,RF,,"49,000",701_RF,second_701_RF
+second,744,LH,,"22,000",744_LH,second_744_LH
+second,744,LF,,"24,000",744_LF,second_744_LF
+second,744,RH,,"29,000",744_RH,second_744_RH
+second,744,RF,,"23,000",744_RF,second_744_RF
+second,763,LH,Sample contaminated,"9,000",763_LH,second_763_LH
+second,763,LF,,"9,000",763_LF,second_763_LF
+second,763,RH,,"8,000",763_RH,second_763_RH
+second,763,RF,,"8,000",763_RF,second_763_RF
+second,675,LH,,"11,000",675_LH,second_675_LH
+second,675,LF,,"17,000",675_LF,second_675_LF
+second,675,RH,,"21,000",675_RH,second_675_RH
+second,675,RF,,"33,000",675_RF,second_675_RF
+second,697,LH,,"27,000",697_LH,second_697_LH
+second,697,LF,,"13,000",697_LF,second_697_LF
+second,697,RH,Sample contaminated,"30,000",697_RH,second_697_RH
+second,697,RF,,"25,000",697_RF,second_697_RF
+second,745,LH,,"19,000",745_LH,second_745_LH
+second,745,LF,,"14,000",745_LF,second_745_LF
+second,745,RH,,"42,000",745_RH,second_745_RH
+second,745,RF,,"19,000",745_RF,second_745_RF
+second,713,LH,,"130,000",713_LH,second_713_LH
+second,713,LF,,"130,000",713_LF,second_713_LF
+second,713,RH,,"180,000",713_RH,second_713_RH
+second,713,RF,,"200,000",713_RF,second_713_RF
+second,761,LH,Staph. species,"81,000",761_LH,second_761_LH
+second,761,LF,,"7,000",761_LF,second_761_LF
+second,761,RH,,"4,000",761_RH,second_761_RH
+second,761,RF,,"5,000",761_RF,second_761_RF
+second,708,LH,,"22,000",708_LH,second_708_LH
+second,708,LF,,"17,000",708_LF,second_708_LF
+second,708,RH,,"17,000",708_RH,second_708_RH
+second,708,RF,,"17,000",708_RF,second_708_RF
+second,722,LH,Corynebacterium species,"26,000",722_LH,second_722_LH
+second,722,LF,Sample contaminated,"26,000",722_LF,second_722_LF
+second,722,RH,,"15,000",722_RH,second_722_RH
+second,722,RF,,"13,000",722_RF,second_722_RF
+second,CB3,LH,Sample contaminated,"14,000",CB3_LH,second_CB3_LH
+second,CB3,LF,,"8,000",CB3_LF,second_CB3_LF
+second,CB3,RH,Sample contaminated,"13,000",CB3_RH,second_CB3_RH
+second,CB3,RF,Corynebacterium species,"6,000",CB3_RF,second_CB3_RF
+second,685,LH,,"56,000",685_LH,second_685_LH
+second,685,LF,,"40,000",685_LF,second_685_LF
+second,685,RH,,"33,000",685_RH,second_685_RH
+second,685,RF,,"47,000",685_RF,second_685_RF
+second,664,LH,,"730,000",664_LH,second_664_LH
+second,664,LF,,"28,000",664_LF,second_664_LF
+second,664,RH,,"11,000",664_RH,second_664_RH
+second,664,RF,,"15,000",664_RF,second_664_RF
+second,755,LH,,"20,000",755_LH,second_755_LH
+second,755,LF,,"14,000",755_LF,second_755_LF
+second,755,RH,,"16,000",755_RH,second_755_RH
+second,755,RF,,"16,000",755_RF,second_755_RF
+second,743,LH,,"11,000",743_LH,second_743_LH
+second,743,LF,Sample contaminated,"15,000",743_LF,second_743_LF
+second,743,RH,Sample contaminated,"14,000",743_RH,second_743_RH
+second,743,RF,,"9,000",743_RF,second_743_RF
+second,616,LH,,"25,000",616_LH,second_616_LH
+second,616,LF,,"22,000",616_LF,second_616_LF
+second,616,RH,Sample contaminated,"24,000",616_RH,second_616_RH
+second,616,RF,,"25,000",616_RF,second_616_RF
+third,758,LH,,"5,000",758_LH,third_758_LH
+third,758,LF,Sample contaminated,"4,000",758_LF,third_758_LF
+third,758,RH,,"5,000",758_RH,third_758_RH
+third,758,RF,,"5,000",758_RF,third_758_RF
+third,757,LH,,"11,000",757_LH,third_757_LH
+third,757,LF,,"5,000",757_LF,third_757_LF
+third,757,RH,,"7,000",757_RH,third_757_RH
+third,757,RF,,"6,000",757_RF,third_757_RF
+third,656,LH,"Staph. aureus, Strep. species","1,600,000",656_LH,third_656_LH
+third,656,LF,,"64,000",656_LF,third_656_LF
+third,656,RH,,"26,000",656_RH,third_656_RH
+third,656,RF,,"60,000",656_RF,third_656_RF
+third,754,LH,,"8,000",754_LH,third_754_LH
+third,754,LF,Other Gram-positive bacteria,"4,000",754_LF,third_754_LF
+third,754,RH,,0,754_RH,third_754_RH
+third,754,RF,,"3,000",754_RF,third_754_RF
+third,CB5,LH,Staph. species,"59,000",CB5_LH,third_CB5_LH
+third,CB5,LF,Staph. species,"29,000",CB5_LF,third_CB5_LF
+third,CB5,RH,,"5,000",CB5_RH,third_CB5_RH
+third,CB5,RF,,"7,000",CB5_RF,third_CB5_RF
+third,585,LH,,"9,000",585_LH,third_585_LH
+third,585,LF,,"16,000",585_LF,third_585_LF
+third,585,RH,,"23,000",585_RH,third_585_RH
+third,585,RF,Staph. species,"1,500,000",585_RF,third_585_RF
+third,727,LH,,"93,000",727_LH,third_727_LH
+third,727,LF,Sample contaminated,"44,000",727_LF,third_727_LF
+third,727,RH,,"25,000",727_RH,third_727_RH
+third,727,RF,,"44,000",727_RF,third_727_RF
+third,741,LH,,"32,000",741_LH,third_741_LH
+third,741,LF,,"15,000",741_LF,third_741_LF
+third,741,RH,Unknown organism,"36,000",741_RH,third_741_RH
+third,741,RF,,"18,000",741_RF,third_741_RF
+third,749,LH,,"8,000",749_LH,third_749_LH
+third,749,LF,,"9,000",749_LF,third_749_LF
+third,749,RH,,"11,000",749_RH,third_749_RH
+third,749,RF,,"11,000",749_RF,third_749_RF
+third,670,LH,Blind quarter,Not analyzed,670_LH,third_670_LH
+third,670,LF,,"22,000",670_LF,third_670_LF
+third,670,RH,,"27,000",670_RH,third_670_RH
+third,670,RF,,"22,000",670_RF,third_670_RF
+third,716,LH,Staph. species,"85,000",716_LH,third_716_LH
+third,716,LF,,"6,000",716_LF,third_716_LF
+third,716,RH,,"5,000",716_RH,third_716_RH
+third,716,RF,,"10,000",716_RF,third_716_RF
+third,720,LH,,"29,000",720_LH,third_720_LH
+third,720,LF,Staph. aureus,"3,600,000",720_LF,third_720_LF
+third,720,RH,Staph. species,"230,000",720_RH,third_720_RH
+third,720,RF,Staph. aureus,"4,100,000",720_RF,third_720_RF
+third,719,LH,,"130,000",719_LH,third_719_LH
+third,719,LF,,"120,000",719_LF,third_719_LF
+third,719,RH,Staph. species,"270,000",719_RH,third_719_RH
+third,719,RF,,"24,000",719_RF,third_719_RF
+third,739,LH,Staph. species,"66,000",739_LH,third_739_LH
+third,739,LF,,"6,000",739_LF,third_739_LF
+third,739,RH,,"4,000",739_RH,third_739_RH
+third,739,RF,,"6,000",739_RF,third_739_RF
+third,693,LH,Staph. species,"13,000",693_LH,third_693_LH
+third,693,LF,Unknown organism,"37,000",693_LF,third_693_LF
+third,693,RH,"Strep. species, Corynebacterium species","13,000",693_RH,third_693_RH
+third,693,RF,,"18,000",693_RF,third_693_RF
+third,731,LH,,"6,000",731_LH,third_731_LH
+third,731,LF,Staph. species,"2,000,000",731_LF,third_731_LF
+third,731,RH,,"44,000",731_RH,third_731_RH
+third,731,RF,Sample contaminated,"7,000",731_RF,third_731_RF
+third,738,LH,Sample contaminated,"20,000",738_LH,third_738_LH
+third,738,LF,,"3,000",738_LF,third_738_LF
+third,738,RH,Strep. species,"7,000",738_RH,third_738_RH
+third,738,RF,,"5,000",738_RF,third_738_RF
+third,753,LH,,"39,000",753_LH,third_753_LH
+third,753,LF,,"18,000",753_LF,third_753_LF
+third,753,RH,,"24,000",753_RH,third_753_RH
+third,753,RF,,"25,000",753_RF,third_753_RF
+third,675,LH,,"13,000",675_LH,third_675_LH
+third,675,LF,,"31,000",675_LF,third_675_LF
+third,675,RH,,"22,000",675_RH,third_675_RH
+third,675,RF,,"41,000",675_RF,third_675_RF
+third,763,LH,,"210,000",763_LH,third_763_LH
+third,763,LF,,"24,000",763_LF,third_763_LF
+third,763,RH,,"13,000",763_RH,third_763_RH
+third,763,RF,,"9,000",763_RF,third_763_RF
+third,733,LH,Other Gram-positive bacteria,"10,000",733_LH,third_733_LH
+third,733,LF,Staph. species,"170,000",733_LF,third_733_LF
+third,733,RH,,"17,000",733_RH,third_733_RH
+third,733,RF,Sample contaminated,"410,000",733_RF,third_733_RF
+third,701,LH,Staph. aureus,"470,000",701_LH,third_701_LH
+third,701,LF,,"29,000",701_LF,third_701_LF
+third,701,RH,,"110,000",701_RH,third_701_RH
+third,701,RF,,"160,000",701_RF,third_701_RF
+third,708,LH,Sample contaminated,"16,000",708_LH,third_708_LH
+third,708,LF,,"26,000",708_LF,third_708_LF
+third,708,RH,Staph. species,"18,000",708_RH,third_708_RH
+third,708,RF,Sample contaminated,"23,000",708_RF,third_708_RF
+third,744,LH,,"13,000",744_LH,third_744_LH
+third,744,LF,,"12,000",744_LF,third_744_LF
+third,744,RH,,"16,000",744_RH,third_744_RH
+third,744,RF,,"10,000",744_RF,third_744_RF
+third,745,LH,,"22,000",745_LH,third_745_LH
+third,745,LF,,"23,000",745_LF,third_745_LF
+third,745,RH,,"42,000",745_RH,third_745_RH
+third,745,RF,,"20,000",745_RF,third_745_RF
+third,761,LH,Staph. species,"70,000",761_LH,third_761_LH
+third,761,LF,,"2,000",761_LF,third_761_LF
+third,761,RH,,"4,000",761_RH,third_761_RH
+third,761,RF,,"5,000",761_RF,third_761_RF
+third,713,LH,,"180,000",713_LH,third_713_LH
+third,713,LF,,"110,000",713_LF,third_713_LF
+third,713,RH,,"180,000",713_RH,third_713_RH
+third,713,RF,,"160,000",713_RF,third_713_RF
+third,722,LH,,"9,000",722_LH,third_722_LH
+third,722,LF,,"6,000",722_LF,third_722_LF
+third,722,RH,,"5,000",722_RH,third_722_RH
+third,722,RF,,"6,000",722_RF,third_722_RF
+third,664,LH,,"880,000",664_LH,third_664_LH
+third,664,LF,,"20,000",664_LF,third_664_LF
+third,664,RH,,"2,000",664_RH,third_664_RH
+third,664,RF,,"2,000",664_RF,third_664_RF
+third,765,LH,,"9,000",765_LH,third_765_LH
+third,765,LF,,"9,000",765_LF,third_765_LF
+third,765,RH,,"18,000",765_RH,third_765_RH
+third,765,RF,,"16,000",765_RF,third_765_RF
+third,CB3,LH,,"12,000",CB3_LH,third_CB3_LH
+third,CB3,LF,,"3,000",CB3_LF,third_CB3_LF
+third,CB3,RH,Unknown organism,"15,000",CB3_RH,third_CB3_RH
+third,CB3,RF,,"5,000",CB3_RF,third_CB3_RF
+third,755,LH,,"6,000",755_LH,third_755_LH
+third,755,LF,,"8,000",755_LF,third_755_LF
+third,755,RH,,"7,000",755_RH,third_755_RH
+third,755,RF,,"6,000",755_RF,third_755_RF
+third,743,LH,,"3,000",743_LH,third_743_LH
+third,743,LF,,"7,000",743_LF,third_743_LF
+third,743,RH,,"3,000",743_RH,third_743_RH
+third,743,RF,,"7,000",743_RF,third_743_RF
+third,685,LH,,"42,000",685_LH,third_685_LH
+third,685,LF,,"33,000",685_LF,third_685_LF
+third,685,RH,,"24,000",685_RH,third_685_RH
+third,685,RF,,"22,000",685_RF,third_685_RF
+third,616,LH,,"43,000",616_LH,third_616_LH
+third,616,LF,,"35,000",616_LF,third_616_LF
+third,616,RH,,"27,000",616_RH,third_616_RH
+third,616,RF,,"28,000",616_RF,third_616_RF

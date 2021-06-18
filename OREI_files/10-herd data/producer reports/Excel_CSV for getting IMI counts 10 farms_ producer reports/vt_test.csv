@@ -1,0 +1,432 @@
+visit,Cow_ID,Quarter,IMI_species,SCC
+first,Vangie,LH,,5000
+first,Vangie,LF,,4000
+first,Vangie,RH,,5000
+first,Vangie,RF,,4000
+first,Gloria,LH,,0
+first,Gloria,LF,Staph. species,85000
+first,Gloria,RH,,5000
+first,Gloria,RF,Staph. species,200000
+first,Luna,LH,,8000
+first,Luna,LF,Sample contaminated,2000
+first,Luna,RH,Blind quarter,Not analyzed
+first,Luna,RF,,11000
+first,Leopard,LH,Staph. aureus,680000
+first,Leopard,LF,Staph. species,34000
+first,Leopard,RH,,0
+first,Leopard,RF,Staph. species,35000
+first,Lena,LH,,23000
+first,Lena,LF,Blind quarter,Not analyzed
+first,Lena,RH,,Not analyzed: low volume
+first,Lena,RF,,4000
+first,Alma,LH,,Not analyzed: low volume
+first,Alma,LF,,0
+first,Alma,RH,,2000
+first,Alma,RF,,2400
+first,Matilda,LH,,3000
+first,Matilda,LF,,0
+first,Matilda,RH,,10800
+first,Matilda,RF,Staph. species,42000
+first,Isabelle,LH,,9778
+first,Isabelle,LF,,2889
+first,Isabelle,RH,,4000
+first,Isabelle,RF,,0
+first,Clara,LH,,23000
+first,Clara,LF,,16000
+first,Clara,RH,Staph. species,290000
+first,Clara,RF,,71000
+first,Leadbelly,LH,,12000
+first,Leadbelly,LF,Blind quarter,Not analyzed
+first,Leadbelly,RH,,7000
+first,Leadbelly,RF,,4000
+first,Esme,LH,Staph. species,120000
+first,Esme,LF,Staph. species,82000
+first,Esme,RH,,49000
+first,Esme,RF,,30000
+first,Tallula,LH,,5000
+first,Tallula,LF,,6000
+first,Tallula,RH,,6000
+first,Tallula,RF,Staph. species,120000
+first,Vicki,LH,,15000
+first,Vicki,LF,,13000
+first,Vicki,RH,,4000
+first,Vicki,RF,Sample contaminated,5000
+first,Zelda,LH,,29000
+first,Zelda,LF,Staph. species,170000
+first,Zelda,RH,,42000
+first,Zelda,RF,,74000
+first,Ursala,LH,Staph. species,29000
+first,Ursala,LF,,4000
+first,Ursala,RH,,9000
+first,Ursala,RF,,7000
+first,Tilly,LH,,19000
+first,Tilly,LF,,21000
+first,Tilly,RH,,17000
+first,Tilly,RF,,15000
+first,Freida,LH,,6000
+first,Freida,LF,,8000
+first,Freida,RH,Blind quarter,Not analyzed
+first,Freida,RF,,4000
+first,Lassandra,LH,,26000
+first,Lassandra,LF,,13000
+first,Lassandra,RH,,15000
+first,Lassandra,RF,,15000
+first,Abigail,LH,Strep. species,1000000
+first,Abigail,LF,,62000
+first,Abigail,RH,,10000
+first,Abigail,RF,,13000
+first,Flavia,LH,,3000
+first,Flavia,LF,Staph. species,86000
+first,Flavia,RH,Staph. species,110000
+first,Flavia,RF,Blind quarter,Not analyzed
+first,Alice,LH,,67000
+first,Alice,LF,,3000
+first,Alice,RH,,2000
+first,Alice,RF,Staph. species,110000
+first,Irene,LH,,16000
+first,Irene,LF,Staph. species,29000
+first,Irene,RH,,6000
+first,Irene,RF,,7000
+first,Lilac,LH,Sample contaminated,5000
+first,Lilac,LF,Staph. species,140000
+first,Lilac,RH,Staph. species,35000
+first,Lilac,RF,Blind quarter,Not analyzed
+first,Hyacinth,LH,,11000
+first,Hyacinth,LF,,9000
+first,Hyacinth,RH,Staph. species,13000
+first,Hyacinth,RF,,8000
+first,Ardetta,LH,,5000
+first,Ardetta,LF,,4000
+first,Ardetta,RH,,17000
+first,Ardetta,RF,Staph. species,60000
+first,Indie,LH,,23000
+first,Indie,LF,,9000
+first,Indie,RH,,12000
+first,Indie,RF,,11000
+first,Panda,LH,,30000
+first,Panda,LF,,10000
+first,Panda,RH,Staph. species,860000
+first,Panda,RF,,15000
+first,Patchouli,LH,,7000
+first,Patchouli,LF,,49000
+first,Patchouli,RH,,12000
+first,Patchouli,RF,,4000
+first,Iris,LH,,6000
+first,Iris,LF,,4000
+first,Iris,RH,,14000
+first,Iris,RF,,4000
+first,Bonnie,LH,,10000
+first,Bonnie,LF,,9000
+first,Bonnie,RH,,6000
+first,Bonnie,RF,,11000
+first,Jasmine,LH,,8000
+first,Jasmine,LF,,6000
+first,Jasmine,RH,,11000
+first,Jasmine,RF,,9000
+first,Imogene,LH,Staph. species,2000
+first,Imogene,LF,,2000
+first,Imogene,RH,Sample contaminated,2000
+first,Imogene,RF,,3000
+first,Seraphina,LH,,3000
+first,Seraphina,LF,,4000
+first,Seraphina,RH,,8000
+first,Seraphina,RF,,8000
+first,Hosana,LH,,3000
+first,Hosana,LF,,3000
+first,Hosana,RH,,0
+first,Hosana,RF,,
+first,Lucha,LH,,4000
+first,Lucha,LF,Staph. species,170000
+first,Lucha,RH,Blind quarter,Not analyzed
+first,Lucha,RF,Staph. species,160000
+second,Leadbelly,LH,,61000
+second,Leadbelly,LF,Blind quarter,Not analyzed
+second,Leadbelly,RH,,43000
+second,Leadbelly,RF,,51000
+second,Leopard,LH,Staph. aureus,650000
+second,Leopard,LF,Staph. species,66000
+second,Leopard,RH,,7000
+second,Leopard,RF,,30000
+second,Lena,LH,,9000
+second,Lena,LF,Blind quarter,Not analyzed
+second,Lena,RH,Unknown organism,6000
+second,Lena,RF,Staph. species,8000
+second,Vangie,LH,,11000
+second,Vangie,LF,,9000
+second,Vangie,RH,,11000
+second,Vangie,RF,,13000
+second,Gloria,LH,,2000
+second,Gloria,LF,Staph. species,80000
+second,Gloria,RH,,4000
+second,Gloria,RF,Staph. species,69000
+second,Matilda,LH,,6000
+second,Matilda,LF,,7000
+second,Matilda,RH,,19000
+second,Matilda,RF,"Corynebacterium species, Staph. species",43000
+second,Alma,LH,,2000
+second,Alma,LF,,2000
+second,Alma,RH,,0
+second,Alma,RF,,2000
+second,Esme,LH,Staph. species,84000
+second,Esme,LF,Staph. species,50000
+second,Esme,RH,,54000
+second,Esme,RF,,45000
+second,Gomora,LH,,38000
+second,Gomora,LF,,40000
+second,Gomora,RH,,49000
+second,Gomora,RF,,41000
+second,Luna,LH,,5000
+second,Luna,LF,,6000
+second,Luna,RH,Blind quarter,Not analyzed
+second,Luna,RF,,11000
+second,Isabelle,LH,,6000
+second,Isabelle,LF,,2000
+second,Isabelle,RH,,4000
+second,Isabelle,RF,,6000
+second,Vicki,LH,,11000
+second,Vicki,LF,,19000
+second,Vicki,RH,,13000
+second,Vicki,RF,,13000
+second,Clara,LH,,27000
+second,Clara,LF,,24000
+second,Clara,RH,Staph. species,160000
+second,Clara,RF,Staph. species,42000
+second,Zelda,LH,,91000
+second,Zelda,LF,Staph. species,90000
+second,Zelda,RH,,120000
+second,Zelda,RF,,150000
+second,Abigail,LH,Strep. species,2400000
+second,Abigail,LF,Staph. species,110000
+second,Abigail,RH,,24000
+second,Abigail,RF,,38000
+second,Tallula,LH,,470000
+second,Tallula,LF,,17000
+second,Tallula,RH,,3000
+second,Tallula,RF,Staph. species,53000
+second,Tilly,LH,,39000
+second,Tilly,LF,,38000
+second,Tilly,RH,,27000
+second,Tilly,RF,,28000
+second,Freida,LH,,11000
+second,Freida,LF,,11000
+second,Freida,RH,Blind quarter,Not analyzed
+second,Freida,RF,,5000
+second,Lassandra,LH,,29000
+second,Lassandra,LF,,24000
+second,Lassandra,RH,,19000
+second,Lassandra,RF,,25000
+second,Irene,LH,,44000
+second,Irene,LF,Staph. species,50000
+second,Irene,RH,,72000
+second,Irene,RF,,10000
+second,Flavia,LH,,8000
+second,Flavia,LF,Staph. species,59000
+second,Flavia,RH,Staph. species,67000
+second,Flavia,RF,,2700000
+second,Ursala,LH,Staph. species,90000
+second,Ursala,LF,,9000
+second,Ursala,RH,,8000
+second,Ursala,RF,,8000
+second,Alice,LH,,4000
+second,Alice,LF,,12000
+second,Alice,RH,,260000
+second,Alice,RF,,9000
+second,Ardetta,LH,,5000
+second,Ardetta,LF,,6000
+second,Ardetta,RH,,11000
+second,Ardetta,RF,Staph. species,72000
+second,Lilac,LH,,4000
+second,Lilac,LF,Staph. species,86000
+second,Lilac,RH,Staph. species,61000
+second,Lilac,RF,Blind quarter,Not analyzed
+second,Hyacinth,LH,,9000
+second,Hyacinth,LF,,7000
+second,Hyacinth,RH,,15000
+second,Hyacinth,RF,,8000
+second,Patchouli,LH,,6000
+second,Patchouli,LF,,2000
+second,Patchouli,RH,,4000
+second,Patchouli,RF,Unknown organism,72000
+second,Lucha,LH,,10000
+second,Lucha,LF,Staph. species,58000
+second,Lucha,RH,Blind quarter,Not analyzed
+second,Lucha,RF,Staph. species,440000
+second,Indie,LH,,16000
+second,Indie,LF,,21000
+second,Indie,RH,,12000
+second,Indie,RF,,24000
+second,Panda,LH,,15000
+second,Panda,LF,,5000
+second,Panda,RH,Staph. species,150000
+second,Panda,RF,,11000
+second,Imogene,LH,,4000
+second,Imogene,LF,Staph. species,5000
+second,Imogene,RH,,8000
+second,Imogene,RF,,6000
+second,Iris,LH,,2000
+second,Iris,LF,,6000
+second,Iris,RH,Corynebacterium species,12000
+second,Iris,RF,,5000
+second,Jasmine,LH,,8000
+second,Jasmine,LF,,9000
+second,Jasmine,RH,,7000
+second,Jasmine,RF,,7000
+second,Bonnie,LH,,11000
+second,Bonnie,LF,,14000
+second,Bonnie,RH,,15000
+second,Bonnie,RF,,13000
+second,Hosana,LH,,0
+second,Hosana,LF,,0
+second,Hosana,RH,,0
+second,Hosana,RF,,0
+second,Seraphina,LH,,0
+second,Seraphina,LF,,0
+second,Seraphina,RH,,0
+second,Seraphina,RF,,0
+third,Vera,LH,,300000
+third,Vera,LF,,4000
+third,Vera,RH,,31000
+third,Vera,RF,Corynebacterium species,10000
+third,Gomora,LH,,6000
+third,Gomora,LF,,5000
+third,Gomora,RH,,6000
+third,Gomora,RF,,8000
+third,Leopard,LH,Staph. aureus,170000
+third,Leopard,LF,Staph. species,24000
+third,Leopard,RH,,2000
+third,Leopard,RF,Staph. species,29000
+third,Vangie,LH,,7000
+third,Vangie,LF,,2000
+third,Vangie,RH,,6000
+third,Vangie,RF,,5000
+third,Gloria,LH,Sample contaminated,6000
+third,Gloria,LF,Staph. species,67000
+third,Gloria,RH,Sample contaminated,11000
+third,Gloria,RF,Staph. species,67000
+third,Luna,LH,Strep. species,6000
+third,Luna,LF,,7000
+third,Luna,RH,Blind quarter,Not analyzed
+third,Luna,RF,,38000
+third,Matilda,LH,,9000
+third,Matilda,LF,,5000
+third,Matilda,RH,Staph. species,8000
+third,Matilda,RF,Staph. species,25000
+third,Isabelle,LH,,4000
+third,Isabelle,LF,,4000
+third,Isabelle,RH,,2000
+third,Isabelle,RF,,4000
+third,Vicki,LH,,17000
+third,Vicki,LF,,15000
+third,Vicki,RH,,12000
+third,Vicki,RF,"Bacillus species, Staph. species",11000
+third,Lena,LH,,2000
+third,Lena,LF,Blind quarter,Not analyzed
+third,Lena,RH,,4000
+third,Lena,RF,,4000
+third,Alma,LH,,4000
+third,Alma,LF,,3000
+third,Alma,RH,,2000
+third,Alma,RF,,3000
+third,Esme,LH,Staph. species,99000
+third,Esme,LF,Staph. species,83000
+third,Esme,RH,,38000
+third,Esme,RF,,23000
+third,Clara,LH,,47000
+third,Clara,LF,,39000
+third,Clara,RH,Staph. species,420000
+third,Clara,RF,,53000
+third,Zelda,LH,,43000
+third,Zelda,LF,Staph. species,100000
+third,Zelda,RH,,64000
+third,Zelda,RF,,260000
+third,Abigail,LH,Strep. species,1700000
+third,Abigail,LF,"Staph. species, Corynebacterium species",200000
+third,Abigail,RH,,36000
+third,Abigail,RF,,94000
+third,Tallula,LH,,170000
+third,Tallula,LF,,9000
+third,Tallula,RH,,3000
+third,Tallula,RF,Staph. species,78000
+third,Tilly,LH,Staph. species,25000
+third,Tilly,LF,,41000
+third,Tilly,RH,,26000
+third,Tilly,RF,,41000
+third,Freida,LH,,10000
+third,Freida,LF,,11000
+third,Freida,RH,Blind quarter,Not analyzed
+third,Freida,RF,,6000
+third,Flavia,LH,,9000
+third,Flavia,LF,Staph. species,140000
+third,Flavia,RH,Staph. species,120000
+third,Flavia,RF,Blind quarter,Not analyzed
+third,Alice,LH,,2000
+third,Alice,LF,Staph. species,240000
+third,Alice,RH,,120000
+third,Alice,RF,,5000
+third,Ursala,LH,Staph. species,48000
+third,Ursala,LF,,3000
+third,Ursala,RH,,3000
+third,Ursala,RF,,5000
+third,Iris,LH,Staph. species,2000
+third,Iris,LF,,2000
+third,Iris,RH,,7000
+third,Iris,RF,,3000
+third,Patchouli,LH,,7000
+third,Patchouli,LF,,5000
+third,Patchouli,RH,,5000
+third,Patchouli,RF,Staph. species,24000
+third,Irene,LH,,16000
+third,Irene,LF,Staph. species,69000
+third,Irene,RH,,34000
+third,Irene,RF,,20000
+third,Ardetta,LH,Staph. species,7000
+third,Ardetta,LF,,9000
+third,Ardetta,RH,,14000
+third,Ardetta,RF,Staph. species,200000
+third,Lilac,LH,,6000
+third,Lilac,LF,Staph. species,290000
+third,Lilac,RH,Staph. species,80000
+third,Lilac,RF,Blind quarter,Not analyzed
+third,Hyacinth,LH,,4000
+third,Hyacinth,LF,,4000
+third,Hyacinth,RH,,8000
+third,Hyacinth,RF,,7000
+third,Indie,LH,,63000
+third,Indie,LF,,82000
+third,Indie,RH,,49000
+third,Indie,RF,,110000
+third,Panda,LH,,8000
+third,Panda,LF,,8000
+third,Panda,RH,Staph. species,160000
+third,Panda,RF,,7000
+third,Tessa,LH,,2000
+third,Tessa,LF,,3000
+third,Tessa,RH,,3000
+third,Tessa,RF,,4000
+third,Jasmine,LH,,8000
+third,Jasmine,LF,,5000
+third,Jasmine,RH,,13000
+third,Jasmine,RF,,7000
+third,Seraphina,LH,,29000
+third,Seraphina,LF,,11000
+third,Seraphina,RH,,7000
+third,Seraphina,RF,,7000
+third,Immogene,LH,,0
+third,Immogene,LF,,2000
+third,Immogene,RH,,0
+third,Immogene,RF,,0
+third,Hosana,LH,,0
+third,Hosana,LF,Staph. species,2000
+third,Hosana,RH,,0
+third,Hosana,RF,,0
+third,Lucha,LH,,3000
+third,Lucha,LF,Staph. species,26000
+third,Lucha,RH,Blind quarter,Not analyzed
+third,Lucha,RF,Staph. species,78000
+,,,,
+Additional clinical samples:,,,,
+,,,Species causing intramammary infection,Quarter-level SCC
+43901,Cardamom,LH,1 colony CNS (positive on CMT),560000
+43901,Cardamom,LF,,14000
+43901,Cardamom,RH,,11000
+43901,Cardamom,RF,,4000

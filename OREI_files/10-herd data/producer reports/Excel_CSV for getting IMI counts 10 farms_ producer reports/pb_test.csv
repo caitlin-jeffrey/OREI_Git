@@ -1,0 +1,421 @@
+visit,Cow_ID,Quarter,IMI_species,SCC
+first,Loha32,LH,,27000
+first,Loha32,LF,,11000
+first,Loha32,RH,,12000
+first,Loha32,RF,,9000
+first,GloryBe29,LH,,25000
+first,GloryBe29,LF,,2000
+first,GloryBe29,RH,,5000
+first,GloryBe29,RF,,2000
+first,Champne25,LH,,5000
+first,Champne25,LF,,7000
+first,Champne25,RH,,4000
+first,Champne25,RF,,5000
+first,Germ1140,LH,,3000
+first,Germ1140,LF,,1400000
+first,Germ1140,RH,Staph. species,150000
+first,Germ1140,RF,,6000
+first,Padfoot21,LH,,9000
+first,Padfoot21,LF,,8000
+first,Padfoot21,RH,,6000
+first,Padfoot21,RF,,16000
+first,Fajita12,LH,,4000
+first,Fajita12,LF,,0
+first,Fajita12,RH,,0
+first,Fajita12,RF,,0
+first,Gronk22,LH,,17000
+first,Gronk22,LF,,15000
+first,Gronk22,RH,,17000
+first,Gronk22,RF,,14000
+first,Kyra35,LH,,16000
+first,Kyra35,LF,,19000
+first,Kyra35,RH,Staph. species,210000
+first,Kyra35,RF,,18000
+first,Kwikmix36,LH,,73000
+first,Kwikmix36,LF,,13000
+first,Kwikmix36,RH,Sample contaminated,16000
+first,Kwikmix36,RF,,14000
+first,Annabelle27,LH,,4000
+first,Annabelle27,LF,,520000
+first,Annabelle27,RH,,19000
+first,Annabelle27,RF,Staph. aureus,230000
+first,Stamina391,LH,,12000
+first,Stamina391,LF,,2000
+first,Stamina391,RH,,7000
+first,Stamina391,RF,,4000
+first,Fitzi31,LH,,5000
+first,Fitzi31,LF,,3000
+first,Fitzi31,RH,,12000
+first,Fitzi31,RF,Staph. species,56000
+first,Ferrari28,LH,,350000
+first,Ferrari28,LF,,17000
+first,Ferrari28,RH,Strep. species,2900000
+first,Ferrari28,RF,Sample contaminated,54000
+first,Minerva34,LH,,6000
+first,Minerva34,LF,,5000
+first,Minerva34,RH,,10000
+first,Minerva34,RF,Staph. species,130000
+first,Octavia42,LH,,8000
+first,Octavia42,LF,,4000
+first,Octavia42,RH,,6000
+first,Octavia42,RF,,6000
+first,Gif9,LH,,40000
+first,Gif9,LF,,64000
+first,Gif9,RH,,62000
+first,Gif9,RF,,75000
+first,Likely30,LH,"Strep. species, Staph. species",130000
+first,Likely30,LF,"Strep. species, Staph. species",500000
+first,Likely30,RH,,18000
+first,Likely30,RF,Strep. species,200000
+first,Chapstick1,LH,,6000
+first,Chapstick1,LF,,3000
+first,Chapstick1,RH,,2000
+first,Chapstick1,RF,,710000
+first,Farrent31,LH,Staph. species,70000
+first,Farrent31,LF,,12000
+first,Farrent31,RH,Staph. species,36000
+first,Farrent31,RF,,11000
+first,Laura558,LH,,4000
+first,Laura558,LF,,2000
+first,Laura558,RH,,3000
+first,Laura558,RF,,7000
+first,Sam19,LH,,5000
+first,Sam19,LF,,9000
+first,Sam19,RH,,8000
+first,Sam19,RF,,15000
+first,Lalune33,LH,,9000
+first,Lalune33,LF,,9000
+first,Lalune33,RH,,10000
+first,Lalune33,RF,,10000
+first,Shania291,LH,,48000
+first,Shania291,LF,Staph. aureus,4200000
+first,Shania291,RH,,99000
+first,Shania291,RF,,46000
+first,Shiela375,LH,,6000
+first,Shiela375,LF,,6000
+first,Shiela375,RH,Staph. species,440000
+first,Shiela375,RF,,13000
+first,Guana362,LH,Staph. species,80000
+first,Guana362,LF,,5000
+first,Guana362,RH,,7000
+first,Guana362,RF,,0
+first,Swallow377,LH,,5000
+first,Swallow377,LF,,5000
+first,Swallow377,RH,,9000
+first,Swallow377,RF,,8000
+first,Saige313,LH,,3000
+first,Saige313,LF,Staph. species,570000
+first,Saige313,RH,Staph. species,3000000
+first,Saige313,RF,Blind quarter,Not analyzed
+first,Sapphire338,LH,,54000
+first,Sapphire338,LF,,5000
+first,Sapphire338,RH,Staph. species,260000
+first,Sapphire338,RF,,9000
+first,Scrapie278,LH,,5000
+first,Scrapie278,LF,,2000
+first,Scrapie278,RH,,220000
+first,Scrapie278,RF,Staph. aureus,330000
+first,Gift379,LH,Sample contaminated,9000
+first,Gift379,LF,Staph. species,210000
+first,Gift379,RH,,7000
+first,Gift379,RF,Staph. species,190000
+first,Marney382,LH,,9000
+first,Marney382,LF,Staph. aureus,1800000
+first,Marney382,RH,,33000
+first,Marney382,RF,,16000
+first,Farrah363,LH,,27000
+first,Farrah363,LF,Staph. species,73000
+first,Farrah363,RH,,120000
+first,Farrah363,RF,Staph. species,220000
+first,Annabeth2,LH,Staph. species,24000
+first,Annabeth2,LF,,190000
+first,Annabeth2,RH,,3000
+first,Annabeth2,RF,,15000
+first,Simply314,LH,,9000
+first,Simply314,LF,,19000
+first,Simply314,RH,,9000
+first,Simply314,RF,,15000
+first,Vida6,LH,,110000
+first,Vida6,LF,,120000
+first,Vida6,RH,,290000
+first,Vida6,RF,,160000
+second,Germ1140,LH,,2000
+second,Germ1140,LF,Blind quarter,Not analyzed
+second,Germ1140,RH,,67000
+second,Germ1140,RF,,8000
+second,GloryBe29,LH,,8000
+second,GloryBe29,LF,,5000
+second,GloryBe29,RH,,4000
+second,GloryBe29,RF,,6000
+second,Fajita12,LH,,4000
+second,Fajita12,LF,,0
+second,Fajita12,RH,,3000
+second,Fajita12,RF,,0
+second,Gronk22,LH,,13000
+second,Gronk22,LF,,12000
+second,Gronk22,RH,,12000
+second,Gronk22,RF,,11000
+second,Annabelle27,LH,,5000
+second,Annabelle27,LF,,8000
+second,Annabelle27,RH,,4000
+second,Annabelle27,RF,Staph. aureus,720000
+second,Kwikmix36,LH,,22000
+second,Kwikmix36,LF,,3000
+second,Kwikmix36,RH,,7000
+second,Kwikmix36,RF,,3000
+second,Loha32,LH,,4000
+second,Loha32,LF,,8000
+second,Loha32,RH,,3000
+second,Loha32,RF,,3000
+second,Champne25,LH,,0
+second,Champne25,LF,,2000
+second,Champne25,RH,,0
+second,Champne25,RF,,4000
+second,Farrent31,LH,Staph. species,46000
+second,Farrent31,LF,,10000
+second,Farrent31,RH,Staph. species,50000
+second,Farrent31,RF,,7000
+second,Kyra35,LH,,16000
+second,Kyra35,LF,,16000
+second,Kyra35,RH,Staph. species,79000
+second,Kyra35,RF,,22000
+second,Stamina391,LH,,4000
+second,Stamina391,LF,,4000
+second,Stamina391,RH,,2000
+second,Stamina391,RF,,3000
+second,Fitzi31,LH,,13000
+second,Fitzi31,LF,,7000
+second,Fitzi31,RH,,16000
+second,Fitzi31,RF,Staph. species,46000
+second,Minerva34,LH,,6000
+second,Minerva34,LF,,4000
+second,Minerva34,RH,,6000
+second,Minerva34,RF,Staph. species,95000
+second,Gif9,LH,,5000
+second,Gif9,LF,,5000
+second,Gif9,RH,,3000
+second,Gif9,RF,,4000
+second,Ferrari28,LH,,140000
+second,Ferrari28,LF,Sample contaminated,9000
+second,Ferrari28,RH,Strep. species,2800000
+second,Ferrari28,RF,,79000
+second,Octavia42,LH,,13000
+second,Octavia42,LF,,5000
+second,Octavia42,RH,,3000
+second,Octavia42,RF,,5000
+second,Laura558,LH,,2000
+second,Laura558,LF,,3000
+second,Laura558,RH,,2000
+second,Laura558,RF,,3000
+second,Likely30,LH,"Strep. species, Staph. species",72000
+second,Likely30,LF,"Strep. species, Staph. species",570000
+second,Likely30,RH,,17000
+second,Likely30,RF,Strep. species,78000
+second,Sam19,LH,,4000
+second,Sam19,LF,,3000
+second,Sam19,RH,,0
+second,Sam19,RF,,2000
+second,Vida6,LH,,36000
+second,Vida6,LF,,24000
+second,Vida6,RH,,23000
+second,Vida6,RF,,88000
+second,Lalune33,LH,,10000
+second,Lalune33,LF,,6000
+second,Lalune33,RH,,11000
+second,Lalune33,RF,,6000
+second,Marney382,LH,Staph. species,26000
+second,Marney382,LF,Staph. aureus,4100000
+second,Marney382,RH,,73000
+second,Marney382,RF,Sample contaminated,87000
+second,Shiela375,LH,Staph. species,7000
+second,Shiela375,LF,,3000
+second,Shiela375,RH,Staph. species,3100000
+second,Shiela375,RF,,65000
+second,Sapphire338,LH,Sample contaminated,21000
+second,Sapphire338,LF,Corynebacterium species,3000
+second,Sapphire338,RH,Staph. species,81000
+second,Sapphire338,RF,,9000
+second,Shania291,LH,"Corynebacterium species, Unknown organism",17000
+second,Shania291,LF,Staph. aureus,6400000
+second,Shania291,RH,,150000
+second,Shania291,RF,,13000
+second,Guana362,LH,Staph. species,130000
+second,Guana362,LF,,4000
+second,Guana362,RH,,4000
+second,Guana362,RF,,0
+second,Scrapie278,LH,,12000
+second,Scrapie278,LF,,18000
+second,Scrapie278,RH,Staph. species,210000
+second,Scrapie278,RF,Staph. aureus,360000
+second,Gift379,LH,,9000
+second,Gift379,LF,Staph. species,150000
+second,Gift379,RH,,7000
+second,Gift379,RF,Staph. species,180000
+second,Swallow377,LH,,12000
+second,Swallow377,LF,,5000
+second,Swallow377,RH,,12000
+second,Swallow377,RF,,11000
+second,Chapstick1,LH,,0
+second,Chapstick1,LF,,2000
+second,Chapstick1,RH,,2000
+second,Chapstick1,RF,,55000
+second,Simply314,LH,,8000
+second,Simply314,LF,,20000
+second,Simply314,RH,,4000
+second,Simply314,RF,,11000
+second,Padfoot21,LH,,53000
+second,Padfoot21,LF,,26000
+second,Padfoot21,RH,,56000
+second,Padfoot21,RF,,38000
+second,Saige313,LH,,6000
+second,Saige313,LF,Staph. species,480000
+second,Saige313,RH,Staph. species,530000
+second,Saige313,RF,Blind quarter,Not analyzed
+second,Annabeth2,LH,,43000
+second,Annabeth2,LF,Staph. aureus,670000
+second,Annabeth2,RH,,14000
+second,Annabeth2,RF,,0
+second,Farrah363,LH,,48000
+second,Farrah363,LF,Staph. species,47000
+second,Farrah363,RH,,42000
+second,Farrah363,RF,Staph. species,120000
+third,Germ1140,LH,,56000
+third,Germ1140,LF,Blind quarter,Not analyzed
+third,Germ1140,RH,Staph. species,46000
+third,Germ1140,RF,,4000
+third,Padfoot21,LH,,7000
+third,Padfoot21,LF,,11000
+third,Padfoot21,RH,,5000
+third,Padfoot21,RF,,8000
+third,Champne25,LH,,2000
+third,Champne25,LF,,2000
+third,Champne25,RH,Corynebacterium species,0
+third,Champne25,RF,,0
+third,Loha32,LH,,6000
+third,Loha32,LF,,5000
+third,Loha32,RH,Staph. species,3000
+third,Loha32,RF,,5000
+third,GloryBe29,LH,Sample contaminated,13000
+third,GloryBe29,LF,,6000
+third,GloryBe29,RH,,7000
+third,GloryBe29,RF,,2000
+third,Fajita12,LH,,3000
+third,Fajita12,LF,,0
+third,Fajita12,RH,,2000
+third,Fajita12,RF,,0
+third,Gronk22,LH,,10000
+third,Gronk22,LF,Yeast,9000
+third,Gronk22,RH,,8000
+third,Gronk22,RF,,7000
+third,Annabelle27,LH,,6000
+third,Annabelle27,LF,,3000
+third,Annabelle27,RH,,15000
+third,Annabelle27,RF,Staph. aureus,1000000
+third,Kwikmix36,LH,,23000
+third,Kwikmix36,LF,,8000
+third,Kwikmix36,RH,,9000
+third,Kwikmix36,RF,,5000
+third,Minerva34,LH,,3000
+third,Minerva34,LF,,3000
+third,Minerva34,RH,,0
+third,Minerva34,RF,Staph. species,1600000
+third,Octavia42,LH,,24000
+third,Octavia42,LF,,7000
+third,Octavia42,RH,,2000
+third,Octavia42,RF,,2000
+third,Laura558,LH,,4000
+third,Laura558,LF,,3000
+third,Laura558,RH,,2000
+third,Laura558,RF,,3000
+third,Stamina391,LH,,2000
+third,Stamina391,LF,,4000
+third,Stamina391,RH,,5000
+third,Stamina391,RF,,2000
+third,Kyra35,LH,,8000
+third,Kyra35,LF,,12000
+third,Kyra35,RH,Staph. species,72000
+third,Kyra35,RF,,8000
+third,Farrent31,LH,Staph. species,85000
+third,Farrent31,LF,,10000
+third,Farrent31,RH,Staph. species,28000
+third,Farrent31,RF,,7000
+third,Fitzi31,LH,Staph. species,190000
+third,Fitzi31,LF,,9000
+third,Fitzi31,RH,,9000
+third,Fitzi31,RF,Staph. species,58000
+third,Ferrari28,LH,,670000
+third,Ferrari28,LF,,22000
+third,Ferrari28,RH,Strep. species,3100000
+third,Ferrari28,RF,,62000
+third,Gif9,LH,,6000
+third,Gif9,LF,,4000
+third,Gif9,RH,,4000
+third,Gif9,RF,,5000
+third,Sam19,LH,,2000
+third,Sam19,LF,,0
+third,Sam19,RH,,7000
+third,Sam19,RF,,3000
+third,Lalune33,LH,,8000
+third,Lalune33,LF,,4000
+third,Lalune33,RH,,9000
+third,Lalune33,RF,,9000
+third,Sapphire338,LH,,560000
+third,Sapphire338,LF,,58000
+third,Sapphire338,RH,Staph. species,140000
+third,Sapphire338,RF,,6000
+third,Likely30,LH,"Staph. species, Strep. species",59000
+third,Likely30,LF,"Staph. species, Strep. species",180000
+third,Likely30,RH,,12000
+third,Likely30,RF,Strep. species,61000
+third,Vida6,LH,,37000
+third,Vida6,LF,Unknown organism,26000
+third,Vida6,RH,,28000
+third,Vida6,RF,,42000
+third,Shiela375,LH,,5000
+third,Shiela375,LF,,8000
+third,Shiela375,RH,Staph. species,78000
+third,Shiela375,RF,,20000
+third,Marney382,LH,"Staph. species, Strep. species",37000
+third,Marney382,LF,Staph. aureus,2100000
+third,Marney382,RH,"Strep. species, unknown organism",72000
+third,Marney382,RF,,75000
+third,Shania291,LH,,20000
+third,Shania291,LF,Staph. aureus,3200000
+third,Shania291,RH,,110000
+third,Shania291,RF,,14000
+third,Guana362,LH,Staph. species,12000
+third,Guana362,LF,,0
+third,Guana362,RH,,3000
+third,Guana362,RF,,2000
+third,Gift379,LH,,0
+third,Gift379,LF,Staph. species,130000
+third,Gift379,RH,,7000
+third,Gift379,RF,Staph. species,180000
+third,Swallow377,LH,,15000
+third,Swallow377,LF,,10000
+third,Swallow377,RH,,23000
+third,Swallow377,RF,,34000
+third,Chapstick1,LH,,0
+third,Chapstick1,LF,Staph. species,0
+third,Chapstick1,RH,Staph. species,2000
+third,Chapstick1,RF,,6000
+third,Simply314,LH,,24000
+third,Simply314,LF,,58000
+third,Simply314,RH,,16000
+third,Simply314,RF,,19000
+third,Scrapie278,LH,,9000
+third,Scrapie278,LF,,10000
+third,Scrapie278,RH,Staph. species,86000
+third,Scrapie278,RF,,1100000
+third,Saige313,LH,Corynebacterium species,28000
+third,Saige313,LF,Unknown organism,320000
+third,Saige313,RH,Staph. species,250000
+third,Saige313,RF,Blind quarter,Not analyzed
+third,Farrah363,LH,,160000
+third,Farrah363,LF,Staph. species,540000
+third,Farrah363,RH,,10000
+third,Farrah363,RF,Staph. species,7000
+third,Annabeth2,LH,,35000
+third,Annabeth2,LF,Staph. aureus,100000
+third,Annabeth2,RH,,23000
+third,Annabeth2,RF,"Gram-negative, non-coliform organism",70000

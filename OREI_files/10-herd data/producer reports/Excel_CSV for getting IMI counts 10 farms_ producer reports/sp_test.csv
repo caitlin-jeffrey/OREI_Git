@@ -1,0 +1,266 @@
+visit,Cow_ID,Quarter,IMI_species,SCC
+first,Big Red,LH,,10000
+first,Big Red,LF,,4000
+first,Big Red,RH,,10000
+first,Big Red,RF,,3000
+first,Zag,LH,Corynebacterium species,10000
+first,Zag,LF,Staph. species,15000
+first,Zag,RH,,3000
+first,Zag,RF,,7000
+first,Margo,LH,Staph. species,616000
+first,Margo,LF,,34000
+first,Margo,RH,,19000
+first,Margo,RF,,22000
+first,Lish,LH,Staph. species,26000
+first,Lish,LF,,40000
+first,Lish,RH,Staph. species,23000
+first,Lish,RF,,40000
+first,Echo,LH,Staph. species,118000
+first,Echo,LF,,106000
+first,Echo,RH,Staph. species,102000
+first,Echo,RF,Staph. species,573000
+first,Peaches,LH,Staph. species,192000
+first,Peaches,LF,,21000
+first,Peaches,RF,,21000
+first,Riley,LH,,78000
+first,Riley,LF,,35000
+first,Riley,RH,,87000
+first,Riley,RF,Staph. species,163000
+first,Pippa,LH,,68000
+first,Pippa,LF,Staph. species,100000
+first,Pippa,RH,,15000
+first,Pippa,RF,,2570000
+first,Lucinda,LH,,91000
+first,Lucinda,LF,,8000
+first,Lucinda,RH,,95000
+first,Lucinda,RF,,21000
+first,TeaTree,LH,,8000
+first,TeaTree,LF,,17000
+first,TeaTree,RH,,6000
+first,TeaTree,RF,,4000
+first,Robin,LH,,22000
+first,Robin,LF,,43000
+first,Robin,RH,,21000
+first,Robin,RF,,117000
+first,Ashley,LH,Staph. species,58000
+first,Ashley,LF,Staph. species,628000
+first,Ashley,RH,,16000
+first,Ashley,RF,,13000
+first,Abbazaba,LH,,7000
+first,Abbazaba,LF,,9000
+first,Abbazaba,RH,,4000
+first,Abbazaba,RF,,10000
+first,Charlotte,LH,,12000
+first,Charlotte,LF,Staph. aureus,94000
+first,Charlotte,RH,,302000
+first,Charlotte,RF,,16000
+first,Alaska,LH,,7000
+first,Alaska,LF,,5000
+first,Alaska,RH,,12000
+first,Alaska,RF,,21000
+first,Indigo,LH,,21000
+first,Indigo,LF,,17000
+first,Indigo,RH,,11000
+first,Indigo,RF,Sample contaminated,140000
+first,Wynona,LH,Staph. species,137000
+first,Wynona,LF,Staph. species,168000
+first,Wynona,RH,,35000
+first,Wynona,RF,,468000
+first,Octavia,LH,Staph. species,233000
+first,Octavia,LF,,11000
+first,Octavia,RH,Staph. species,79000
+first,Octavia,RF,,13000
+first,Doris,LH,,29000
+first,Doris,LF,Staph. species,259000
+first,Doris,RH,,29000
+first,Doris,RF,,1826000
+first,Peggie,LH,,52000
+first,Peggie,LF,,20000
+first,Peggie,RH,,24000
+first,Peggie,RF,,31000
+first,Italia,LH,,32000
+first,Italia,LF,,7000
+first,Italia,RH,,9000
+first,Italia,RF,Staph. aureus,247000
+first,Rashida,LH,Staph. species,310000
+first,Rashida,LF,Staph. species,2496000
+first,Rashida,RH,Staph. species,349000
+first,Rashida,RF,Staph. species,1120000
+first,Abbi,LH,,336000
+first,Abbi,LF,,127000
+first,Abbi,RH,,105000
+first,Abbi,RF,Corynebacterium species,78000
+first,Brandy,LH,,12000
+first,Brandy,LF,,62000
+first,Brandy,RH,,30000
+first,Brandy,RF,,409000
+first,Rhonda,LH,,62000
+first,Rhonda,LF,,88000
+first,Rhonda,RH,,29000
+first,Rhonda,RF,,40000
+first,Daisy,LH,,40000
+first,Daisy,LF,,53000
+first,Daisy,RH,,39000
+first,Daisy,RF,,40000
+first,Daryl,LH,,57000
+first,Daryl,LF,,22000
+first,Daryl,RH,,878000
+first,Daryl,RF,,52000
+first,Genie,LH,,34000
+first,Genie,LF,,16000
+first,Genie,RH,,39000
+first,Genie,RF,,84000
+first,Faith,LH,,78000
+first,Faith,LF,,440000
+first,Faith,RH,,82000
+first,Faith,RF,,96000
+first,Whopper,LH,,2200000
+first,Whopper,LF,,1159000
+first,Whopper,RH,,82000
+first,Whopper,RF,,156000
+first,Sally,LH,,12000
+first,Sally,LF,,13000
+first,Sally,RH,,8000
+first,Sally,RF,,12000
+first,Aubrey,LH,,32000
+first,Aubrey,LF,,18000
+first,Aubrey,RH,,46000
+first,Aubrey,RF,,5000
+first,Chelsea,LH,,11000
+first,Chelsea,LF,Unknown organism,135000
+first,Chelsea,RH,,32000
+first,Chelsea,RF,,10000
+first,Alexis,LH,,330000
+first,Alexis,LF,Staph. species,3003000
+first,Alexis,RH,,318000
+first,Alexis,RF,,715000
+first,Delilah,LH,,31000
+first,Delilah,LF,,12000
+first,Delilah,RH,,12000
+first,Delilah,RF,,11000
+second,Peaches,LH,Staph. species,240000
+second,Peaches,LF,,65000
+second,Peaches,RF,,77000
+second,Faith,LH,,5600000
+second,Faith,LF,Sample contaminated,1800000
+second,Faith,RH,Sample contaminated,1500000
+second,Faith,RF,Staph. species,1400000
+second,Pippa,LH,,160000
+second,Pippa,LF,Staph. species,500000
+second,Pippa,RH,,150000
+second,Pippa,RF,,2900000
+second,Wynona,LH,Staph. species,170000
+second,Wynona,LF,Staph. species,230000
+second,Wynona,RH,,53000
+second,Wynona,RF,Serratia,10000000
+second,Abbazaba,LH,,710000
+second,Abbazaba,LF,,470000
+second,Abbazaba,RH,,560000
+second,Abbazaba,RF,,420000
+second,Whopper,LH,,2600000
+second,Whopper,LF,,6900000
+second,Whopper,RH,,760000
+second,Whopper,RF,,1900000
+second,Big Red,LH,,41000
+second,Big Red,LF,,15000
+second,Big Red,RH,,45000
+second,Big Red,RF,,12000
+second,Margo,LH,Staph. species,770000
+second,Margo,LF,,73000
+second,Margo,RH,,68000
+second,Margo,RF,,44000
+second,Lish,LH,Staph. species,97000
+second,Lish,LF,,170000
+second,Lish,RH,Staph. species,60000
+second,Lish,RF,,78000
+second,TeaTree,LH,,14000
+second,TeaTree,LF,,41000
+second,TeaTree,RH,,7000
+second,TeaTree,RF,,6000
+second,Lucinda,LH,,220000
+second,Lucinda,LF,,33000
+second,Lucinda,RH,,280000
+second,Lucinda,RF,,78000
+second,Riley,LH,,140000
+second,Riley,LF,,81000
+second,Riley,RH,,220000
+second,Riley,RF,Staph. species,250000
+second,Peggie,LH,,29000
+second,Peggie,LF,,46000
+second,Peggie,RH,,47000
+second,Peggie,RF,,74000
+second,Echo,LH,Staph. species,260000
+second,Echo,LF,,420000
+second,Echo,RH,Staph. species,370000
+second,Echo,RF,,1400000
+second,Charlie,LH,,53000
+second,Charlie,LF,Staph. aureus,330000
+second,Charlie,RF,Sample contaminated,37000
+second,Alaska,LH,,29000
+second,Alaska,LF,,30000
+second,Alaska,RH,,21000
+second,Alaska,RF,,61000
+second,Sally,LH,,22000
+second,Sally,LF,,25000
+second,Sally,RH,,30000
+second,Sally,RF,,29000
+second,Brandy,LH,,29000
+second,Brandy,LF,,610000
+second,Brandy,RH,,110000
+second,Brandy,RF,,1400000
+second,Robin,LH,,40000
+second,Robin,LF,,37000
+second,Robin,RH,Staph. species,50000
+second,Robin,RF,Staph. species,120000
+second,Rashida,LH,Staph. species,690000
+second,Rashida,LF,Staph. species,3100000
+second,Rashida,RH,Staph. species,370000
+second,Rashida,RF,Staph. species,1300000
+second,Doris,LH,,140000
+second,Doris,LF,Staph. species,640000
+second,Doris,RH,,95000
+second,Doris,RF,,8400000
+second,Ashley,LH,Staph. species,280000
+second,Ashley,LF,Staph. species,560000
+second,Ashley,RH,,33000
+second,Ashley,RF,,41000
+second,Chelsea,LH,Staph. species,68000
+second,Chelsea,LF,Sample contaminated,200000
+second,Chelsea,RH,,76000
+second,Chelsea,RF,,40000
+second,Octavia,LH,Staph. species,340000
+second,Octavia,LF,,33000
+second,Octavia,RH,Staph. species,220000
+second,Octavia,RF,,22000
+second,Abbi,LH,,740000
+second,Abbi,LF,,170000
+second,Abbi,RH,,130000
+second,Abbi,RF,Sample contaminated,120000
+second,Rhonda,LH,,230000
+second,Rhonda,LF,,220000
+second,Rhonda,RH,,79000
+second,Rhonda,RF,,240000
+second,Aubrey,LH,,160000
+second,Aubrey,LF,,88000
+second,Aubrey,RH,,140000
+second,Aubrey,RF,,82000
+second,Daisy,LH,,93000
+second,Daisy,LF,Sample contaminated,170000
+second,Daisy,RH,,140000
+second,Daisy,RF,,130000
+second,Genie,LH,,20000
+second,Genie,LF,,12000
+second,Genie,RH,,16000
+second,Genie,RF,,62000
+second,Daryl,LH,,250000
+second,Daryl,LF,,130000
+second,Daryl,RH,,5100000
+second,Daryl,RF,,260000
+second,Alexis,LH,Sample contaminated,800000
+second,Alexis,LF,,1300000
+second,Alexis,RH,Staph. species,760000
+second,Alexis,RF,Staph. species,6100000
+second,Delilah,LH,,180000
+second,Delilah,LF,,17000
+second,Delilah,RH,,14000
+second,Delilah,RF,,14000

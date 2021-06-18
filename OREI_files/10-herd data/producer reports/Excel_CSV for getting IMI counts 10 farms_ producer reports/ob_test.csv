@@ -1,0 +1,433 @@
+visit,Cow_ID,Quarter,IMI_species,SCC
+first,Easter,LH,,10000
+first,Easter,LF,,2000
+first,Easter,RH,,2000
+first,Easter,RF,Staph. aureus,4900000
+first,Kit,LH,Staph. species,290000
+first,Kit,LF,,29000
+first,Kit,RH,,12000
+first,Kit,RF,,14000
+first,Maxie,LH,,71000
+first,Maxie,LF,,11000
+first,Maxie,RH,,140000
+first,Maxie,RF,,24000
+first,Aloha,LH,Staph. species,550000
+first,Aloha,LF,,11000
+first,Aloha,RH,,4000
+first,Aloha,RF,,2000
+first,Teach,LH,,6000
+first,Teach,LF,,4000
+first,Teach,RH,,4000
+first,Teach,RF,,7000
+first,PG,LH,,13000
+first,PG,LF,,16000
+first,PG,RH,,15000
+first,PG,RF,,15000
+first,Rabbit,LH,,5000
+first,Rabbit,LF,,4000
+first,Rabbit,RH,,6000
+first,Rabbit,RF,Staph. species,300000
+first,Izzie,LH,,7000
+first,Izzie,LF,,2000
+first,Izzie,RH,Strep. species,2000
+first,Izzie,RF,,2000
+first,Goody,LH,Staph. species,300000
+first,Goody,LF,Staph. species,540000
+first,Goody,RH,,84000
+first,Goody,RF,Blind quarter,Not Analyzed
+first,Korny,LH,"Staph. species, Strep. species",120000
+first,Korny,LF,Staph. species,210000
+first,Korny,RH,Staph. species,33000
+first,Korny,RF,Staph. species,130000
+first,Racer,LH,Staph. species,370000
+first,Racer,LF,,18000
+first,Racer,RH,,10000
+first,Racer,RF,Staph. species,250000
+first,Bella,LH,,15000
+first,Bella,LF,,12000
+first,Bella,RH,,16000
+first,Bella,RF,,34000
+first,Tess,LH,,2000
+first,Tess,LF,,2000
+first,Tess,RH,,2000
+first,Tess,RF,,0
+first,Peonie,LH,,8000
+first,Peonie,LF,,8000
+first,Peonie,RH,"Corynebacterium species, Strep. species",8000
+first,Peonie,RF,Sample contaminated,54000
+first,Jersey,LH,"Strep. species, Corynebacterium species",130000
+first,Jersey,LF,Staph. aureus,610000
+first,Jersey,RH,,15000
+first,Jersey,RF,,4000
+first,Kandykorn,LH,,10000
+first,Kandykorn,LF,Staph. species,43000
+first,Kandykorn,RH,,7000
+first,Kandykorn,RF,Blind quarter,Not Analyzed
+first,Lemon,LH,,38000
+first,Lemon,LF,,34000
+first,Lemon,RH,,27000
+first,Lemon,RF,,31000
+first,Butterfly,LH,,7000
+first,Butterfly,LF,,4000
+first,Butterfly,RH,,21000
+first,Butterfly,RF,Staph. species,300000
+first,Karla,LH,"Strep. species, Staph. species",130000
+first,Karla,LF,,8000
+first,Karla,RH,Staph. species,570000
+first,Karla,RF,,17000
+first,Jenny,LH,Strep. species,750000
+first,Jenny,LF,,20000
+first,Jenny,RH,,5000
+first,Jenny,RF,Strep. species,86000
+first,Pistol,LH,,8000
+first,Pistol,LF,Blind quarter,Not Analyzed
+first,Pistol,RH,,4000
+first,Pistol,RF,,4000
+first,MsChar,LH,Staph. species,71000
+first,MsChar,LF,,5000
+first,MsChar,RH,,26000
+first,MsChar,RF,,4000
+first,Spice,LH,Staph. species,34000
+first,Spice,LF,Staph. species,900000
+first,Spice,RH,,43000
+first,Spice,RF,,24000
+first,Alf,LH,Blind quarter,Not Analyzed
+first,Alf,LF,,13000
+first,Alf,RH,,2000
+first,Alf,RF,Staph. species,450000
+first,Spot,LH,,10000
+first,Spot,LF,Sample contaminated,0
+first,Spot,RH,,2000
+first,Spot,RF,,2000
+first,Whinnie,LH,,15000
+first,Whinnie,LF,,6000
+first,Whinnie,RH,,33000
+first,Whinnie,RF,,22000
+first,Bullet,LH,,4000
+first,Bullet,LF,,4000
+first,Bullet,RH,,2000
+first,Bullet,RF,,3000
+first,Tiktac,LH,,2000
+first,Tiktac,LF,Blind quarter,Not Analyzed
+first,Tiktac,RH,"Strep. species, Staph. species",210000
+first,Tiktac,RF,Staph. aureus,220000
+first,Penny,LH,,6000
+first,Penny,LF,,0
+first,Penny,RH,,2000
+first,Penny,RF,Corynebacterium species,2000
+first,Butter ,LH,,8000
+first,Butter ,LF,,15000
+first,Butter ,RH,,9000
+first,Butter ,RF,,17000
+first,Honey,LH,,29000
+first,Honey,LF,,8000
+first,Honey,RH,,27000
+first,Honey,RF,Staph. aureus,380000
+first,Tiktoe,LH,Staph. species,110000
+first,Tiktoe,LF,Staph. species,61000
+first,Tiktoe,RH,Strep. species,1200000
+first,Tiktoe,RF,Staph. species,160000
+first,Peacock,LH,Staph. species,240000
+first,Peacock,LF,Staph. species,770000
+first,Peacock,RH,,20000
+first,Peacock,RF,,6000
+first,ApplePie,LH,Blind quarter,Not Analyzed
+first,ApplePie,LF,Staph. species,810000
+first,ApplePie,RH,Staph. species,130000
+first,ApplePie,RF,"Staph. species, Strep. species",1200000
+first,Katie,LH,Staph. species,180000
+first,Katie,LF,Blind quarter,Not Analyzed
+first,Katie,RH,,5000
+first,Katie,RF,,380000
+first,Ginger,LH,Staph. aureus,18000000
+first,Ginger,LF,,310000
+first,Ginger,RH,Staph. species,1400000
+first,Ginger,RF,,27000
+second,Easter,LH,,17000
+second,Easter,LF,,7000
+second,Easter,RH,,7000
+second,Easter,RF,Staph. aureus,1900000
+second,Aloha,LH,Staph. species,2600000
+second,Aloha,LF,,51000
+second,Aloha,RH,Staph. species,10000
+second,Aloha,RF,,6000
+second,Kit,LH,Staph. species,320000
+second,Kit,LF,,71000
+second,Kit,RH,,41000
+second,Kit,RF,,33000
+second,Teach,LH,,9000
+second,Teach,LF,Corynebacterium species,6000
+second,Teach,RH,,4000
+second,Teach,RF,,4000
+second,Rabbit,LH,,6000
+second,Rabbit,LF,,4000
+second,Rabbit,RH,,6000
+second,Rabbit,RF,Staph. species,300000
+second,Maxie,LH,,110000
+second,Maxie,LF,,13000
+second,Maxie,RH,,94000
+second,Maxie,RF,,13000
+second,PG,LH,,57000
+second,PG,LF,,58000
+second,PG,RH,,57000
+second,PG,RF,,62000
+second,Izzie,LH,,6000
+second,Izzie,LF,,8000
+second,Izzie,RH,,3000
+second,Izzie,RF,,9000
+second,Goody,LH,Staph. species,520000
+second,Goody,LF,Staph. species,580000
+second,Goody,RH,,200000
+second,Goody,RF,Blind quarter,Not analyzed
+second,Tess,LH,,2000
+second,Tess,LF,,2000
+second,Tess,RH,,0
+second,Tess,RF,,3000
+second,Korny,LH,"Strep. species, Staph. species",180000
+second,Korny,LF,Staph. species,230000
+second,Korny,RH,Staph. species,43000
+second,Korny,RF,Staph. species,90000
+second,Bella,LH,,40000
+second,Bella,LF,,33000
+second,Bella,RH,,31000
+second,Bella,RF,,39000
+second,Racer,LH,Staph. species,630000
+second,Racer,LF,,29000
+second,Racer,RH,,12000
+second,Racer,RF,Staph. species,150000
+second,Kandykorn,LH,,31000
+second,Kandykorn,LF,Staph. species,110000
+second,Kandykorn,RH,Sample contaminated,9000
+second,Kandykorn,RF,Blind quarter,Not analyzed
+second,Peonie,LH,,13000
+second,Peonie,LF,,6000
+second,Peonie,RH,Sample contaminated,9000
+second,Peonie,RF,Staph. species,240000
+second,Jersey,LH,,9000
+second,Jersey,LF,Staph. aureus,670000
+second,Jersey,RH,"Strep. species, Corynebacterium species",61000
+second,Jersey,RF,,8000
+second,MsChar,LH,Staph. species,170000
+second,MsChar,LF,,28000
+second,MsChar,RH,,75000
+second,MsChar,RF,,19000
+second,Karla,LH,Staph. species,310000
+second,Karla,LF,,13000
+second,Karla,RH,"Strep. species, Staph. species",110000
+second,Karla,RF,,11000
+second,Lemon,LH,Corynebacterium species,9000
+second,Lemon,LF,,5000
+second,Lemon,RH,Corynebacterium species,10000
+second,Lemon,RF,,2000
+second,Butterfly,LH,,14000
+second,Butterfly,LF,,23000
+second,Butterfly,RH,,39000
+second,Butterfly,RF,Staph. species,240000
+second,Spice,LH,,42000
+second,Spice,LF,Staph. species,960000
+second,Spice,RH,,66000
+second,Spice,RF,,33000
+second,Jenny,LH,No sample,Not analyzed
+second,Jenny,LF,No sample,Not analyzed
+second,Jenny,RH,No sample,Not analyzed
+second,Jenny,RF,No sample,Not analyzed
+second,Gold,LH,,15000
+second,Gold,LF,,9000
+second,Gold,RH,Staph. aureus,2700000
+second,Gold,RF,,57000
+second,Alf,LH,Blind quarter,Not analyzed
+second,Alf,LF,,130000
+second,Alf,RH,,42000
+second,Alf,RF,Staph. species,1000000
+second,Tiktac,LH,,39000
+second,Tiktac,LF,Blind quarter,Not analyzed
+second,Tiktac,RH,,510000
+second,Tiktac,RF,,1600000
+second,Whinnie,LH,,66000
+second,Whinnie,LF,,21000
+second,Whinnie,RH,,35000
+second,Whinnie,RF,,19000
+second,Pistol,LH,,4000
+second,Pistol,LF,Blind quarter,Not analyzed
+second,Pistol,RH,"Strep. species, Staph. species",260000
+second,Pistol,RF,Staph. aureus,11000
+second,Spot,LH,,6000
+second,Spot,LF,,4000
+second,Spot,RH,,9000
+second,Spot,RF,,12000
+second,Honey,LH,Staph. species,78000
+second,Honey,LF,,26000
+second,Honey,RH,,76000
+second,Honey,RF,Staph. aureus,360000
+second,Bullet,LH,,26000
+second,Bullet,LF,,8000
+second,Bullet,RH,,15000
+second,Bullet,RF,,8000
+second,Butter,LH,,6000
+second,Butter,LF,,2000
+second,Butter,RH,,12000
+second,Butter,RF,,15000
+second,Penny,LH,,0
+second,Penny,LF,,4000
+second,Penny,RH,,3000
+second,Penny,RF,,2000
+second,Tiktoe,LH,Staph. species,77000
+second,Tiktoe,LF,Staph. species,33000
+second,Tiktoe,RH,Strep. species,130000
+second,Tiktoe,RF,Staph. species,110000
+second,Ginger,LH,Blind quarter,Not analyzed
+second,Ginger,LF,,2000
+second,Ginger,RH,Staph. species,230000
+second,Ginger,RF,,16000
+second,Katie,LH,Staph. species,190000
+second,Katie,LF,Strep. species,3500000
+second,Katie,RH,,140000
+second,Katie,RF,Blind quarter,Not analyzed
+second,ApplePie,LH,Blind quarter,Not analyzed
+second,ApplePie,LF,Staph. species,630000
+second,ApplePie,RH,Staph. species,99000
+second,ApplePie,RF,"Strep. species, Staph. species",1200000
+second,Peacock,LH,Staph. species,580000
+second,Peacock,LF,Staph. species,1400000
+second,Peacock,RH,,53000
+second,Peacock,RF,,490000
+third,Rabbit,LH,,16000
+third,Rabbit,LF,,0
+third,Rabbit,RH,,0
+third,Rabbit,RF,Staph. species,28000
+third,Aloha,LH,Staph. species,130000
+third,Aloha,LF,,6000
+third,Aloha,RH,,2000
+third,Aloha,RF,,3000
+third,Teach,LH,,2000
+third,Teach,LF,,0
+third,Teach,RH,,0
+third,Teach,RF,,0
+third,PG,LH,,6000
+third,PG,LF,,12000
+third,PG,RH,,9000
+third,PG,RF,,6000
+third,Kit,LH,Staph. species,120000
+third,Kit,LF,,42000
+third,Kit,RH,,31000
+third,Kit,RF,,12000
+third,Korny,LH,"Staph. species, Strep. species",20000
+third,Korny,LF,Staph. species,28000
+third,Korny,RH,Staph. species,8000
+third,Korny,RF,Staph. species,13000
+third,Grape,LH,,2000
+third,Grape,LF,Staph. species,28000
+third,Grape,RH,Staph. species,20000
+third,Grape,RF,Staph. species,71000
+third,Jersey,LH,,3000
+third,Jersey,LF,Staph. aureus,84000
+third,Jersey,RH,Strep. species,5000
+third,Jersey,RF,,0
+third,Ruger,LH,Strep. species,310000
+third,Ruger,LF,,92000
+third,Ruger,RH,,8000
+third,Ruger,RF,Staph. species,3000
+third,Goody,LH,Staph. species,100000
+third,Goody,LF,Staph. species,300000
+third,Goody,RH,,37000
+third,Goody,RF,Blind quarter,Not analyzed
+third,Izzie,LH,,0
+third,Izzie,LF,Other Gram-postive bacteria,2000
+third,Izzie,RH,,0
+third,Izzie,RF,,0
+third,Tess,LH,,0
+third,Tess,LF,,0
+third,Tess,RH,,0
+third,Tess,RF,,0
+third,Racer,LH,Staph. species,250000
+third,Racer,LF,,24000
+third,Racer,RH,,5000
+third,Racer,RF,Staph. species,40000
+third,Peonie,LH,,7000
+third,Peonie,LF,,0
+third,Peonie,RH,Staph. species,4000
+third,Peonie,RF,Staph. species,20000
+third,Butterfly,LH,,6000
+third,Butterfly,LF,,4000
+third,Butterfly,RH,,8000
+third,Butterfly,RF,Staph. species,50000
+third,Kandykorn,LH,,9000
+third,Kandykorn,LF,Staph. species,29000
+third,Kandykorn,RH,,3000
+third,Kandykorn,RF,Blind quarter,Not analyzed
+third,Kooper,LH,Staph. species,43000
+third,Kooper,LF,Staph. species,13000
+third,Kooper,RH,Sample contaminated,30000
+third,Kooper,RF,Blind quarter,Not analyzed
+third,Lemon,LH,,0
+third,Lemon,LF,,0
+third,Lemon,RH,,0
+third,Lemon,RF,,0
+third,MsChar,LH,Staph. species,160000
+third,MsChar,LF,,84000
+third,MsChar,RH,,1100000
+third,MsChar,RF,,70000
+third,Karla,LH,Staph. species,70000
+third,Karla,LF,,4000
+third,Karla,RH,"Staph. species, Strep. species",29000
+third,Karla,RF,,8000
+third,Spice,LH,,8000
+third,Spice,LF,Staph. species,63000
+third,Spice,RH,Corynebacterium species,12000
+third,Spice,RF,Corynebacterium species,3000
+third,Alf,LH,Blind quarter,Not analyzed
+third,Alf,LF,,49000
+third,Alf,RH,,33000
+third,Alf,RF,Staph. species,410000
+third,Gold,LH,,23000
+third,Gold,LF,,0
+third,Gold,RH,Staph. aureus,330000
+third,Gold,RF,,24000
+third,Jenny,LH,"Strep. species, Staph. species",200000
+third,Jenny,LF,,9000
+third,Jenny,RH,,3000
+third,Jenny,RF,Strep. species,33000
+third,Tiktac,LH,,9000
+third,Tiktac,LF,Blind quarter,Not analyzed
+third,Tiktac,RH,"Staph. species, Strep. species",530000
+third,Tiktac,RF,Staph. aureus,620000
+third,Whinnie,LH,,43000
+third,Whinnie,LF,,5000
+third,Whinnie,RH,,10000
+third,Whinnie,RF,,9000
+third,Bullet,LH,,4000
+third,Bullet,LF,,0
+third,Bullet,RH,,0
+third,Bullet,RF,,0
+third,Spot,LH,,2000
+third,Spot,LF,,0
+third,Spot,RH,,0
+third,Spot,RF,,0
+third,Honey,LH,,15000
+third,Honey,LF,,11000
+third,Honey,RH,,9000
+third,Honey,RF,Staph. aureus,97000
+third,Butter,LH,,7000
+third,Butter,LF,,2000
+third,Butter,RH,,2000
+third,Butter,RF,,0
+third,Pistol,LH,,2000
+third,Pistol,LF,Blind quarter,Not analyzed
+third,Pistol,RH,,4000
+third,Pistol,RF,,1200000
+third,Penny,LH,,150000
+third,Penny,LF,Staph. species,22000
+third,Penny,RH,,4000
+third,Penny,RF,,0
+third,Tiktoe,LH,Staph. species,19000
+third,Tiktoe,LF,Staph. species,20000
+third,Tiktoe,RH,Strep. species,25000
+third,Tiktoe,RF,Staph. species,12000
+third,Ginger,LH,Blind quarter,Not analyzed
+third,Ginger,LF,,0
+third,Ginger,RH,,1700000
+third,Ginger,RF,,350000
+third,Katie,LH,Staph. species,110000
+third,Katie,LF,Blind quarter,Not analyzed
+third,Katie,RH,,41000
+third,Katie,RF,Blind quarter,Not analyzed

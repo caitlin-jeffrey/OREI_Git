@@ -1,0 +1,425 @@
+visit,Cow_ID,Quarter,IMI_species,SCC
+first,Pledge,LH,Strep. species,4000
+first,Pledge,LF,Staph. species,87000
+first,Pledge,RH,Staph. species,59000
+first,Pledge,RF,Staph. species,172000
+first,Shelly,LH,,57000
+first,Shelly,LF,,40000
+first,Shelly,RH,,58000
+first,Shelly,RF,,134000
+first,Picknick,LH,,4000
+first,Picknick,LF,,3000
+first,Picknick,RH,,3000
+first,Picknick,RF,,2000
+first,DeeDee,LH,,31000
+first,DeeDee,LF,,5000
+first,DeeDee,RH,Strep. species,50000
+first,DeeDee,RF,,26000
+first,Sparky,LH,,8000
+first,Sparky,LF,,8000
+first,Sparky,RH,,8000
+first,Sparky,RF,,6000
+first,Denise,LH,Sample contaminated,131000
+first,Denise,LF,,23000
+first,Denise,RH,,22000
+first,Denise,RF,Staph. species,139000
+first,Skyler,LH,,3000
+first,Skyler,LF,,2000
+first,Skyler,RH,,4000
+first,Skyler,RF,Staph. species,0
+first,Cambric,LH,Staph. species,36000
+first,Cambric,LF,,2000
+first,Cambric,RH,Sample contaminated,64000
+first,Cambric,RF,,3000
+first,Diane,LH,,2000
+first,Diane,LF,,13000
+first,Diane,RH,,2000
+first,Diane,RF,Staph. species,3000
+first,Gretchen,LH,,8000
+first,Gretchen,LF,,60000
+first,Gretchen,RH,,16000
+first,Gretchen,RF,,14000
+first,Paige,LH,Sample contaminated,56000
+first,Paige,LF,,9000
+first,Paige,RH,Staph. species,55000
+first,Paige,RF,,17000
+first,Denver,LH,,6000
+first,Denver,LF,"Staph. species, Strep. species",153000
+first,Denver,RH,Staph. species,103000
+first,Denver,RF,,7000
+first,Dorian,LH,Sample contaminated,26000
+first,Dorian,LF,Sample contaminated,43000
+first,Dorian,RH,,28000
+first,Dorian,RF,Strep. species,9000
+first,Quantum,LH,,6000
+first,Quantum,LF,Staph. species,15000
+first,Quantum,RH,,10000
+first,Quantum,RF,,9000
+first,Goldie,LH,"Staph. species, Strep. species",66000
+first,Goldie,LF,Staph. species,157000
+first,Goldie,RH,"Staph. species, Strep. species",73000
+first,Goldie,RF,,46000
+first,Jazz,LH,,6000
+first,Jazz,LF,,5000
+first,Jazz,RH,,6000
+first,Jazz,RF,,5000
+first,Sondra,LH,Sample contaminated,82000
+first,Sondra,LF,Sample contaminated,177000
+first,Sondra,RH,Sample contaminated,26000
+first,Sondra,RF,,47000
+first,Halo,LH,,5000
+first,Halo,LF,,6000
+first,Halo,RH,,8000
+first,Halo,RF,,9000
+first,Sonic,LH,,6000
+first,Sonic,LF,,14000
+first,Sonic,RH,,9000
+first,Sonic,RF,,9000
+first,Sadie,LH,,5000
+first,Sadie,LF,Strep. species,12000
+first,Sadie,RH,,4000
+first,Sadie,RF,,3000
+first,Pasta,LH,,21000
+first,Pasta,LF,Staph. species,78000
+first,Pasta,RH,,16000
+first,Pasta,RF,,16000
+first,Pamela,LH,,2000
+first,Pamela,LF,,8000
+first,Pamela,RH,,3000
+first,Pamela,RF,,5000
+first,Rock7,LH,,6000
+first,Rock7,LF,,8000
+first,Rock7,RH,,9000
+first,Rock7,RF,,7000
+first,Flossy,LH,Staph. species,86000
+first,Flossy,LF,Sample contaminated,11000
+first,Flossy,RH,,3000
+first,Flossy,RF,,4000
+first,Zap,LH,,10000
+first,Zap,LF,,22000
+first,Zap,RH,,12000
+first,Zap,RF,,11000
+first,Amber,LH,Staph. species,57000
+first,Amber,LF,,10000
+first,Amber,RH,,5000
+first,Amber,RF,,8000
+first,Marshmellow,LH,"Staph. species, Strep. species",120000
+first,Marshmellow,LF,Staph. species,61000
+first,Marshmellow,RH,Strep. species,725000
+first,Marshmellow,RF,Staph. species,98000
+first,Zeal,LH,,2594000
+first,Zeal,LF,,238000
+first,Zeal,RH,,1230000
+first,Zeal,RF,Staph. aureus,919000
+first,Ferris,LH,,63000
+first,Ferris,LF,,7000
+first,Ferris,RH,,83000
+first,Ferris,RF,,24000
+first,Cassia,LH,Staph. species,51000
+first,Cassia,LF,,139000
+first,Cassia,RH,Staph. species,24000
+first,Cassia,RF,,9000
+first,Jewel,LH,Staph. species,11000
+first,Jewel,LF,,0
+first,Jewel,RH,,5000
+first,Jewel,RF,,3000
+first,Debutant,LH,,20000
+first,Debutant,LF,,35000
+first,Debutant,RH,,250000
+first,Debutant,RF,,0
+first,Marta,LH,,2000
+first,Marta,LF,,3000
+first,Marta,RH,,102000
+first,Marta,RF,,56000
+first,Mabel,LH,Strep. species,1776000
+first,Mabel,LF,Staph. species,60000
+first,Mabel,RH,Sample contaminated,9000
+first,Mabel,RF,,281000
+first,Maisie,LH,,24000
+first,Maisie,LF,,20000
+first,Maisie,RH,Staph. species,16000
+first,Maisie,RF,,16000
+second,Picknick,LH,,2000
+second,Picknick,LF,,3000
+second,Picknick,RH,,2000
+second,Picknick,RF,,2000
+second,Diane,LH,,15000
+second,Diane,LF,,25000
+second,Diane,RH,,8000
+second,Diane,RF,,9000
+second,Zap,LH,,34000
+second,Zap,LF,,4200000
+second,Zap,RH,,120000
+second,Zap,RF,,37000
+second,Sparky,LH,,11000
+second,Sparky,LF,,11000
+second,Sparky,RH,,8000
+second,Sparky,RF,,6000
+second,29,LH,Sample contaminated,35000
+second,29,LF,Strep. species,830000
+second,29,RH,,150000
+second,29,RF,"Staph. species, Strep. species",760000
+second,Goldie,LH,"Staph. species, Strep. species",110000
+second,Goldie,LF,Staph. species,45000
+second,Goldie,RH,"Staph. species, Strep. species",58000
+second,Goldie,RF,,8000
+second,Paige,LH,Staph. species,24000
+second,Paige,LF,,23000
+second,Paige,RH,Staph. species,89000
+second,Paige,RF,,21000
+second,Marshmellow,LH,Strep. species,95000
+second,Marshmellow,LF,Staph. species,220000
+second,Marshmellow,RH,"Staph. species, Strep. species",110000
+second,Marshmellow,RF,Staph. species,150000
+second,Casbah,LH,,9000
+second,Casbah,LF,,4000
+second,Casbah,RH,,3000
+second,Casbah,RF,,7000
+second,Flossy,LH,Staph. species,420000
+second,Flossy,LF,,12000
+second,Flossy,RH,,4000
+second,Flossy,RF,,6000
+second,Amber,LH,Staph. species,110000
+second,Amber,LF,,13000
+second,Amber,RH,,8000
+second,Amber,RF,,6000
+second,Gretchen,LH,,4000
+second,Gretchen,LF,,25000
+second,Gretchen,RH,,6000
+second,Gretchen,RF,,8000
+second,Maisie,LH,,3000
+second,Maisie,LF,,11000
+second,Maisie,RH,,3000
+second,Maisie,RF,,5000
+second,Cambric,LH,Staph. species,200000
+second,Cambric,LF,,9000
+second,Cambric,RH,Staph. species,400000
+second,Cambric,RF,,13000
+second,Quantum,LH,,5000
+second,Quantum,LF,Staph. species,52000
+second,Quantum,RH,,6000
+second,Quantum,RF,,7000
+second,Shelly,LH,,12000
+second,Shelly,LF,,8000
+second,Shelly,RH,,9000
+second,Shelly,RF,,23000
+second,Rock7,LH,,3000
+second,Rock7,LF,,7000
+second,Rock7,RH,,3000
+second,Rock7,RF,,4000
+second,Marta,LH,,9000
+second,Marta,LF,,79000
+second,Marta,RH,,20000
+second,Marta,RF,,6000
+second,Dorian,LH,Staph. species,74000
+second,Dorian,LF,,84000
+second,Dorian,RH,,24000
+second,Dorian,RF,,19000
+second,Pasta,LH,,2000
+second,Pasta,LF,Staph. species,83000
+second,Pasta,RH,,6000
+second,Pasta,RF,,18000
+second,Denise,LH,,68000
+second,Denise,LF,Staph. species,250000
+second,Denise,RH,Staph. species,130000
+second,Denise,RF,,35000
+second,Skyler,LH,,7000
+second,Skyler,LF,,2000
+second,Skyler,RH,,0
+second,Skyler,RF,,0
+second,Pamela,LH,,5000
+second,Pamela,LF,,4000
+second,Pamela,RH,,4000
+second,Pamela,RF,,5000
+second,Halo,LH,,4000
+second,Halo,LF,,12000
+second,Halo,RH,,0
+second,Halo,RF,,6000
+second,Debutant,LH,,2000
+second,Debutant,LF,,0
+second,Debutant,RH,,2000
+second,Debutant,RF,,2000
+second,Ferris,LH,,34000
+second,Ferris,LF,,36000
+second,Ferris,RH,,26000
+second,Ferris,RF,,30000
+second,Jazz,LH,Corynebacterium species,1200000
+second,Jazz,LF,,26000
+second,Jazz,RH,,4000
+second,Jazz,RF,,2000
+second,Sondra,LH,,26000
+second,Sondra,LF,"Strep. species, Staph. species",89000
+second,Sondra,RH,,8000
+second,Sondra,RF,,170000
+second,Denver,LH,,5000
+second,Denver,LF,"Staph. species, Strep. species",160000
+second,Denver,RH,Staph. species,68000
+second,Denver,RF,,2000
+second,Sonic,LH,,3000
+second,Sonic,LF,,5000
+second,Sonic,RH,,4000
+second,Sonic,RF,,6000
+second,Cassia,LH,Staph. species,220000
+second,Cassia,LF,,75000
+second,Cassia,RH,Staph. species,1300000
+second,Cassia,RF,,29000
+second,Pledge,LH,,2000
+second,Pledge,LF,Staph. species,230000
+second,Pledge,RH,Staph. species,84000
+second,Pledge,RF,Staph. species,140000
+second,Opal,LH,,0
+second,Opal,LF,,3000
+second,Opal,RH,,0
+second,Opal,RF,,9000
+second,Jewel,LH,,2000
+second,Jewel,LF,,2000
+second,Jewel,RH,Staph. species,24000
+second,Jewel,RF,,160000
+second,Gigi,LH,,12000
+second,Gigi,LF,,5000
+second,Gigi,RH,Staph. aureus,1100000
+second,Gigi,RF,,26000
+second,DeeDee,LH,,23000
+second,DeeDee,LF,,17000
+second,DeeDee,RH,,400000
+second,DeeDee,RF,,30000
+third,Sparky,LH,,12000
+third,Sparky,LF,,12000
+third,Sparky,RH,,10000
+third,Sparky,RF,,7000
+third,Diane,LH,,47000
+third,Diane,LF,,60000
+third,Diane,RH,,60000
+third,Diane,RF,,33000
+third,Quantum,LH,,96000
+third,Quantum,LF,Staph. species,480000
+third,Quantum,RH,,140000
+third,Quantum,RF,,150000
+third,Pasta,LH,,20000
+third,Pasta,LF,Staph. species,500000
+third,Pasta,RH,,13000
+third,Pasta,RF,,3000
+third,Paige,LH,Staph. species,120000
+third,Paige,LF,,6000
+third,Paige,RH,Staph. species,120000
+third,Paige,RF,,8000
+third,Dorian,LH,Staph. species,100000
+third,Dorian,LF,,15000
+third,Dorian,RH,,29000
+third,Dorian,RF,,10000
+third,Picknick,LH,,4000
+third,Picknick,LF,,4000
+third,Picknick,RH,,3000
+third,Picknick,RF,,6000
+third,Casbah,LH,,6000
+third,Casbah,LF,,3000
+third,Casbah,RH,,3000
+third,Casbah,RF,,0
+third,29,LH,,250000
+third,29,LF,Strep. species,1800000
+third,29,RH,,490000
+third,29,RF,"Strep. species, Staph. species",1800000
+third,Debutant,LH,Sample contaminated,39000
+third,Debutant,LF,Sample contaminated,5000
+third,Debutant,RH,,2000
+third,Debutant,RF,,4000
+third,Pledge,LH,,2000
+third,Pledge,LF,Staph. species,410000
+third,Pledge,RH,Staph. species,180000
+third,Pledge,RF,Staph. species,440000
+third,Maisie,LH,,13000
+third,Maisie,LF,,7000
+third,Maisie,RH,Strep. species,3000
+third,Maisie,RF,,11000
+third,Amber,LH,Staph. species,140000
+third,Amber,LF,,15000
+third,Amber,RH,,8000
+third,Amber,RF,,7000
+third,Gretchen,LH,,0
+third,Gretchen,LF,,17000
+third,Gretchen,RH,,7000
+third,Gretchen,RF,,10000
+third,DeeDee,LH,,39000
+third,DeeDee,LF,,21000
+third,DeeDee,RH,,120000
+third,DeeDee,RF,,19000
+third,Jazz,LH,Other Gram-positive bacteria,2200000
+third,Jazz,LF,,40000
+third,Jazz,RH,,5000
+third,Jazz,RF,,6000
+third,Cambric,LH,Staph. species,76000
+third,Cambric,LF,,4000
+third,Cambric,RH,,53000
+third,Cambric,RF,,7000
+third,Shelly,LH,,19000
+third,Shelly,LF,,15000
+third,Shelly,RH,,10000
+third,Shelly,RF,,30000
+third,Ferris,LH,,25000
+third,Ferris,LF,,22000
+third,Ferris,RH,,27000
+third,Ferris,RF,,40000
+third,Sondra,LH,,17000
+third,Sondra,LF,"Strep. species, Staph. species",87000
+third,Sondra,RH,"Strep. species, Corynebacterium species",7000
+third,Sondra,RF,"Strep. species, Staph. species",94000
+third,Marshmellow,LH,Strep. species,120000
+third,Marshmellow,LF,Staph. species,180000
+third,Marshmellow,RH,Strep. species,90000
+third,Marshmellow,RF,Staph. species,270000
+third,Denise,LH,,29000
+third,Denise,LF,Staph. species,150000
+third,Denise,RH,Staph. species,87000
+third,Denise,RF,,28000
+third,Flossy,LH,,590000
+third,Flossy,LF,,20000
+third,Flossy,RH,,6000
+third,Flossy,RF,,5000
+third,Pamela,LH,,6000
+third,Pamela,LF,,10000
+third,Pamela,RH,,7000
+third,Pamela,RF,,5000
+third,Jewel,LH,Staph. species,33000
+third,Jewel,LF,,2000
+third,Jewel,RH,,0
+third,Jewel,RF,,0
+third,Marta,LH,,17000
+third,Marta,LF,,90000
+third,Marta,RH,,15000
+third,Marta,RF,,9000
+third,Halo,LH,,0
+third,Halo,LF,,3000
+third,Halo,RH,,4000
+third,Halo,RF,,2000
+third,Rock7,LH,,3000
+third,Rock7,LF,,6000
+third,Rock7,RH,,3000
+third,Rock7,RF,,5000
+third,Denver,LH,,4000
+third,Denver,LF,"Strep. species, Staph. species",380000
+third,Denver,RH,Staph. species,92000
+third,Denver,RF,,5000
+third,Opal,LH,,0
+third,Opal,LF,,2000
+third,Opal,RH,,0
+third,Opal,RF,,4000
+third,Gigi,LH,,4000
+third,Gigi,LF,,8000
+third,Gigi,RH,Staph. aureus,3000000
+third,Gigi,RF,,58000
+third,Sonic,LH,,4000
+third,Sonic,LF,,5000
+third,Sonic,RH,,5000
+third,Sonic,RF,,6000
+third,Goldie,LH,Sample contaminated,130000
+third,Goldie,LF,Staph. species,59000
+third,Goldie,RH,Sample contaminated,200000
+third,Goldie,RF,,14000
+third,Cassia,LH,Staph. species,1000000
+third,Cassia,LF,,240000
+third,Cassia,RH,Staph. species,750000
+third,Cassia,RF,,27000
+third,Skyler,LH,Staph. species,3000
+third,Skyler,LF,,2000
+third,Skyler,RH,,14000
+third,Skyler,RF,,0

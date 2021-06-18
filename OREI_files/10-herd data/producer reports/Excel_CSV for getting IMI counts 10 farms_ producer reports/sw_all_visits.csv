@@ -1,0 +1,157 @@
+"","cow_id","quarter","first_IMI_species","first_SCC","second_IMI_species","second_SCC","third_IMI_species","third_SCC"
+"1","29","LF",NA,NA,"Strep. species",830000,"Strep. species",1800000
+"2","29","LH",NA,NA,"Sample contaminated",35000,"",250000
+"3","29","RF",NA,NA,"Staph. species, Strep. species",760000,"Strep. species, Staph. species",1800000
+"4","29","RH",NA,NA,"",150000,"",490000
+"5","Amber","LF","",10000,"",13000,"",15000
+"6","Amber","LH","Staph. species",57000,"Staph. species",110000,"Staph. species",140000
+"7","Amber","RF","",8000,"",6000,"",7000
+"8","Amber","RH","",5000,"",8000,"",8000
+"9","Cambric","LF","",2000,"",9000,"",4000
+"10","Cambric","LH","Staph. species",36000,"Staph. species",200000,"Staph. species",76000
+"11","Cambric","RF","",3000,"",13000,"",7000
+"12","Cambric","RH","Sample contaminated",64000,"Staph. species",400000,"",53000
+"13","Casbah","LF",NA,NA,"",4000,"",3000
+"14","Casbah","LH",NA,NA,"",9000,"",6000
+"15","Casbah","RF",NA,NA,"",7000,"",0
+"16","Casbah","RH",NA,NA,"",3000,"",3000
+"17","Cassia","LF","",139000,"",75000,"",240000
+"18","Cassia","LH","Staph. species",51000,"Staph. species",220000,"Staph. species",1000000
+"19","Cassia","RF","",9000,"",29000,"",27000
+"20","Cassia","RH","Staph. species",24000,"Staph. species",1300000,"Staph. species",750000
+"21","Debutant","LF","",35000,"",0,"Sample contaminated",5000
+"22","Debutant","LH","",20000,"",2000,"Sample contaminated",39000
+"23","Debutant","RF","",0,"",2000,"",4000
+"24","Debutant","RH","",250000,"",2000,"",2000
+"25","DeeDee","LF","",5000,"",17000,"",21000
+"26","DeeDee","LH","",31000,"",23000,"",39000
+"27","DeeDee","RF","",26000,"",30000,"",19000
+"28","DeeDee","RH","Strep. species",50000,"",400000,"",120000
+"29","Denise","LF","",23000,"Staph. species",250000,"Staph. species",150000
+"30","Denise","LH","Sample contaminated",131000,"",68000,"",29000
+"31","Denise","RF","Staph. species",139000,"",35000,"",28000
+"32","Denise","RH","",22000,"Staph. species",130000,"Staph. species",87000
+"33","Denver","LF","Staph. species, Strep. species",153000,"Staph. species, Strep. species",160000,"Strep. species, Staph. species",380000
+"34","Denver","LH","",6000,"",5000,"",4000
+"35","Denver","RF","",7000,"",2000,"",5000
+"36","Denver","RH","Staph. species",103000,"Staph. species",68000,"Staph. species",92000
+"37","Diane","LF","",13000,"",25000,"",60000
+"38","Diane","LH","",2000,"",15000,"",47000
+"39","Diane","RF","Staph. species",3000,"",9000,"",33000
+"40","Diane","RH","",2000,"",8000,"",60000
+"41","Dorian","LF","Sample contaminated",43000,"",84000,"",15000
+"42","Dorian","LH","Sample contaminated",26000,"Staph. species",74000,"Staph. species",100000
+"43","Dorian","RF","Strep. species",9000,"",19000,"",10000
+"44","Dorian","RH","",28000,"",24000,"",29000
+"45","Ferris","LF","",7000,"",36000,"",22000
+"46","Ferris","LH","",63000,"",34000,"",25000
+"47","Ferris","RF","",24000,"",30000,"",40000
+"48","Ferris","RH","",83000,"",26000,"",27000
+"49","Flossy","LF","Sample contaminated",11000,"",12000,"",20000
+"50","Flossy","LH","Staph. species",86000,"Staph. species",420000,"",590000
+"51","Flossy","RF","",4000,"",6000,"",5000
+"52","Flossy","RH","",3000,"",4000,"",6000
+"53","Gigi","LF",NA,NA,"",5000,"",8000
+"54","Gigi","LH",NA,NA,"",12000,"",4000
+"55","Gigi","RF",NA,NA,"",26000,"",58000
+"56","Gigi","RH",NA,NA,"Staph. aureus",1100000,"Staph. aureus",3000000
+"57","Goldie","LF","Staph. species",157000,"Staph. species",45000,"Staph. species",59000
+"58","Goldie","LH","Staph. species, Strep. species",66000,"Staph. species, Strep. species",110000,"Sample contaminated",130000
+"59","Goldie","RF","",46000,"",8000,"",14000
+"60","Goldie","RH","Staph. species, Strep. species",73000,"Staph. species, Strep. species",58000,"Sample contaminated",200000
+"61","Gretchen","LF","",60000,"",25000,"",17000
+"62","Gretchen","LH","",8000,"",4000,"",0
+"63","Gretchen","RF","",14000,"",8000,"",10000
+"64","Gretchen","RH","",16000,"",6000,"",7000
+"65","Halo","LF","",6000,"",12000,"",3000
+"66","Halo","LH","",5000,"",4000,"",0
+"67","Halo","RF","",9000,"",6000,"",2000
+"68","Halo","RH","",8000,"",0,"",4000
+"69","Jazz","LF","",5000,"",26000,"",40000
+"70","Jazz","LH","",6000,"Corynebacterium species",1200000,"Other Gram-positive bacteria",2200000
+"71","Jazz","RF","",5000,"",2000,"",6000
+"72","Jazz","RH","",6000,"",4000,"",5000
+"73","Jewel","LF","",0,"",2000,"",2000
+"74","Jewel","LH","Staph. species",11000,"",2000,"Staph. species",33000
+"75","Jewel","RF","",3000,"",160000,"",0
+"76","Jewel","RH","",5000,"Staph. species",24000,"",0
+"77","Mabel","LF","Staph. species",60000,NA,NA,NA,NA
+"78","Mabel","LH","Strep. species",1776000,NA,NA,NA,NA
+"79","Mabel","RF","",281000,NA,NA,NA,NA
+"80","Mabel","RH","Sample contaminated",9000,NA,NA,NA,NA
+"81","Maisie","LF","",20000,"",11000,"",7000
+"82","Maisie","LH","",24000,"",3000,"",13000
+"83","Maisie","RF","",16000,"",5000,"",11000
+"84","Maisie","RH","Staph. species",16000,"",3000,"Strep. species",3000
+"85","Marshmellow","LF","Staph. species",61000,"Staph. species",220000,"Staph. species",180000
+"86","Marshmellow","LH","Staph. species, Strep. species",120000,"Strep. species",95000,"Strep. species",120000
+"87","Marshmellow","RF","Staph. species",98000,"Staph. species",150000,"Staph. species",270000
+"88","Marshmellow","RH","Strep. species",725000,"Staph. species, Strep. species",110000,"Strep. species",90000
+"89","Marta","LF","",3000,"",79000,"",90000
+"90","Marta","LH","",2000,"",9000,"",17000
+"91","Marta","RF","",56000,"",6000,"",9000
+"92","Marta","RH","",102000,"",20000,"",15000
+"93","Opal","LF",NA,NA,"",3000,"",2000
+"94","Opal","LH",NA,NA,"",0,"",0
+"95","Opal","RF",NA,NA,"",9000,"",4000
+"96","Opal","RH",NA,NA,"",0,"",0
+"97","Paige","LF","",9000,"",23000,"",6000
+"98","Paige","LH","Sample contaminated",56000,"Staph. species",24000,"Staph. species",120000
+"99","Paige","RF","",17000,"",21000,"",8000
+"100","Paige","RH","Staph. species",55000,"Staph. species",89000,"Staph. species",120000
+"101","Pamela","LF","",8000,"",4000,"",10000
+"102","Pamela","LH","",2000,"",5000,"",6000
+"103","Pamela","RF","",5000,"",5000,"",5000
+"104","Pamela","RH","",3000,"",4000,"",7000
+"105","Pasta","LF","Staph. species",78000,"Staph. species",83000,"Staph. species",500000
+"106","Pasta","LH","",21000,"",2000,"",20000
+"107","Pasta","RF","",16000,"",18000,"",3000
+"108","Pasta","RH","",16000,"",6000,"",13000
+"109","Picknick","LF","",3000,"",3000,"",4000
+"110","Picknick","LH","",4000,"",2000,"",4000
+"111","Picknick","RF","",2000,"",2000,"",6000
+"112","Picknick","RH","",3000,"",2000,"",3000
+"113","Pledge","LF","Staph. species",87000,"Staph. species",230000,"Staph. species",410000
+"114","Pledge","LH","Strep. species",4000,"",2000,"",2000
+"115","Pledge","RF","Staph. species",172000,"Staph. species",140000,"Staph. species",440000
+"116","Pledge","RH","Staph. species",59000,"Staph. species",84000,"Staph. species",180000
+"117","Quantum","LF","Staph. species",15000,"Staph. species",52000,"Staph. species",480000
+"118","Quantum","LH","",6000,"",5000,"",96000
+"119","Quantum","RF","",9000,"",7000,"",150000
+"120","Quantum","RH","",10000,"",6000,"",140000
+"121","Rock7","LF","",8000,"",7000,"",6000
+"122","Rock7","LH","",6000,"",3000,"",3000
+"123","Rock7","RF","",7000,"",4000,"",5000
+"124","Rock7","RH","",9000,"",3000,"",3000
+"125","Sadie","LF","Strep. species",12000,NA,NA,NA,NA
+"126","Sadie","LH","",5000,NA,NA,NA,NA
+"127","Sadie","RF","",3000,NA,NA,NA,NA
+"128","Sadie","RH","",4000,NA,NA,NA,NA
+"129","Shelly","LF","",40000,"",8000,"",15000
+"130","Shelly","LH","",57000,"",12000,"",19000
+"131","Shelly","RF","",134000,"",23000,"",30000
+"132","Shelly","RH","",58000,"",9000,"",10000
+"133","Skyler","LF","",2000,"",2000,"",2000
+"134","Skyler","LH","",3000,"",7000,"Staph. species",3000
+"135","Skyler","RF","Staph. species",0,"",0,"",0
+"136","Skyler","RH","",4000,"",0,"",14000
+"137","Sondra","LF","Sample contaminated",177000,"Strep. species, Staph. species",89000,"Strep. species, Staph. species",87000
+"138","Sondra","LH","Sample contaminated",82000,"",26000,"",17000
+"139","Sondra","RF","",47000,"",170000,"Strep. species, Staph. species",94000
+"140","Sondra","RH","Sample contaminated",26000,"",8000,"Strep. species, Corynebacterium species",7000
+"141","Sonic","LF","",14000,"",5000,"",5000
+"142","Sonic","LH","",6000,"",3000,"",4000
+"143","Sonic","RF","",9000,"",6000,"",6000
+"144","Sonic","RH","",9000,"",4000,"",5000
+"145","Sparky","LF","",8000,"",11000,"",12000
+"146","Sparky","LH","",8000,"",11000,"",12000
+"147","Sparky","RF","",6000,"",6000,"",7000
+"148","Sparky","RH","",8000,"",8000,"",10000
+"149","Zap","LF","",22000,"",4200000,NA,NA
+"150","Zap","LH","",10000,"",34000,NA,NA
+"151","Zap","RF","",11000,"",37000,NA,NA
+"152","Zap","RH","",12000,"",120000,NA,NA
+"153","Zeal","LF","",238000,NA,NA,NA,NA
+"154","Zeal","LH","",2594000,NA,NA,NA,NA
+"155","Zeal","RF","Staph. aureus",919000,NA,NA,NA,NA
+"156","Zeal","RH","",1230000,NA,NA,NA,NA
