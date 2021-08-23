@@ -1,0 +1,12 @@
+---
+title: "Exercise 10"
+author: "Caitlin Jeffrey"
+date: "February 14, 2019"
+output: html_document
+---
+
+```{r}
+load(file = "grazing_impacts.Rdata")
+write.csv(gi, "grazing_impactsV2.csv", row.names = F)
+```
+

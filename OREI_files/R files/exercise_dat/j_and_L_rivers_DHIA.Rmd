@@ -1,0 +1,56 @@
+---
+title: "rivers"
+author: "Caitlin Jeffrey"
+date: "May 28, 2019"
+output: html_document
+---
+
+
+```{r}
+setwd(path.exercise)
+rivers<-read.csv("13104456.csv", na.strings= ".", header = T)
+str(rivers)
+```
+```{r}
+levels(rivers$Test.Date)
+```
+
+
+
+
+```{r}
+rivers_4<-subset(rivers, Test.Date =="4/28/2019" & SCC>0); rivers_4
+rivers_3<-subset(rivers, Test.Date =="3/22/2019" & SCC>0); rivers_3
+```
+
+
+```{r}
+riv_marchtest<-data.frame(rivers_3$ID, rivers_3$Test.Date, rivers_3$SCC)
+riv_apriltest<-data.frame(rivers_4$ID, rivers_4$Test.Date, rivers_4$SCC)
+names(riv_marchtest)[1] <- "ID"; names(riv_marchtest)[2] <- "Test.Date"; names(riv_marchtest)[3]<- "SCC"
+names(riv_apriltest)[1] <- "ID"; names(riv_apriltest)[2] <- "Test.Date"; names(riv_apriltest)[3]<- "SCC"
+```
+
+
+```{r}
+library(na.tools)
+riv_both_test<-merge(riv_marchtest, riv_apriltest, by="ID", all=T)
+#nas<-which_na(both_test); length(nas)
+which(is.na(riv_both_test), arr.ind = T)
+```
+
+
+```{r}
+riv_noNA<-na.omit(riv_both_test)
+```
+
+
+```{r}
+riv_uninf<-subset(riv_noNA, SCC.x<200 & SCC.y<200); riv_uninf
+riv_chronic<-subset(riv_noNA, SCC.x>200 & SCC.y>200); riv_chronic
+riv_new<-subset(riv_noNA, SCC.x<200 & SCC.y>200); riv_new
+riv_cure<-subset(riv_noNA, SCC.x>200 & SCC.y<200); riv_cure
+```
+```{r}
+riv_high<-subset(riv_apriltest, SCC>200); riv_high
+```

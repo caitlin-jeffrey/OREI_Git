@@ -1,0 +1,2445 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\PassOptionsToPackage{hyphens}{url} % url is loaded by hyperref
+\usepackage[unicode=true]{hyperref}
+\hypersetup{
+            pdftitle={Exploration of 40 herd bulk tank milk data},
+            pdfauthor={Caitlin Jeffrey},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+
+\title{\emph{Exploration of 40 herd bulk tank milk data}}
+\author{Caitlin Jeffrey}
+\date{August 6, 2021}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{library}\NormalTok{(MASS)}
+\KeywordTok{library}\NormalTok{(ggpubr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'ggpubr' was built under R version 4.0.5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# library(geoR)}
+\CommentTok{# library(sgeostat)}
+\KeywordTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:MASS':
+## 
+##     select
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tinytex)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'tinytex' was built under R version 4.0.5
+\end{verbatim}
+
+\subsection{\texorpdfstring{\textbf{\emph{Discrete
+distributions}}}{Discrete distributions}}\label{discrete-distributions}
+
+\subsubsection{\texorpdfstring{\textbf{Poisson}}{Poisson}}\label{poisson}
+
+\begin{itemize}
+\tightlist
+\item
+  Range: {[}0,infinity{]}
+\item
+  Parameters: size = number of events, rate = λ
+\item
+  Interpretation: Distribution of events that occur during a fixed time
+  interval or sampling effort with a constant rate of independent
+  events; resembles normal with large λ, or exponential with small λ
+  (example: over a 1 month period, what's the probability a bird lays a
+  particular number of eggs; assumes constant rate of egg laying and
+  eggs laid are independent of each other )
+\end{itemize}
+
+\subsubsection{\texorpdfstring{\textbf{Binomial}}{Binomial}}\label{binomial}
+
+\begin{itemize}
+\tightlist
+\item
+  Range: {[}0, \# of trials{]}
+\item
+  Parameters: size= number of trials; p = probability of positive
+  outcome
+\item
+  Interpretation: Distribution of number of successful independent
+  dichotomous trials, with constant p (coin tossing, certain probability
+  of getting heads)
+\end{itemize}
+
+\subsubsection{\texorpdfstring{\textbf{Negative
+Binomial}}{Negative Binomial}}\label{negative-binomial}
+
+\begin{itemize}
+\tightlist
+\item
+  Range: {[}0, infinity{]}
+\item
+  Parameters: size=number of successes; p = probability of success
+\item
+  Interpretation: Distribution of number of failures in a series of
+  independent Bernouli trials, each with p = probability of a success.
+  Generates a discrete distribution that is more heterogeneous
+  (``overdispersed'') than Poisson; (how many coins we have to toss
+  before GETTING 10 heads?)
+\end{itemize}
+
+\subsection{\texorpdfstring{\textbf{\emph{Continuous
+distributions}}}{Continuous distributions}}\label{continuous-distributions}
+
+\subsubsection{\texorpdfstring{\textbf{Uniform}}{Uniform}}\label{uniform}
+
+\begin{itemize}
+\tightlist
+\item
+  Range: {[}min,max{]}
+\item
+  Parameters: min = minimum boundary; max = maximum boundary
+\item
+  Interpretation: Distribution of a value that is equally likely within
+  a specified range (any possible value prob is constant between two
+  limits; special case of beta distributions)
+\end{itemize}
+
+\subsubsection{\texorpdfstring{\textbf{Normal}}{Normal}}\label{normal}
+
+\begin{itemize}
+\tightlist
+\item
+  Range: {[}neg infinity, infinity{]}
+\item
+  Parameters: mean = central tendency; SD = standard deviation
+\item
+  Interpretation: Symmetric bell-shaped curve with unbounded tails
+\end{itemize}
+
+\subsubsection{\texorpdfstring{\textbf{Gamma}}{Gamma}}\label{gamma}
+
+\begin{itemize}
+\tightlist
+\item
+  Range: {[}0, infinity{]} (doens't go into 0, but continuous)
+\item
+  Parameters: shape, scale
+\item
+  Interpretation: mean=shape x scale, variance=shape x scale\^{}2;
+  generates a variety of shapes (including normal and exponential) for
+  positive continuous variables; (unlike normal, NO NEG)
+\end{itemize}
+
+\subsubsection{\texorpdfstring{\textbf{Beta}}{Beta}}\label{beta}
+
+\begin{itemize}
+\tightlist
+\item
+  Range: {[}0,1{]} (can be rescaled to any range by simple
+  multiplication and addition)
+\item
+  Paramters: shape1, shape2
+\item
+  Interpretation: if shape1 and shape 2 are integers, interpret as a
+  coin toss, with shape1 = \# of successes + 1, shape2 = \# of failures
+  + 1. Gives distribution of value of p, estimated from data, which can
+  range from exponential through uniform through normal (but all are
+  bounded). Setting shape1 and shape2 \textless{}1 yields u-shaped
+  distributions. (dist of PROB of getting a certain outcome)
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{btm<-}\KeywordTok{read.csv}\NormalTok{(}\StringTok{"BTM_data_combined_7_1_2021.csv"}\NormalTok{, }\DataTypeTok{na.strings=} \StringTok{"."}\NormalTok{, }\DataTypeTok{header =}\NormalTok{ T)}
+\KeywordTok{str}\NormalTok{(btm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    21 obs. of  26 variables:
+##  $ Sample_ID              : chr  "OH.01" "OH.02" "OH.03" "OH.04" ...
+##  $ RAW_CFU_ml_1.100       : int  400 600 3700 100 1200 2300 1000 1500 1200 800 ...
+##  $ log10_rawcfu           : num  2.6 2.78 3.57 2 3.08 ...
+##  $ PAST_CFU_ml_1.10       : num  10 10 90 9.99 9.99 10 10 1000 50 9.99 ...
+##  $ PI__CFU_ml__1.1000     : int  1000 2000 80000 4000 3000 4000 1000000 120000 2000 2000 ...
+##  $ Total_Coli__CFU_ml__1.1: num  0.99 11 0.99 0.99 26 0.99 0.99 0.99 0.99 0.99 ...
+##  $ E._coli__CFU_ml__1.1   : num  0.99 2 0.99 0.99 0.99 0.99 0.99 0.99 0.99 0.99 ...
+##  $ Staph__CFU_ml__1.10    : num  30 30 30 20 50 40 130 40 10 9.99 ...
+##  $ perc_BF                : num  3.61 4.26 4.8 5.43 3.71 5.09 3.98 3.91 4.07 3.88 ...
+##  $ perc_Protein           : num  2.93 3.52 3.82 3.46 2.92 3.52 3.01 2.95 3.08 2.88 ...
+##  $ perc_Lactose           : num  4.6 4.6 4.6 4.63 4.68 4.63 4.65 4.62 4.65 4.56 ...
+##  $ perc_Other.Solids      : num  5.7 5.69 5.69 5.69 5.83 5.74 5.73 5.72 5.74 5.65 ...
+##  $ MUN                    : num  9.1 9.57 11.7 9.41 13.68 ...
+##  $ SCC_1.1000             : int  140000 99000 200000 85000 250000 180000 250000 98000 54000 200000 ...
+##  $ log2_SCC               : num  3.49 2.99 4 2.77 4.32 3.85 4.32 2.97 2.11 4 ...
+##  $ log10_scc              : num  5.15 5 5.3 4.93 5.4 ...
+##  $ Coliforms              : int  0 0 0 0 0 0 0 0 5 0 ...
+##  $ log10_coliforms        : num  NA NA NA NA NA ...
+##  $ Non_ag_Strep           : int  35 10 30 35 30 205 130 35 35 70 ...
+##  $ log10_strep            : num  1.54 1 1.48 1.54 1.48 ...
+##  $ Staph_aureus           : int  15 30 0 0 55 0 320 0 0 55 ...
+##  $ log10_aureus           : num  1.18 1.48 0 0 1.74 ...
+##  $ Staph_sp               : int  0 40 110 65 20 175 15 125 30 665 ...
+##  $ log10_staphsp          : num  0 1.6 2.04 1.81 1.3 ...
+##  $ Strep_ag               : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ Mycoplasma             : chr  "Neg" "Neg" "Neg" "Neg" ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{btm}\OperatorTok{$}\NormalTok{SCC_}\FloatTok{1.1000}\NormalTok{<-}\KeywordTok{as.numeric}\NormalTok{(btm}\OperatorTok{$}\NormalTok{SCC_}\FloatTok{1.1000}\NormalTok{)}
+\NormalTok{btm}\OperatorTok{$}\NormalTok{RAW_CFU_ml_}\FloatTok{1.100}\NormalTok{<-}\KeywordTok{as.numeric}\NormalTok{(btm}\OperatorTok{$}\NormalTok{RAW_CFU_ml_}\FloatTok{1.100}\NormalTok{)}
+\NormalTok{btm}\OperatorTok{$}\NormalTok{PI__CFU_ml__}\FloatTok{1.1000}\NormalTok{<-}\KeywordTok{as.numeric}\NormalTok{(btm}\OperatorTok{$}\NormalTok{PI__CFU_ml__}\FloatTok{1.1000}\NormalTok{)}
+\NormalTok{btm}\OperatorTok{$}\NormalTok{Coliforms<-}\KeywordTok{as.numeric}\NormalTok{(btm}\OperatorTok{$}\NormalTok{Coliforms)}
+\NormalTok{btm}\OperatorTok{$}\NormalTok{Non_ag_Strep<-}\KeywordTok{as.numeric}\NormalTok{(btm}\OperatorTok{$}\NormalTok{Non_ag_Strep)}
+\NormalTok{btm}\OperatorTok{$}\NormalTok{Staph_aureus<-}\KeywordTok{as.numeric}\NormalTok{(btm}\OperatorTok{$}\NormalTok{Staph_aureus)}
+\NormalTok{btm}\OperatorTok{$}\NormalTok{Staph_sp<-}\KeywordTok{as.numeric}\NormalTok{(btm}\OperatorTok{$}\NormalTok{Staph_sp)}
+\CommentTok{# btm$log10_coliforms<-as.numeric(btm$log10_coliforms)}
+\CommentTok{# btm$log10_staphsp<-as.numeric(btm$log10_staphsp)}
+\CommentTok{# btm$log10_aureus<-as.numeric(btm$log10_aureus)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{\texorpdfstring{\textbf{Maximum likelihood estimators of
+the
+parameters}}{Maximum likelihood estimators of the parameters}}\label{maximum-likelihood-estimators-of-the-parameters}
+
+\begin{itemize}
+\tightlist
+\item
+  MLE's - probability of the data, given the hypothesis (standard would
+  be null hypothesis - how probable are data given null is true)
+\item
+  vs.~what is probability of data given the parameters - how well does
+  data fit given parameters of distribution - goodness of fit test
+\item
+  vs.~what is probability of the parameters, given the data - for a
+  given data set, what is probability that certain set of parameters
+  would be there- want parameter combinations that make it most likely
+  to have come up with the data; maximize this probability (parameters
+  given this data)
+\end{itemize}
+
+\subsubsection{\texorpdfstring{\textbf{Q-Q and P-P plots to assess
+normality}}{Q-Q and P-P plots to assess normality}}\label{q-q-and-p-p-plots-to-assess-normality}
+
+\begin{itemize}
+\item
+  Probability plot: The data are plotted against a theoretical
+  distribution in such a way that the points should form approximately a
+  straight line. Departures from this straight line indicate departures
+  from the specified distribution. The correlation coefficient
+  associated with the linear fit to the data in the probability plot is
+  a measure of the goodness of the fit
+\item
+  The P-P plot plots the cumulative probability of a variable against
+  the cumulative probability of a particular distribution (e.g., normal
+  distribution). After data are ranked and sorted, the corresponding
+  z-score is calculated. This is the expected value that the score
+  should have in a normal distribution. The scores are then themselves
+  converted to z-scores. The actual z-scores are plotted against the
+  expected z-scores. If the data are normally distributed, the result
+  would be a straight diagonal line
+\item
+  Q-Q plot is very similar to the P-P plot except that it plots the
+  quantiles (values that split a data set into equal portions) of the
+  data set instead of every individual score in the data
+\item
+  Residuals skewed to the right = normal plot curves below 45-degree
+  line (convex); residuals skewed to the left = normal plot curves above
+  45-degree line (concave); residuals too peaked = normal plot will be
+  sigmoid curved
+\end{itemize}
+
+\subsubsection{\texorpdfstring{\textbf{Log
+transformation}}{Log transformation}}\label{log-transformation}
+
+\begin{itemize}
+\item
+  Patel 2019 (bacterial counts): ``Because bedding bacteria counts
+  (cfu/cm\^{}3) and BTM culture results (cfu/mL) were not normally
+  distributed, results were transformed (log10) before further analysis.
+  Continuous variables underwent correlation analysis to identify
+  variables that were highly associated (R2 \textgreater{}/= 0.60).
+  Simple associations among categorized variables were evaluated using a
+  chi-squared test.''
+\item
+  ``BTSCS is a logarithmic transformation of the BTSCC developed by
+  Shook (1982), obtained by the equation: BTSCS = log2(BTSCC/100.000) +
+  3''
+\item
+  Cicconi-Hogan 2013 (\emph{Risk factors associated with bulk tank
+  standard plate count, bulk tank coliform count, and the presence of
+  Staphylococcus aureus on organic and conventional dairy farms in the
+  United States;} standard plate count, coliform count, S. aureus):
+  ``Outcome variables analyzed were SPC from the bulk tank, the presence
+  of Staph. aureus in the bulk tank, and the CC of the bulk tank milk.
+  The presence of Staph. aureus was analyzed as a binary variable (yes,
+  no). The distribution of the SPC and CC were both truncated on the
+  left at 0 and skewed to the right. The SPC was transformed to log10
+  cfu/mL (hereafter, LSPC) and reported as a geometric mean. The CC was
+  dichotomized, based on previous research and milk quality
+  recommendations (Jayarao et al., 2004; Schroeder, 2009; Elmoslemany et
+  al., 2010), at either \textless{}/= 50 cfu/mL (= 0) or
+  \textgreater{}50 cfu/mL (= 1).''
+\item
+  Cicconi-Hogan 2013 (\emph{Associations of risk factors with somatic
+  cell count in bulk tank milk on organic and conventional dairy farms
+  in the United States;} SCC, SPC, laboratory-pasteurized count, E.
+  coli): ``Somatic cell count and SPC were transformed into log10 values
+  of the number of cells per milliliter and log10 values of the number
+  of colony-forming units per milliliter, respectively, and reported as
+  geometric means using the antilog to back-transform the parameters.
+  Due to the large number of negative results, LP count and E. coli were
+  dichotomized.''
+\end{itemize}
+
+\subsection{\texorpdfstring{\textbf{\emph{SCC}}}{SCC}}\label{scc}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(btm}\OperatorTok{$}\NormalTok{SCC_}\FloatTok{1.1000}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   54000   99000  140000  144286  180000  250000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{scc_data<-btm}\OperatorTok{$}\NormalTok{SCC_}\FloatTok{1.1000}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(scc_data,}\StringTok{"normal"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z) }\CommentTok{# mean and SD, the MLE's (best fit for scc data; most likely if scc data is normally distributed)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       mean          sd    
+##   144285.714    52634.538 
+##  ( 11485.798) (  8121.685)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# plot the density function for the normal data with these parameters and annotate with original data points (see smooth density normal curve, and where our data lie on that curve- does model fit data in reasonable way)}
+
+\NormalTok{x <-}\StringTok{ }\DecValTok{0}\OperatorTok{:}\DecValTok{300000} \CommentTok{# range of x values across where you want distribution}
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{mean=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"mean"}\NormalTok{],}
+                   \DataTypeTok{sd=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"sd"}\NormalTok{]) }\CommentTok{# use mean and sd from actual scc data}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{scc_data,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{,}\DataTypeTok{color=}\StringTok{"springgreen4"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"SCC data against a normal distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM SCC of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of normal dist."}\NormalTok{) }\CommentTok{# see data points (x values) fall right in middle of probability mass curve}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggdensity}\NormalTok{(btm}\OperatorTok{$}\NormalTok{SCC_}\FloatTok{1.1000}\NormalTok{, }
+          \DataTypeTok{main =} \StringTok{"Density plot of BTM SCC"}\NormalTok{,}
+          \DataTypeTok{xlab =} \StringTok{"SCC of 21 herds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-3-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggqqplot}\NormalTok{(btm}\OperatorTok{$}\NormalTok{SCC_}\FloatTok{1.1000}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-3-3.pdf}
+
+\subsection{\texorpdfstring{\textbf{\emph{BTSCS = log2(BTM/100,000) +
+3}}}{BTSCS = log2(BTM/100,000) + 3}}\label{btscs-log2btm100000-3}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{scclog2_data<-btm}\OperatorTok{$}\NormalTok{log2_SCC}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(scclog2_data,}\StringTok{"normal"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       mean          sd    
+##   3.43047619   0.54635133 
+##  (0.11922363) (0.08430384)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{0}\OperatorTok{:}\DecValTok{5} \CommentTok{# range of x values across where you want distribution}
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{mean=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"mean"}\NormalTok{],}
+                   \DataTypeTok{sd=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"sd"}\NormalTok{]) }\CommentTok{# use mean and sd from actual scc data}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{scclog2_data,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{,}\DataTypeTok{color=}\StringTok{"springgreen4"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"BTSCS data against a normal distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM SCC score (log2) of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of normal dist."}\NormalTok{) }\CommentTok{# see data points (x values) fall right in middle of probability mass curve}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#do the same for the gamma distribution}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(scclog2_data,}\StringTok{"gamma"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      shape       rate   
+##   36.896503   10.755504 
+##  (11.335133) ( 3.326757)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dgamma}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{shape=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"shape"}\NormalTok{],}
+                   \DataTypeTok{rate=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"rate"}\NormalTok{])}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{scclog2_data,}\DataTypeTok{y=}\FloatTok{0.001}\NormalTok{, }\DataTypeTok{color=}\StringTok{"springgreen4"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"BTSCS data against a gamma distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM SCC score (log2) of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of gamma dist."}\NormalTok{) }\CommentTok{#bound at 0}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-4-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggdensity}\NormalTok{(btm}\OperatorTok{$}\NormalTok{log2_SCC, }
+          \DataTypeTok{main =} \StringTok{"Density plot of BTM SCC score (log2)"}\NormalTok{,}
+          \DataTypeTok{xlab =} \StringTok{"BTSCS of 21 herds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-4-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggqqplot}\NormalTok{(btm}\OperatorTok{$}\NormalTok{log2_SCC)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-4-4.pdf}
+
+\subsection{\texorpdfstring{\textbf{\emph{Log10 of
+SCC}}}{Log10 of SCC}}\label{log10-of-scc}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{scclog10_data<-btm}\OperatorTok{$}\NormalTok{log10_scc}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(scclog10_data,}\StringTok{"normal"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       mean          sd    
+##   5.12923302   0.16467899 
+##  (0.03593590) (0.02541052)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{3}\OperatorTok{:}\DecValTok{6} \CommentTok{# range of x values across where you want distribution}
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{mean=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"mean"}\NormalTok{],}
+                   \DataTypeTok{sd=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"sd"}\NormalTok{]) }\CommentTok{# use mean and sd from actual scc data}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{scclog10_data,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{,}\DataTypeTok{color=}\StringTok{"springgreen4"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Log10 SCC data against a normal distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM SCC (log10) of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of normal dist."}\NormalTok{) }\CommentTok{# see data points (x values) fall right in middle of probability mass curve}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#do the same for the gamma distribution}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(scclog10_data,}\StringTok{"gamma"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      shape       rate   
+##   923.93017   180.13028 
+##  (284.92255) ( 55.56377)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dgamma}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{shape=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"shape"}\NormalTok{],}
+                   \DataTypeTok{rate=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"rate"}\NormalTok{])}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{scclog10_data,}\DataTypeTok{y=}\FloatTok{0.001}\NormalTok{, }\DataTypeTok{color=}\StringTok{"springgreen4"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Log10 SCC data against a gamma distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM SCC (log10) of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of gamma dist."}\NormalTok{) }\CommentTok{#bound at 0}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-5-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggdensity}\NormalTok{(btm}\OperatorTok{$}\NormalTok{log10_scc, }
+          \DataTypeTok{main =} \StringTok{"Density plot of BTM SCC (log10)"}\NormalTok{,}
+          \DataTypeTok{xlab =} \StringTok{"BTM SCC log10 of 21 herds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-5-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggqqplot}\NormalTok{(btm}\OperatorTok{$}\NormalTok{log10_scc)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-5-4.pdf}
+
+\subsection{\texorpdfstring{\textbf{\emph{Raw
+CFU}}}{Raw CFU}}\label{raw-cfu}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(btm}\OperatorTok{$}\NormalTok{RAW_CFU_ml_}\FloatTok{1.100}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##     100     600    1000    5467    1700   72000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rawcfu_data<-btm}\OperatorTok{$}\NormalTok{RAW_CFU_ml_}\FloatTok{1.100}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(rawcfu_data,}\StringTok{"normal"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z) }\CommentTok{# mean and SD, the MLE's}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      mean         sd    
+##    5466.667   15278.567 
+##  ( 3334.057) ( 2357.534)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{0}\OperatorTok{:}\DecValTok{100000} \CommentTok{# range of x values across where you want distribution}
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{mean=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"mean"}\NormalTok{],}
+                   \DataTypeTok{sd=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"sd"}\NormalTok{]) }\CommentTok{# use mean and sd from actual data}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{rawcfu_data,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{,}\DataTypeTok{color=}\StringTok{"deeppink2"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Raw CFU count data against a normal distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM Raw CFU count of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of normal dist."}\NormalTok{) }\CommentTok{# see data points (x values) fall right in middle of probability mass curve}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# # do the same for the gamma distribution}
+\CommentTok{# z <-fitdistr(rawcfu_data,"gamma")}
+\CommentTok{# print(z)}
+\CommentTok{# p_density <- dgamma(x=x,}
+\CommentTok{#                    shape=z$estimate["shape"],}
+\CommentTok{#                    rate=z$estimate["rate"])}
+\CommentTok{# qplot(x,p_density,geom="line") + annotate(geom="point",x=rawcfu_data,y=0.001, color="red") + labs(title="Raw CFU count data against a gamma distribution density curve",}
+\CommentTok{#        x="BTM Raw CFU count of 21 herds",}
+\CommentTok{#        y="Probability density of gamma dist.") #bound at 0 #bound at 0}
+
+\KeywordTok{ggdensity}\NormalTok{(btm}\OperatorTok{$}\NormalTok{RAW_CFU_ml_}\FloatTok{1.100}\NormalTok{, }
+          \DataTypeTok{main =} \StringTok{"Density plot of BTM Raw CFU count"}\NormalTok{,}
+          \DataTypeTok{xlab =} \StringTok{"Raw CFU of 21 herds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-6-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggqqplot}\NormalTok{(btm}\OperatorTok{$}\NormalTok{RAW_CFU_ml_}\FloatTok{1.100}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-6-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#---------------------------------------------------}
+
+\CommentTok{# remove outlier}
+\NormalTok{rawcfu_data_trim<-rawcfu_data[rawcfu_data}\OperatorTok{<}\DecValTok{20000}\NormalTok{]}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(rawcfu_data_trim,}\StringTok{"normal"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z) }\CommentTok{# mean and SD, the MLE's}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      mean         sd    
+##   2140.0000   3564.4635 
+##  ( 797.0383) ( 563.5912)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{0}\OperatorTok{:}\DecValTok{20000} \CommentTok{# range of x values across where you want distribution}
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{mean=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"mean"}\NormalTok{],}
+                   \DataTypeTok{sd=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"sd"}\NormalTok{]) }\CommentTok{# use mean and sd from actual data}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{rawcfu_data_trim,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{,}\DataTypeTok{color=}\StringTok{"deeppink2"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Raw CFU count data against a normal distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM Raw CFU count of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of normal dist."}\NormalTok{) }\CommentTok{# see data points (x values) fall right in middle of probability mass curve}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-6-4.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggqqplot}\NormalTok{(rawcfu_data_trim)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-6-5.pdf}
+
+\subsection{\texorpdfstring{\textbf{\emph{Raw CFU log10
+transformation}}}{Raw CFU log10 transformation}}\label{raw-cfu-log10-transformation}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(btm}\OperatorTok{$}\NormalTok{log10_rawcfu)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   2.000   2.778   3.000   3.096   3.230   4.857
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rawcfulog_data<-btm}\OperatorTok{$}\NormalTok{log10_rawcfu}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(rawcfulog_data,}\StringTok{"normal"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z) }\CommentTok{# mean and SD, the MLE's}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       mean          sd    
+##   3.09562583   0.62488090 
+##  (0.13636019) (0.09642122)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{1}\OperatorTok{:}\DecValTok{6} \CommentTok{# range of x values across where you want distribution}
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{mean=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"mean"}\NormalTok{],}
+                   \DataTypeTok{sd=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"sd"}\NormalTok{]) }\CommentTok{# use mean and sd from actual data}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{rawcfulog_data,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{,}\DataTypeTok{color=}\StringTok{"deeppink2"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Raw CFU log10 count data against a normal distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM Raw CFU log10 count of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of normal dist."}\NormalTok{) }\CommentTok{# see data points (x values) fall right in middle of probability mass curve}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# do the same for the gamma distribution}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(rawcfulog_data,}\StringTok{"gamma"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      shape       rate   
+##   26.361137    8.515610 
+##  ( 8.084173) ( 2.636442)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dgamma}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{shape=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"shape"}\NormalTok{],}
+                   \DataTypeTok{rate=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"rate"}\NormalTok{])}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{rawcfulog_data,}\DataTypeTok{y=}\FloatTok{0.001}\NormalTok{, }\DataTypeTok{color=}\StringTok{"red"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Raw CFU count log10 data against a gamma distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM Raw CFU count log10 of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of gamma dist."}\NormalTok{) }\CommentTok{#bound at 0 #bound at 0}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-7-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggdensity}\NormalTok{(btm}\OperatorTok{$}\NormalTok{log10_rawcfu, }
+          \DataTypeTok{main =} \StringTok{"Density plot of BTM Raw CFU log10 count"}\NormalTok{,}
+          \DataTypeTok{xlab =} \StringTok{"Raw CFU of 21 herds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-7-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggqqplot}\NormalTok{(btm}\OperatorTok{$}\NormalTok{log10_rawcfu)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-7-4.pdf}
+
+\subsection{\texorpdfstring{\textbf{\emph{Past
+CFU}}}{Past CFU}}\label{past-cfu}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(btm}\OperatorTok{$}\NormalTok{PAST_CFU_ml_}\FloatTok{1.10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    9.99   10.00   20.00   91.90   60.00 1000.00
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pastcfu_data<-btm}\OperatorTok{$}\NormalTok{PAST_CFU_ml_}\FloatTok{1.10}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(pastcfu_data,}\StringTok{"normal"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z) }\CommentTok{# mean and SD, the MLE's}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      mean         sd    
+##    91.90286   210.41120 
+##  ( 45.91549) ( 32.46715)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{0}\OperatorTok{:}\DecValTok{2000} \CommentTok{# range of x values across where you want distribution}
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{mean=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"mean"}\NormalTok{],}
+                   \DataTypeTok{sd=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"sd"}\NormalTok{]) }\CommentTok{# use mean and sd from actual data}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{pastcfu_data,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{,}\DataTypeTok{color=}\StringTok{"deeppink1"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Past. CFU count data against a normal distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM Past. CFU count of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of normal dist."}\NormalTok{) }\CommentTok{# see data points (x values) fall right in middle of probability mass curve}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# do the same for the gamma distribution}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(pastcfu_data,}\StringTok{"gamma"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       shape         rate    
+##   0.555446019   0.006043867 
+##  (0.141901507) (0.002306987)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dgamma}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{shape=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"shape"}\NormalTok{],}
+                   \DataTypeTok{rate=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"rate"}\NormalTok{])}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{pastcfu_data,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{, }\DataTypeTok{color=}\StringTok{"deeppink1"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Past. CFU count data against a gamma distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM Past. CFU count of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of gamma dist."}\NormalTok{) }\CommentTok{#bound at 0}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-8-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggdensity}\NormalTok{(btm}\OperatorTok{$}\NormalTok{PAST_CFU_ml_}\FloatTok{1.10}\NormalTok{, }
+          \DataTypeTok{main =} \StringTok{"Density plot of BTM Past. CFU count"}\NormalTok{,}
+          \DataTypeTok{xlab =} \StringTok{"Past. CFU of 21 herds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-8-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggqqplot}\NormalTok{(btm}\OperatorTok{$}\NormalTok{PAST_CFU_ml_}\FloatTok{1.10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-8-4.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#---------------------------------------------------}
+
+\CommentTok{# remove outlier}
+\NormalTok{pastcfu_data_trim<-pastcfu_data[pastcfu_data}\OperatorTok{<}\DecValTok{200}\NormalTok{]}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(pastcfu_data_trim,}\StringTok{"normal"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z) }\CommentTok{# mean and SD, the MLE's}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      mean         sd    
+##   46.498000   56.505717 
+##  (12.635062) ( 8.934338)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{0}\OperatorTok{:}\DecValTok{300} \CommentTok{# range of x values across where you want distribution}
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{mean=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"mean"}\NormalTok{],}
+                   \DataTypeTok{sd=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"sd"}\NormalTok{]) }\CommentTok{# use mean and sd from actual data}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{pastcfu_data_trim,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{,}\DataTypeTok{color=}\StringTok{"deeppink1"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Past. CFU count data against a normal distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM Past. CFU count of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of normal dist."}\NormalTok{) }\CommentTok{# see data points (x values) fall right in middle of probability mass curve}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-8-5.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggqqplot}\NormalTok{(pastcfu_data_trim)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-8-6.pdf}
+
+\subsection{\texorpdfstring{\textbf{\emph{PI
+CFU}}}{PI CFU}}\label{pi-cfu}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(btm}\OperatorTok{$}\NormalTok{PI__CFU_ml__}\FloatTok{1.1000}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##     999    2000    4000  173333   94000 1000000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{picfu_data<-btm}\OperatorTok{$}\NormalTok{PI__CFU_ml__}\FloatTok{1.1000}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(picfu_data,}\StringTok{"normal"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z) }\CommentTok{# mean and SD, the MLE's}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      mean         sd    
+##   173333.29   344269.90 
+##  ( 75125.85) ( 53122.00)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{0}\OperatorTok{:}\DecValTok{2000000} \CommentTok{# range of x values across where you want distribution}
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{mean=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"mean"}\NormalTok{],}
+                   \DataTypeTok{sd=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"sd"}\NormalTok{]) }\CommentTok{# use mean and sd from actual data}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{picfu_data,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{,}\DataTypeTok{color=}\StringTok{"deeppink3"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"PI CFU count data against a normal distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM PI CFU count of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of normal dist."}\NormalTok{) }\CommentTok{# see data points (x values) fall right in middle of probability mass curve}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# # do the same for the gamma distribution}
+\CommentTok{# z <-fitdistr(picfu_data,"gamma")}
+\CommentTok{# print(z)}
+\CommentTok{# p_density <- dgamma(x=x,}
+\CommentTok{#                    shape=z$estimate["shape"],}
+\CommentTok{#                    rate=z$estimate["rate"])}
+\CommentTok{# qplot(x,p_density,geom="line") + annotate(geom="point",x=picfu_data,y=0.0000001, color="deeppink3") + labs(title="PI CFU count data against a gamma distribution density curve",}
+\CommentTok{#        x="BTM PI CFU count of 21 herds",}
+\CommentTok{#        y="Probability density of gamma dist.") #bound at 0}
+
+\KeywordTok{ggdensity}\NormalTok{(btm}\OperatorTok{$}\NormalTok{PI__CFU_ml__}\FloatTok{1.1000}\NormalTok{, }
+          \DataTypeTok{main =} \StringTok{"Density plot of BTM PI CFU count"}\NormalTok{,}
+          \DataTypeTok{xlab =} \StringTok{"PI CFU of 21 herds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-9-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggqqplot}\NormalTok{(btm}\OperatorTok{$}\NormalTok{PI__CFU_ml__}\FloatTok{1.1000}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-9-3.pdf}
+
+\subsection{\texorpdfstring{\textbf{\emph{Total
+coliforms}}}{Total coliforms}}\label{total-coliforms}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(btm}\OperatorTok{$}\NormalTok{Total_Coli__CFU_ml__}\FloatTok{1.1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   0.990   0.990   0.990   4.565   3.000  26.000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tcoli_data<-btm}\OperatorTok{$}\NormalTok{Total_Coli__CFU_ml__}\FloatTok{1.1}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(tcoli_data,}\StringTok{"normal"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z) }\CommentTok{# mean and SD, the MLE's}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      mean        sd   
+##   4.565238   7.224535 
+##  (1.576523) (1.114770)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{0}\OperatorTok{:}\DecValTok{30} \CommentTok{# range of x values across where you want distribution}
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{mean=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"mean"}\NormalTok{],}
+                   \DataTypeTok{sd=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"sd"}\NormalTok{]) }\CommentTok{# use mean and sd from actual data}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{tcoli_data,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{,}\DataTypeTok{color=}\StringTok{"deeppink4"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Total coliform count data against a normal distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM Total coliform count of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of normal dist."}\NormalTok{) }\CommentTok{# see data points (x values) fall right in middle of probability mass curve}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-10-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# do the same for the gamma distribution}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(tcoli_data,}\StringTok{"gamma"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      shape       rate   
+##   0.7377362   0.1616001 
+##  (0.1949484) (0.0592369)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dgamma}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{shape=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"shape"}\NormalTok{],}
+                   \DataTypeTok{rate=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"rate"}\NormalTok{])}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{tcoli_data,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{, }\DataTypeTok{color=}\StringTok{"deeppink4"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Total coliform count data against a gamma distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM Total coliform count of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of gamma dist."}\NormalTok{) }\CommentTok{#bound at 0}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-10-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggdensity}\NormalTok{(btm}\OperatorTok{$}\NormalTok{Total_Coli__CFU_ml__}\FloatTok{1.1}\NormalTok{, }
+          \DataTypeTok{main =} \StringTok{"Density plot of BTM Total coliform count"}\NormalTok{,}
+          \DataTypeTok{xlab =} \StringTok{"Total coliform count of 21 herds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-10-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggqqplot}\NormalTok{(btm}\OperatorTok{$}\NormalTok{Total_Coli__CFU_ml__}\FloatTok{1.1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-10-4.pdf}
+
+\subsection{\texorpdfstring{\textbf{\emph{E.
+coli}}}{E. coli}}\label{e.-coli}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(btm}\OperatorTok{$}\NormalTok{E._coli__CFU_ml__}\FloatTok{1.1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    0.99    0.99    0.99    1.61    0.99   13.00
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ecoli_data<-btm}\OperatorTok{$}\NormalTok{E._coli__CFU_ml__}\FloatTok{1.1}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(ecoli_data,}\StringTok{"normal"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z) }\CommentTok{# mean and SD, the MLE's}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      mean         sd    
+##   1.6100000   2.5559250 
+##  (0.5577486) (0.3943878)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{0}\OperatorTok{:}\DecValTok{20} \CommentTok{# range of x values across where you want distribution}
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{mean=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"mean"}\NormalTok{],}
+                   \DataTypeTok{sd=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"sd"}\NormalTok{]) }\CommentTok{# use mean and sd from actual data}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{ecoli_data,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{,}\DataTypeTok{color=}\StringTok{"mediumorchid"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"E. coli count data against a normal distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM E. coli count of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of normal dist."}\NormalTok{) }\CommentTok{# see data points (x values) fall right in middle of probability mass curve}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-11-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# do the same for the gamma distribution}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(ecoli_data,}\StringTok{"gamma"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      shape       rate   
+##   1.6614509   1.0319508 
+##  (0.4702745) (0.3403538)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dgamma}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{shape=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"shape"}\NormalTok{],}
+                   \DataTypeTok{rate=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"rate"}\NormalTok{])}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{ecoli_data,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{, }\DataTypeTok{color=}\StringTok{"mediumorchid"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"E. coli count data against a gamma distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM E. coli count of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of gamma dist."}\NormalTok{) }\CommentTok{#bound at 0}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-11-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggdensity}\NormalTok{(btm}\OperatorTok{$}\NormalTok{Total_Coli__CFU_ml__}\FloatTok{1.1}\NormalTok{, }
+          \DataTypeTok{main =} \StringTok{"Density plot of BTM E. coli count"}\NormalTok{,}
+          \DataTypeTok{xlab =} \StringTok{"E. coli count of 21 herds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-11-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggqqplot}\NormalTok{(btm}\OperatorTok{$}\NormalTok{Total_Coli__CFU_ml__}\FloatTok{1.1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-11-4.pdf}
+
+\subsection{\texorpdfstring{\textbf{\emph{Staph}}}{Staph}}\label{staph}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(btm}\OperatorTok{$}\NormalTok{Staph__CFU_ml__}\FloatTok{1.10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    9.99   10.00   30.00   32.86   40.00  130.00
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{staph_data<-btm}\OperatorTok{$}\NormalTok{Staph__CFU_ml__}\FloatTok{1.10}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(staph_data,}\StringTok{"normal"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z) }\CommentTok{# mean and SD, the MLE's}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      mean         sd    
+##   32.855238   26.213773 
+##  ( 5.720314) ( 4.044873)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{0}\OperatorTok{:}\DecValTok{200} \CommentTok{# range of x values across where you want distribution}
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{mean=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"mean"}\NormalTok{],}
+                   \DataTypeTok{sd=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"sd"}\NormalTok{]) }\CommentTok{# use mean and sd from actual data}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{staph_data,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{,}\DataTypeTok{color=}\StringTok{"mediumorchid2"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Staph. count data against a normal distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM Staph. count of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of normal dist."}\NormalTok{) }\CommentTok{# see data points (x values) fall right in middle of probability mass curve}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-12-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# do the same for the gamma distribution}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(staph_data,}\StringTok{"gamma"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      shape         rate   
+##   2.11381530   0.06433064 
+##  (0.60772643) (0.02086002)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dgamma}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{shape=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"shape"}\NormalTok{],}
+                   \DataTypeTok{rate=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"rate"}\NormalTok{])}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{staph_data,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{, }\DataTypeTok{color=}\StringTok{"mediumorchid2"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Staph. count data against a gamma distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM Staph. count of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of gamma dist."}\NormalTok{) }\CommentTok{#bound at 0}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-12-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggdensity}\NormalTok{(btm}\OperatorTok{$}\NormalTok{Staph__CFU_ml__}\FloatTok{1.10}\NormalTok{, }
+          \DataTypeTok{main =} \StringTok{"Density plot of BTM Staph count (St. Albans)"}\NormalTok{,}
+          \DataTypeTok{xlab =} \StringTok{"Staph count of 21 herds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-12-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggqqplot}\NormalTok{(btm}\OperatorTok{$}\NormalTok{Staph__CFU_ml__}\FloatTok{1.10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-12-4.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#---------------------------------------------------}
+
+\CommentTok{# remove outlier}
+\NormalTok{staph_data_trim<-staph_data[staph_data}\OperatorTok{<}\DecValTok{100}\NormalTok{]}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(staph_data_trim,}\StringTok{"normal"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z) }\CommentTok{# mean and SD, the MLE's}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      mean         sd    
+##   27.998000   15.035691 
+##  ( 3.362083) ( 2.377352)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{0}\OperatorTok{:}\DecValTok{100} \CommentTok{# range of x values across where you want distribution}
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{mean=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"mean"}\NormalTok{],}
+                   \DataTypeTok{sd=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"sd"}\NormalTok{]) }\CommentTok{# use mean and sd from actual data}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{staph_data_trim, }\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{,}\DataTypeTok{color=}\StringTok{"mediumorchid2"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Staph. count data against a normal distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM Staph. count of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of normal dist."}\NormalTok{) }\CommentTok{# see data points (x values) fall right in middle of probability mass curve}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-12-5.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggqqplot}\NormalTok{(staph_data_trim)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-12-6.pdf}
+
+\subsection{\texorpdfstring{\textbf{\emph{Percent
+butterfat}}}{Percent butterfat}}\label{percent-butterfat}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(btm}\OperatorTok{$}\NormalTok{perc_BF)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   3.610   3.910   4.260   4.358   4.850   5.430
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bf_data<-btm}\OperatorTok{$}\NormalTok{perc_BF}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(bf_data,}\StringTok{"normal"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z) }\CommentTok{# mean and SD, the MLE's}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       mean          sd    
+##   4.35809524   0.53713188 
+##  (0.11721179) (0.08288125)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{0}\OperatorTok{:}\DecValTok{10} \CommentTok{# range of x values across where you want distribution}
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{mean=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"mean"}\NormalTok{],}
+                   \DataTypeTok{sd=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"sd"}\NormalTok{]) }\CommentTok{# use mean and sd from actual data}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{bf_data,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{,}\DataTypeTok{color=}\StringTok{"royalblue1"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Percent butterfat data against a normal distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM Percent butterfat of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of normal dist."}\NormalTok{) }\CommentTok{# see data points (x values) fall right in middle of probability mass curve}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# do the same for the gamma distribution}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(bf_data,}\StringTok{"gamma"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      shape       rate   
+##   66.967180   15.366160 
+##  (20.614475) ( 4.747869)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dgamma}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{shape=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"shape"}\NormalTok{],}
+                   \DataTypeTok{rate=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"rate"}\NormalTok{])}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{bf_data,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{, }\DataTypeTok{color=}\StringTok{"royalblue1"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Percent butterfat data against a gamma distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM Percent butterfat of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of gamma dist."}\NormalTok{) }\CommentTok{#bound at 0}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-13-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggdensity}\NormalTok{(btm}\OperatorTok{$}\NormalTok{perc_BF, }
+          \DataTypeTok{main =} \StringTok{"Density plot of BTM % Butterfat"}\NormalTok{,}
+          \DataTypeTok{xlab =} \StringTok{"% Butterfat of 21 herds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-13-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggqqplot}\NormalTok{(btm}\OperatorTok{$}\NormalTok{perc_BF)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-13-4.pdf}
+
+\subsection{\texorpdfstring{\textbf{\emph{Percent
+protein}}}{Percent protein}}\label{percent-protein}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(btm}\OperatorTok{$}\NormalTok{perc_Protein)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   2.880   2.950   3.150   3.264   3.520   3.820
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pro_data<-btm}\OperatorTok{$}\NormalTok{perc_Protein}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(pro_data,}\StringTok{"normal"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z) }\CommentTok{# mean and SD, the MLE's}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       mean          sd    
+##   3.26428571   0.31246442 
+##  (0.06818533) (0.04821431)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{0}\OperatorTok{:}\DecValTok{7} \CommentTok{# range of x values across where you want distribution}
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{mean=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"mean"}\NormalTok{],}
+                   \DataTypeTok{sd=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"sd"}\NormalTok{]) }\CommentTok{# use mean and sd from actual data}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{pro_data,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{,}\DataTypeTok{color=}\StringTok{"royalblue2"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Percent protein data against a normal distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM Percent protein of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of normal dist."}\NormalTok{) }\CommentTok{# see data points (x values) fall right in middle of probability mass curve}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-14-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# do the same for the gamma distribution}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(pro_data,}\StringTok{"gamma"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      shape       rate   
+##   110.85796    33.96085 
+##  ( 34.15802) ( 10.48780)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dgamma}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{shape=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"shape"}\NormalTok{],}
+                   \DataTypeTok{rate=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"rate"}\NormalTok{])}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{pro_data,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{, }\DataTypeTok{color=}\StringTok{"royalblue2"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Percent protein data against a gamma distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM Percent protein of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of gamma dist."}\NormalTok{) }\CommentTok{#bound at 0}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-14-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggdensity}\NormalTok{(btm}\OperatorTok{$}\NormalTok{perc_Protein, }
+          \DataTypeTok{main =} \StringTok{"Density plot of BTM % Protein"}\NormalTok{,}
+          \DataTypeTok{xlab =} \StringTok{"% Protein of 21 herds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-14-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggqqplot}\NormalTok{(btm}\OperatorTok{$}\NormalTok{perc_Protein)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-14-4.pdf}
+
+\subsection{\texorpdfstring{\textbf{\emph{Percent
+lactose}}}{Percent lactose}}\label{percent-lactose}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(btm}\OperatorTok{$}\NormalTok{perc_Lactose)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   4.530   4.570   4.620   4.614   4.650   4.710
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lac_data<-btm}\OperatorTok{$}\NormalTok{perc_Lactose}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(lac_data,}\StringTok{"normal"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z) }\CommentTok{# mean and SD, the MLE's}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       mean           sd     
+##   4.614285714   0.049528388 
+##  (0.010807980) (0.007642396)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{4}\OperatorTok{:}\DecValTok{6} \CommentTok{# range of x values across where you want distribution}
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{mean=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"mean"}\NormalTok{],}
+                   \DataTypeTok{sd=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"sd"}\NormalTok{]) }\CommentTok{# use mean and sd from actual data}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{lac_data,}\DataTypeTok{y=}\FloatTok{0.00000000000001}\NormalTok{,}\DataTypeTok{color=}\StringTok{"royalblue3"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Percent lactose data against a normal distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM Percent lactose of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of normal dist."}\NormalTok{) }\CommentTok{# see data points (x values) fall right in middle of probability mass curve}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-15-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# do the same for the gamma distribution}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(lac_data,}\StringTok{"gamma"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      shape       rate   
+##   8266.3022   1791.4587 
+##  (2508.5328) ( 543.6614)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dgamma}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{shape=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"shape"}\NormalTok{],}
+                   \DataTypeTok{rate=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"rate"}\NormalTok{])}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{lac_data,}\DataTypeTok{y=}\FloatTok{0.00000000000001}\NormalTok{, }\DataTypeTok{color=}\StringTok{"royalblue3"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Percent lactose data against a gamma distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM Percent lactose of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of gamma dist."}\NormalTok{) }\CommentTok{#bound at 0}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-15-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggdensity}\NormalTok{(btm}\OperatorTok{$}\NormalTok{perc_Lactose, }
+          \DataTypeTok{main =} \StringTok{"Density plot of BTM % Lactose"}\NormalTok{,}
+          \DataTypeTok{xlab =} \StringTok{"% Lactose of 21 herds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-15-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggqqplot}\NormalTok{(btm}\OperatorTok{$}\NormalTok{perc_Lactose)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-15-4.pdf}
+
+\subsection{\texorpdfstring{\textbf{\emph{Percent other
+solids}}}{Percent other solids}}\label{percent-other-solids}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(btm}\OperatorTok{$}\NormalTok{perc_Other.Solids)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    5.62    5.68    5.71    5.72    5.74    5.86
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{solids_data<-btm}\OperatorTok{$}\NormalTok{perc_Other.Solids}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(solids_data,}\StringTok{"normal"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z) }\CommentTok{# mean and SD, the MLE's}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       mean           sd     
+##   5.719523810   0.059799362 
+##  (0.013049291) (0.009227242)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{4}\OperatorTok{:}\DecValTok{8} \CommentTok{# range of x values across where you want distribution}
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{mean=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"mean"}\NormalTok{],}
+                   \DataTypeTok{sd=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"sd"}\NormalTok{]) }\CommentTok{# use mean and sd from actual data}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{solids_data,}\DataTypeTok{y=}\FloatTok{0.00000000000001}\NormalTok{,}\DataTypeTok{color=}\StringTok{"royalblue4"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Percent other solids data against a normal distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM Percent other solids of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of normal dist."}\NormalTok{) }\CommentTok{# see data points (x values) fall right in middle of probability mass curve}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-16-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# do the same for the gamma distribution}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(solids_data,}\StringTok{"gamma"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      shape       rate   
+##   8712.3907   1523.2720 
+##  (2684.0936) ( 469.2993)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dgamma}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{shape=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"shape"}\NormalTok{],}
+                   \DataTypeTok{rate=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"rate"}\NormalTok{])}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{solids_data,}\DataTypeTok{y=}\FloatTok{0.00000000000001}\NormalTok{, }\DataTypeTok{color=}\StringTok{"royalblue4"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Percent other solids data against a gamma distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM Percent other solids of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of gamma dist."}\NormalTok{) }\CommentTok{#bound at 0}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-16-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggdensity}\NormalTok{(btm}\OperatorTok{$}\NormalTok{perc_Other.Solids, }
+          \DataTypeTok{main =} \StringTok{"Density plot of BTM % Other solids"}\NormalTok{,}
+          \DataTypeTok{xlab =} \StringTok{"% Other solids of 21 herds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-16-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggqqplot}\NormalTok{(btm}\OperatorTok{$}\NormalTok{perc_Other.Solids)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-16-4.pdf}
+
+\subsection{\texorpdfstring{\textbf{\emph{MUN}}}{MUN}}\label{mun}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(btm}\OperatorTok{$}\NormalTok{MUN)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    6.51    9.69   10.94   11.57   13.26   17.05
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mun_data<-btm}\OperatorTok{$}\NormalTok{MUN}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(mun_data,}\StringTok{"normal"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z) }\CommentTok{# mean and SD, the MLE's}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       mean          sd    
+##   11.5676190    2.4762354 
+##  ( 0.5403589) ( 0.3820914)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{0}\OperatorTok{:}\DecValTok{25} \CommentTok{# range of x values across where you want distribution}
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{mean=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"mean"}\NormalTok{],}
+                   \DataTypeTok{sd=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"sd"}\NormalTok{]) }\CommentTok{# use mean and sd from actual data}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{mun_data,}\DataTypeTok{y=}\FloatTok{0.001}\NormalTok{,}\DataTypeTok{color=}\StringTok{"firebrick2"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"MUN data against a normal distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM MUN of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of normal dist."}\NormalTok{) }\CommentTok{# see data points (x values) fall right in middle of probability mass curve}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-17-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# do the same for the gamma distribution}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(mun_data,}\StringTok{"gamma"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      shape       rate   
+##   21.613294    1.868431 
+##  ( 6.619068) ( 0.578888)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dgamma}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{shape=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"shape"}\NormalTok{],}
+                   \DataTypeTok{rate=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"rate"}\NormalTok{])}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{mun_data,}\DataTypeTok{y=}\FloatTok{0.001}\NormalTok{, }\DataTypeTok{color=}\StringTok{"firebrick2"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"MUN data against a gamma distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM MUN of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of gamma dist."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-17-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggdensity}\NormalTok{(btm}\OperatorTok{$}\NormalTok{MUN, }
+          \DataTypeTok{main =} \StringTok{"Density plot of BTM MUN"}\NormalTok{,}
+          \DataTypeTok{xlab =} \StringTok{"MUN of 21 herds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-17-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggqqplot}\NormalTok{(btm}\OperatorTok{$}\NormalTok{MUN)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-17-4.pdf}
+
+\subsection{\texorpdfstring{\textbf{\emph{Minnesota
+coliforms}}}{Minnesota coliforms}}\label{minnesota-coliforms}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(btm}\OperatorTok{$}\NormalTok{Coliforms)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    0.00    0.00    0.00    1.19    0.00    5.00
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mcoli_data<-btm}\OperatorTok{$}\NormalTok{Coliforms}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(mcoli_data,}\StringTok{"normal"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z) }\CommentTok{# mean and SD, the MLE's}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      mean         sd    
+##   1.1904762   2.1295885 
+##  (0.4647143) (0.3286026)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{0}\OperatorTok{:}\DecValTok{10} \CommentTok{# range of x values across where you want distribution}
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{mean=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"mean"}\NormalTok{],}
+                   \DataTypeTok{sd=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"sd"}\NormalTok{]) }\CommentTok{# use mean and sd from actual data}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{, }\DataTypeTok{x=}\NormalTok{mcoli_data,}\DataTypeTok{y=}\FloatTok{0.00000000000001}\NormalTok{,}\DataTypeTok{color=}\StringTok{"firebrick"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Coliforms (Minn.) data against a normal distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM Coliforms (Minn) of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of normal dist."}\NormalTok{) }\CommentTok{# see data points (x values) fall right in middle of probability mass curve}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-18-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mcoli_data_no0<-mcoli_data[mcoli_data}\OperatorTok{>}\DecValTok{0}\NormalTok{]}
+
+\CommentTok{# # do the same for the gamma distribution}
+\CommentTok{# z <-fitdistr(mcoli_data_no0,"gamma")}
+\CommentTok{# print(z)}
+\CommentTok{# p_density <- dgamma(x=x,}
+\CommentTok{#                    shape=z$estimate["shape"],}
+\CommentTok{#                    rate=z$estimate["rate"])}
+\CommentTok{# qplot(x,p_density,geom="line") + annotate(geom="point",x=mcoli_data_no0,y=0.00000000000001, color="firebrick") + labs(title="Coliforms (Minn.) data against a gamma distribution density curve",}
+\CommentTok{#        x="BTM Coliforms (Minn.)  of 21 herds",}
+\CommentTok{#        y="Probability density of gamma dist.") #bound at 0}
+
+
+\KeywordTok{ggdensity}\NormalTok{(btm}\OperatorTok{$}\NormalTok{Coliforms, }
+          \DataTypeTok{main =} \StringTok{"Density plot of BTM Coliforms (Minn)"}\NormalTok{,}
+          \DataTypeTok{xlab =} \StringTok{"Coliform counts of 21 herds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-18-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggqqplot}\NormalTok{(btm}\OperatorTok{$}\NormalTok{Coliforms)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-18-3.pdf}
+
+\subsection{\texorpdfstring{\textbf{\emph{Minnesota non-ag
+Streps}}}{Minnesota non-ag Streps}}\label{minnesota-non-ag-streps}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(btm}\OperatorTok{$}\NormalTok{Non_ag_Strep)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    10.0    35.0    45.0   156.4   205.0  1250.0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{strep_data<-btm}\OperatorTok{$}\NormalTok{Non_ag_Strep}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(strep_data,}\StringTok{"normal"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z) }\CommentTok{# mean and SD, the MLE's}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      mean         sd    
+##   156.42857   261.94394 
+##  ( 57.16085) ( 40.41883)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{0}\OperatorTok{:}\DecValTok{2000} \CommentTok{# range of x values across where you want distribution}
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{mean=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"mean"}\NormalTok{],}
+                   \DataTypeTok{sd=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"sd"}\NormalTok{]) }\CommentTok{# use mean and sd from actual data}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{strep_data,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{,}\DataTypeTok{color=}\StringTok{"firebrick2"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Non-ag Streps (Minn.) data against a normal distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM non-ag Streps (Minn) of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of normal dist."}\NormalTok{) }\CommentTok{# see data points (x values) fall right in middle of probability mass curve}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-19-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# do the same for the gamma distribution}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(strep_data,}\StringTok{"gamma"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       shape         rate    
+##   0.784269959   0.005013601 
+##  (0.205274781) (0.001753532)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dgamma}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{shape=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"shape"}\NormalTok{],}
+                   \DataTypeTok{rate=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"rate"}\NormalTok{])}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{strep_data,}\DataTypeTok{y=}\FloatTok{0.00000000000001}\NormalTok{, }\DataTypeTok{color=}\StringTok{"firebrick2"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Non-ag Streps (Minn.) data against a gamma distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM non-ag Streps (Minn.)  of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of gamma dist."}\NormalTok{) }\CommentTok{#bound at 0}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-19-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggdensity}\NormalTok{(btm}\OperatorTok{$}\NormalTok{Non_ag_Strep, }
+          \DataTypeTok{main =} \StringTok{"Density plot of BTM Non-ag Streps (Minn)"}\NormalTok{,}
+          \DataTypeTok{xlab =} \StringTok{"Non-ag Strep counts of 21 herds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-19-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggqqplot}\NormalTok{(btm}\OperatorTok{$}\NormalTok{Non_ag_Strep)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-19-4.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#---------------------------------------------------}
+
+\CommentTok{# remove outlier}
+\NormalTok{strep_data_trim<-strep_data[strep_data}\OperatorTok{<}\DecValTok{400}\NormalTok{]}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(strep_data_trim,}\StringTok{"normal"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z) }\CommentTok{# mean and SD, the MLE's}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      mean         sd    
+##   101.75000    96.23247 
+##  ( 21.51823) ( 15.21569)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{0}\OperatorTok{:}\DecValTok{500} \CommentTok{# range of x values across where you want distribution}
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{mean=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"mean"}\NormalTok{],}
+                   \DataTypeTok{sd=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"sd"}\NormalTok{]) }\CommentTok{# use mean and sd from actual data}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{strep_data_trim,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{,}\DataTypeTok{color=}\StringTok{"firebrick2"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Non-ag Streps (Minn.) data against a normal distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM non-ag Streps (Minn) of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of normal dist."}\NormalTok{) }\CommentTok{# see data points (x values) fall right in middle of probability mass curve}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-19-5.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggqqplot}\NormalTok{(strep_data_trim)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-19-6.pdf}
+
+\subsection{\texorpdfstring{\textbf{\emph{Minnesota non-ag Streps log10
+transformation}}}{Minnesota non-ag Streps log10 transformation}}\label{minnesota-non-ag-streps-log10-transformation}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(btm}\OperatorTok{$}\NormalTok{log10_strep)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   1.000   1.544   1.653   1.865   2.312   3.097
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{streplog_data<-btm}\OperatorTok{$}\NormalTok{log10_strep}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(streplog_data,}\StringTok{"normal"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z) }\CommentTok{# mean and SD, the MLE's}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       mean          sd    
+##   1.86480124   0.50115719 
+##  (0.10936146) (0.07733023)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{0}\OperatorTok{:}\DecValTok{10} \CommentTok{# range of x values across where you want distribution}
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{mean=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"mean"}\NormalTok{],}
+                   \DataTypeTok{sd=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"sd"}\NormalTok{]) }\CommentTok{# use mean and sd from actual data}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{streplog_data,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{,}\DataTypeTok{color=}\StringTok{"firebrick2"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Non-ag Streps (Minn.) log10 data against a normal distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM non-ag Streps (Minn) log10 of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of normal dist."}\NormalTok{) }\CommentTok{# see data points (x values) fall right in middle of probability mass curve}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-20-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# do the same for the gamma distribution}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(streplog_data,}\StringTok{"gamma"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      shape       rate   
+##   14.250137    7.641638 
+##  ( 4.347151) ( 2.372643)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dgamma}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{shape=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"shape"}\NormalTok{],}
+                   \DataTypeTok{rate=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"rate"}\NormalTok{])}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{streplog_data,}\DataTypeTok{y=}\FloatTok{0.00000000000001}\NormalTok{, }\DataTypeTok{color=}\StringTok{"firebrick2"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Non-ag Streps (Minn.) log10 data against a gamma distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM non-ag Streps (Minn.) log10 of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of gamma dist."}\NormalTok{) }\CommentTok{#bound at 0}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-20-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggdensity}\NormalTok{(btm}\OperatorTok{$}\NormalTok{log10_strep, }
+          \DataTypeTok{main =} \StringTok{"Density plot of BTM Non-ag Streps (Minn) log10"}\NormalTok{,}
+          \DataTypeTok{xlab =} \StringTok{"Non-ag Strep counts of 21 herds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-20-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggqqplot}\NormalTok{(btm}\OperatorTok{$}\NormalTok{log10_strep)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-20-4.pdf}
+
+\subsection{\texorpdfstring{\textbf{\emph{Minnesota Staph.
+aureus}}}{Minnesota Staph. aureus}}\label{minnesota-staph.-aureus}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(btm}\OperatorTok{$}\NormalTok{Staph_aureus)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    0.00    0.00   30.00   43.57   55.00  320.00
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sa_data<-btm}\OperatorTok{$}\NormalTok{Staph_aureus}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(sa_data,}\StringTok{"normal"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z) }\CommentTok{# mean and SD, the MLE's}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      mean        sd   
+##   43.57143   68.21086 
+##  (14.88483) (10.52516)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{0}\OperatorTok{:}\DecValTok{500} \CommentTok{# range of x values across where you want distribution}
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{mean=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"mean"}\NormalTok{],}
+                   \DataTypeTok{sd=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"sd"}\NormalTok{]) }\CommentTok{# use mean and sd from actual data}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{sa_data,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{,}\DataTypeTok{color=}\StringTok{"firebrick3"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"S. aureus (Minn.) data against a normal distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM S. aureus (Minn) of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of normal dist."}\NormalTok{) }\CommentTok{# see data points (x values) fall right in middle of probability mass curve}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-21-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sa_data_no0<-sa_data[sa_data}\OperatorTok{>}\DecValTok{0}\NormalTok{]}
+\CommentTok{# do the same for the gamma distribution, with 0's removed}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(sa_data_no0,}\StringTok{"gamma"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      shape         rate   
+##   1.78316185   0.02533454 
+##  (0.64364400) (0.01053816)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dgamma}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{shape=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"shape"}\NormalTok{],}
+                   \DataTypeTok{rate=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"rate"}\NormalTok{])}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{sa_data_no0,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{, }\DataTypeTok{color=}\StringTok{"firebrick3"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"S. aureus (Minn.) data against a gamma distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM S. aureus (Minn.)  of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of gamma dist."}\NormalTok{) }\CommentTok{#bound at 0}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-21-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggdensity}\NormalTok{(btm}\OperatorTok{$}\NormalTok{Staph_aureus, }
+          \DataTypeTok{main =} \StringTok{"Density plot of BTM Staph. aureus (Minn)"}\NormalTok{,}
+          \DataTypeTok{xlab =} \StringTok{"Staph. aureus counts of 21 herds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-21-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggqqplot}\NormalTok{(btm}\OperatorTok{$}\NormalTok{Staph_aureus)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-21-4.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#---------------------------------------------------}
+
+\CommentTok{# remove outlier}
+\NormalTok{sa_data_trim<-sa_data[sa_data}\OperatorTok{<}\DecValTok{200}\NormalTok{]}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(sa_data_trim,}\StringTok{"normal"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z) }\CommentTok{# mean and SD, the MLE's}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      mean         sd    
+##   29.750000   29.558205 
+##  ( 6.609416) ( 4.673563)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{0}\OperatorTok{:}\DecValTok{200} \CommentTok{# range of x values across where you want distribution}
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{mean=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"mean"}\NormalTok{],}
+                   \DataTypeTok{sd=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"sd"}\NormalTok{]) }\CommentTok{# use mean and sd from actual data}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{sa_data_trim,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{,}\DataTypeTok{color=}\StringTok{"firebrick3"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"S. aureus (Minn.) data against a normal distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM S. aureus (Minn) of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of normal dist."}\NormalTok{) }\CommentTok{# see data points (x values) fall right in middle of probability mass curve}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-21-5.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggqqplot}\NormalTok{(sa_data_trim)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-21-6.pdf}
+
+\subsection{\texorpdfstring{\textbf{\emph{Minnesota Staph. aureus log10
+transformation}}}{Minnesota Staph. aureus log10 transformation}}\label{minnesota-staph.-aureus-log10-transformation}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(btm}\OperatorTok{$}\NormalTok{log10_aureus)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   0.000   0.000   1.477   1.061   1.740   2.505
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{aureuslog_data<-btm}\OperatorTok{$}\NormalTok{log10_aureus}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(aureuslog_data,}\StringTok{"normal"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z) }\CommentTok{# mean and SD, the MLE's}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      mean         sd    
+##   1.0614409   0.8666937 
+##  (0.1891281) (0.1337337)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{0}\OperatorTok{:}\DecValTok{5} \CommentTok{# range of x values across where you want distribution}
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{mean=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"mean"}\NormalTok{],}
+                   \DataTypeTok{sd=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"sd"}\NormalTok{]) }\CommentTok{# use mean and sd from actual data}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{aureuslog_data,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{,}\DataTypeTok{color=}\StringTok{"firebrick3"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"S. aureus (Minn.) log10 data against a normal distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM S. aureus (Minn.) log10 of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of normal dist."}\NormalTok{) }\CommentTok{# see data points (x values) fall right in middle of probability mass curve}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-22-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# # do the same for the gamma distribution - can't do, has zeroes in it}
+\CommentTok{# z <-fitdistr(aureuslog_data,"gamma")}
+\CommentTok{# print(z)}
+\CommentTok{# p_density <- dgamma(x=x,}
+\CommentTok{#                    shape=z$estimate["shape"],}
+\CommentTok{#                    rate=z$estimate["rate"])}
+\CommentTok{# qplot(x,p_density,geom="line") + annotate(geom="point",x=aureuslog_data,y=0.00000000000001, color="firebrick3") + labs(title="S. aureus (Minn.) log10 data against a gamma distribution density curve",}
+\CommentTok{#        x="BTM S. aureus (Minn.) log10 of 21 herds",}
+\CommentTok{#        y="Probability density of gamma dist.") #bound at 0}
+
+\KeywordTok{ggdensity}\NormalTok{(btm}\OperatorTok{$}\NormalTok{log10_aureus, }
+          \DataTypeTok{main =} \StringTok{"Density plot of BTM S. aureus (Minn) log10"}\NormalTok{,}
+          \DataTypeTok{xlab =} \StringTok{"S. aureus counts of 21 herds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-22-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggqqplot}\NormalTok{(btm}\OperatorTok{$}\NormalTok{log10_aureus)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-22-3.pdf}
+
+\subsection{\texorpdfstring{\textbf{\emph{Minnesota Staph.
+species}}}{Minnesota Staph. species}}\label{minnesota-staph.-species}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(btm}\OperatorTok{$}\NormalTok{Staph_sp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    0.00   20.00   65.00   95.48  125.00  665.00
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sp_data<-btm}\OperatorTok{$}\NormalTok{Staph_sp}
+\NormalTok{sp_data_no0<-sp_data[sp_data}\OperatorTok{>}\DecValTok{0}\NormalTok{]}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(sp_data,}\StringTok{"normal"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z) }\CommentTok{# mean and SD, the MLE's}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      mean         sd    
+##    95.47619   136.66003 
+##  ( 29.82166) ( 21.08710)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{0}\OperatorTok{:}\DecValTok{800} \CommentTok{# range of x values across where you want distribution}
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{mean=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"mean"}\NormalTok{],}
+                   \DataTypeTok{sd=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"sd"}\NormalTok{]) }\CommentTok{# use mean and sd from actual data}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{sp_data,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{,}\DataTypeTok{color=}\StringTok{"firebrick4"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Staph sp. (Minn.) data against a normal distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM Staph. sp. (Minn) of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of normal dist."}\NormalTok{) }\CommentTok{# see data points (x values) fall right in middle of probability mass curve}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-23-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# do the same for the gamma distribution, took out 0 value}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(sp_data_no0,}\StringTok{"gamma"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       shape         rate    
+##   0.998528451   0.009960363 
+##  (0.276553909) (0.003521411)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dgamma}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{shape=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"shape"}\NormalTok{],}
+                   \DataTypeTok{rate=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"rate"}\NormalTok{])}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{sp_data_no0,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{, }\DataTypeTok{color=}\StringTok{"firebrick4"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Staph sp. (Minn.) data against a gamma distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM Staph sp. (Minn.)  of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of gamma dist."}\NormalTok{) }\CommentTok{#bound at 0}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-23-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggdensity}\NormalTok{(btm}\OperatorTok{$}\NormalTok{Staph_sp, }
+          \DataTypeTok{main =} \StringTok{"Density plot of BTM Staph. species (Minn)"}\NormalTok{,}
+          \DataTypeTok{xlab =} \StringTok{"Staph. species counts of 21 herds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-23-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggqqplot}\NormalTok{(btm}\OperatorTok{$}\NormalTok{Staph_sp)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-23-4.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#---------------------------------------------------}
+
+\CommentTok{# remove outlier}
+\NormalTok{sp_data_trim<-sa_data[sa_data}\OperatorTok{<}\DecValTok{200}\NormalTok{]}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(sp_data_trim,}\StringTok{"normal"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z) }\CommentTok{# mean and SD, the MLE's}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      mean         sd    
+##   29.750000   29.558205 
+##  ( 6.609416) ( 4.673563)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{0}\OperatorTok{:}\DecValTok{200} \CommentTok{# range of x values across where you want distribution}
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{mean=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"mean"}\NormalTok{],}
+                   \DataTypeTok{sd=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"sd"}\NormalTok{]) }\CommentTok{# use mean and sd from actual data}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{sp_data_trim,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{,}\DataTypeTok{color=}\StringTok{"firebrick4"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Staph sp. (Minn.) data against a normal distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM Staph. sp. (Minn) of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of normal dist."}\NormalTok{) }\CommentTok{# see data points (x values) fall right in middle of probability mass curve}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-23-5.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggqqplot}\NormalTok{(sp_data_trim)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-23-6.pdf}
+
+\subsection{\texorpdfstring{\textbf{\emph{Minnesota Staph. species log10
+transformation}}}{Minnesota Staph. species log10 transformation}}\label{minnesota-staph.-species-log10-transformation}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(btm}\OperatorTok{$}\NormalTok{log10_staphsp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   0.000   1.301   1.813   1.667   2.097   2.823
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{staphsplog_data<-btm}\OperatorTok{$}\NormalTok{log10_staphsp}
+\NormalTok{z <-}\KeywordTok{fitdistr}\NormalTok{(staphsplog_data,}\StringTok{"normal"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(z) }\CommentTok{# mean and SD, the MLE's}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       mean          sd    
+##   1.66665641   0.59304206 
+##  (0.12941239) (0.09150838)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{0}\OperatorTok{:}\DecValTok{5} \CommentTok{# range of x values across where you want distribution}
+\NormalTok{p_density <-}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DataTypeTok{x=}\NormalTok{x,}
+                   \DataTypeTok{mean=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"mean"}\NormalTok{],}
+                   \DataTypeTok{sd=}\NormalTok{z}\OperatorTok{$}\NormalTok{estimate[}\StringTok{"sd"}\NormalTok{]) }\CommentTok{# use mean and sd from actual data}
+\KeywordTok{qplot}\NormalTok{(x,p_density,}\DataTypeTok{geom=}\StringTok{"line"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{"point"}\NormalTok{,}\DataTypeTok{x=}\NormalTok{staphsplog_data,}\DataTypeTok{y=}\FloatTok{0.0000001}\NormalTok{,}\DataTypeTok{color=}\StringTok{"firebrick4"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Staph sp. (Minn.) log10 data against a normal distribution density curve"}\NormalTok{,}
+       \DataTypeTok{x=}\StringTok{"BTM Staph. sp (Minn.) log10 of 21 herds"}\NormalTok{,}
+       \DataTypeTok{y=}\StringTok{"Probability density of normal dist."}\NormalTok{) }\CommentTok{# see data points (x values) fall right in middle of probability mass curve}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-24-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# # do the same for the gamma distribution - can't do, has zeroes in it}
+\CommentTok{# z <-fitdistr(staphsplog_data,"gamma")}
+\CommentTok{# print(z)}
+\CommentTok{# p_density <- dgamma(x=x,}
+\CommentTok{#                    shape=z$estimate["shape"],}
+\CommentTok{#                    rate=z$estimate["rate"])}
+\CommentTok{# qplot(x,p_density,geom="line") + annotate(geom="point",x=staphsplog_data,y=0.00000000000001, color="firebrick3") + labs(title="Staph. sp (Minn.) log10 data against a gamma distribution density curve",}
+\CommentTok{#        x="BTM Staph. sp (Minn.) log10 of 21 herds",}
+\CommentTok{#        y="Probability density of gamma dist.") #bound at 0}
+
+\KeywordTok{ggdensity}\NormalTok{(btm}\OperatorTok{$}\NormalTok{log10_staphsp, }
+          \DataTypeTok{main =} \StringTok{"Density plot of BTM Staph. sp (Minn) log10"}\NormalTok{,}
+          \DataTypeTok{xlab =} \StringTok{"Staph. sp counts of 21 herds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-24-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggqqplot}\NormalTok{(btm}\OperatorTok{$}\NormalTok{log10_staphsp)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{probability_dist_BTM_40herd_edited_files/figure-latex/unnamed-chunk-24-3.pdf}
+
+\end{document}

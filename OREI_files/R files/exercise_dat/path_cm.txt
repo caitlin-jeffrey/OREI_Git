@@ -1,0 +1,7 @@
+none,cns,corynebac,other,sa,strep
+none,2172,104,0,0,11,0
+cns,407,208,0,0,6,0
+corynebac,76,5,0,0,1,0
+other,66,55,0,0,6,0
+sa,17,87,0,0,17,0
+strep,39,36,0,0,20,0

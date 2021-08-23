@@ -1,0 +1,292 @@
+---
+title: "Untitled"
+author: "Caitlin Jeffrey"
+date: "November 25, 2020"
+output: html_document
+---
+
+
+```{r}
+OREI<-read.csv("OREIculture_results_csv.csv", na.strings= ".", header = T)
+##OREI is data frame with all quarters (4212)
+#make data frame where diagnosis is clear of IMI yes/no
+
+table(OREI$quarter_code)
+library(dplyr)
+yes_no<-filter(OREI, (quarter_code == "1" | quarter_code == "2" | quarter_code == "21" | quarter_code == "24" | quarter_code == "27" | quarter_code == "29" | quarter_code =="35" | quarter_code=="3" | quarter_code=="5" | quarter_code=="6")) #3338 observations, lose 874 quarters
+
+#remove any missing SCC readings
+yes_no_scc<-subset(yes_no, (scc!= "Not analyzed" & scc!= "Not analyzed: abnormal" & scc!= "Not analyzed: volume")) #now 3333 observations
+sum(is.na(yes_no_scc$scc)) #checking to make sure no NA's
+```
+
+```{r}
+library(ggplot2)
+options(scipen=999)
+
+str(yes_no_scc) #scc is character
+yes_no_scc$scc<-as.numeric(as.character(yes_no_scc$scc)) #coerce to numeric
+str(yes_no_scc)
+
+summary(yes_no_scc$scc)
+sd(yes_no_scc$scc)
+
+rem_outlier<-filter(yes_no_scc, scc<10000000) #3328 observations, lost 5 observations
+
+d<-density(yes_no_scc$scc)
+plot(d, main="scc distribution")
+
+d<-density(rem_outlier$scc)
+plot(d, main="scc distribution")
+
+yes_no_scc %>%
+  ggplot(aes(x=scc))+
+  geom_histogram(binwidth = 1000)+
+  labs(title="scc distribution",
+       x="scc in cells/mL",
+       y="frequency",
+       color="legend")+
+    theme(legend.position = "right")
+
+rem_outlier %>%
+  ggplot(aes(x=scc))+
+  geom_histogram()+
+  labs(title="scc distribution",
+       x="scc in cells/mL",
+       y="frequency",
+       color="legend")+
+    theme(legend.position = "right")
+
+```
+
+
+```{r}
+
+checkIMI<-filter(yes_no_scc, (quarter_code == "1" | quarter_code == "2" | quarter_code == "21" | quarter_code == "24" | quarter_code == "27" | quarter_code == "29" | quarter_code =="35")) #1046 observations of IMI
+no_IMI<-filter(yes_no_scc, (quarter_code=="3" | quarter_code=="5" | quarter_code=="6"))#2287 observations
+
+unique(checkIMI$IMI_series) #check to make sure can just call as "yes" for IMI series
+unique(no_IMI$IMI_series)
+```
+
+
+```{r}
+setwd(path.exercise)
+##dealing with distribution of SCC
+write.csv(yes_no_scc, "yes_no_scc.csv", row.names = T) #write csv to make LS below 12,500=0
+yes_no_ls<-read.csv("yes_no_scc1.csv", na.strings= ".", header = T)
+yes_no_ls<-yes_no_ls[-c(1,37)] #get rid of "x" column at beginning
+str(yes_no_ls)
+
+#repeat summary statistics, but using linear score (which also has NO NEG numbers, set all neg to 0 (anything below 12,50))
+summary(yes_no_ls$ls)
+sd(yes_no_ls$ls)
+
+summary(yes_no_ls$ls_no_neg)
+sd(yes_no_ls$ls_no_neg)
+
+d<-density(yes_no_ls$ls_no_neg)
+plot(d, main="scc distribution, no neg LS")
+
+yes_no_ls %>%
+  ggplot(aes(x=ls_no_neg))+
+  geom_histogram()+
+  labs(title="scc distribution, no neg LS",
+       x="scc in cells/mL",
+       y="frequency",
+       color="legend")+
+    theme(legend.position = "right")
+
+d<-density(yes_no_ls$ls)
+plot(d, main="Distribution of Linear Scores, allowing negative values")
+
+yes_no_ls %>%
+  ggplot(aes(x=ls))+
+  geom_histogram()+
+  labs(title="scc distribution, allowing neg linear scores",
+       x="scc in cells/mL",
+       y="frequency",
+       color="legend")+
+    theme(legend.position = "right")
+```
+
+
+```{r}
+yes_no_ls$scc<-as.numeric(as.character(yes_no_ls$scc))
+str(yes_no_ls$scc)
+yes_no_ls$scc_200k<-ifelse(yes_no_ls$scc >= 200000, yes_no_ls$scc_200k<-"yes", "no")
+
+yes_no_ls$cause_path<-ifelse(yes_no_ls$quarter_code== "27" | yes_no_ls$quarter_code== "24"| yes_no_ls$path_1== "yeast" | yes_no_ls$path_1== "?" |yes_no_ls$path_1== "bacillus" | yes_no_ls$path_1== "gramneg.coli" | yes_no_ls$path_1== "gramneg.noncoli" | yes_no_ls$path_1== "serratia" , yes_no_ls$cause_path<-"other", yes_no_ls$path_1) #categorize by causative pathogen (put mixed inf with "other")
+
+write.csv(yes_no_ls, "yes_no_ls.csv", row.names = T) #check to see if worked
+yes_no_ls$cause_path[yes_no_ls$cause_path == ""] <-"none"
+
+unique(yes_no_ls$cause_path)
+no_imi_ser<-filter(yes_no_ls, cause_path == "none") #2287, making sure all cause_path = "none" are no IMI; same number as abover "no IMI"
+unique(imi_ser$IMI_series) #yup, only "no" and ""
+df<-yes_no_ls #rename yes_no_ls so it's shorter for this project
+
+##commands used for summary tables
+df %>% count(farm); df %>% count(farm, IMI_series); df %>% count(farm, scc_200k); df %>% count(farm, cause_path, scc_200k); df %>% count(farm, cause_path)
+```
+
+
+```{r}
+#chi square for IMI_SCC200k
+noimi_lowscc<-filter(df, (IMI_series==""|IMI_series=="no") & scc_200k=="no") #2179 quarters no AND low
+unique(noimi_lowscc$IMI_series); unique(noimi_lowscc$scc_200k) #checking above code
+
+noimi_hiscc<-filter(df, (IMI_series==""|IMI_series=="no") & scc_200k=="yes") #108 quarters no AND high (2179+108=2287)
+
+yesimi_lowscc<-filter(df, IMI_series=="yes" & scc_200k=="no") #636 observations
+
+yesimi_hiscc<-filter(df, IMI_series=="yes" & scc_200k=="yes") #410 observations (636+410=1046)
+
+imi_scc <- matrix(c(2179, 108, 636, 410),nrow=2,ncol=2)
+
+rows<-c("SCC_below_200k", "SCC_equal_to_or_above_200k")
+rownames(imi_scc)<-rows
+columns<-c("Negative_IMI","Positive_IMI")
+colnames(imi_scc)<-columns
+
+###Pearson Chi-squared Test###
+(scc_pearson <- chisq.test(imi_scc))
+
+#Pearson residuals = (p_ij - p_i(p_j))/sqrt(p_i(p_j)/N)
+scc_pearson$residuals 
+
+tiff(file="pear_plot.tiff",
+width=8, height=6, units="in", res=100)
+mosaicplot(t(imi_scc), shade = T, main="Shading Using Pearson Residuals for elevated SCC and IMI status
+           of a quarter")
+dev.off()
+
+#resid <- as.table(matrix(c(5.629983, -8.32481, 
+                          # -13.124460, 19.40656), nrow=2, byrow=T))
+
+```
+
+```{r}
+###multi-logit baseline model, can path_type predict elevated SCC?
+library(readxl); library(tidyverse); library(DescTools); library(gtools);library(gridExtra)
+library(VGAM); library(nnet); library(MASS); library(ResourceSelection)
+
+#Density Plot for LS by path_type         
+#Alpha = # changes how "see through" the density plots for each color are
+#scale_fill_manual changes the color choices of each star color group
+plot_theme <- theme(axis.title = element_text(size = 12),
+                    axis.text = element_text(size = 10),
+                    plot.title = element_text(size = 16, hjust = 0.5),
+                    plot.subtitle = element_text(size = 12, hjust = 0.5),
+                    plot.caption = element_text(size = 12),
+                    legend.position = "none")
+
+plot_theme2 <- theme(axis.title = element_text(size = 18),
+                     axis.text = element_text(size = 10),
+                     plot.title = element_text(size = 20, hjust = 0.5),
+                     plot.subtitle = element_text(size = 12, hjust = 0.5),
+                     plot.caption = element_text(size = 18),
+                     legend.title=element_text(size=20),
+                     legend.text=element_text(size=18),
+                     legend.position = c(0.925,0.825))
+
+densplot<-df %>% ggplot(aes(x = ls, fill=cause_path)) + 
+          
+          geom_density(aes(y=..count..),alpha=0.5) + theme_bw()+
+          
+          scale_fill_manual(values = c("dodgerblue","darkorange1","#FFFF00","seashell2", "springgreen4", "darkmagenta"))+
+  
+          scale_x_continuous(limits = c(-15, 11))+
+          
+          labs(title="Pathogen type density plot by Linear score",
+               x= "Linear score") + plot_theme2
+
+ggsave("densplot.png", densplot, width = 15 , height = 8)
+
+```
+
+```{r}
+#convert cause_path to a factor, then set "none" as baseline category
+df$cause_path<-as.factor(df$cause_path)
+df$cause_path <- relevel(df$cause_path, "none")
+levels(df$cause_path)
+
+path_nnet <- multinom(cause_path~ls, data=df) #model for cause_path~ls using nnet package, output is easier to read
+summary(path_nnet)
+
+#convert quarter to a factor, then set "LH" as baseline category; cause_path~ls AND quarter
+df$quarter<-as.factor(df$quarter)
+df$quarter <- relevel(df$quarter, "LH")
+
+path_q_nnet <- multinom(cause_path~ls + quarter, data=df)
+summary(path_q_nnet)
+
+##making a confusion matrix for baseline category model, ls alone
+predict(path_nnet)
+(path_cm <- table(actual_path = df$cause_path, predicted_path = predict(path_nnet)))
+sum(diag(path_cm))/sum(path_cm) ## Correct % rate: 0.7191719
+# Error %:
+1-sum(diag(path_cm))/sum(path_cm) #% error: 0.2808281
+
+# Proportion of quarter that is misclassified = P(Pred = j | Obs = i)
+path_cm_prop<-prop.table(path_cm,margin = 1)
+
+
+
+##making a confusion matrix for baseline category model, ls AND quarter
+predict(path_q_nnet)
+(path_q_cm <- table(actual_q_path = df$cause_path, predicted_q_path = predict(path_q_nnet)))
+sum(diag(path_q_cm))/sum(path_q_cm) ## Correct % rate: 0.7185719
+# Error %:
+1-sum(diag(path_q_cm))/sum(path_q_cm) #% error: 0.2814281
+
+# Proportion of quarter that is misclassified = P(Pred = j | Obs = i)
+path_q_cm_prop<-prop.table(path_q_cm,margin = 1)
+
+write.table(path_q_cm, file = "path_q_cm.txt", sep = ",", row.names = T)
+
+write.table(path_cm_prop, file = "path_cm_prop.txt", sep = ",", row.names = T)
+write.table(path_q_cm_prop, file = "path_q_cm_prop.txt", sep = ",", row.names = T)
+```
+
+```{r}
+##tinkering with stargazer to make fancy tables for regression summary output
+stargazer(path_nnet, type="html",
+ dep.var.caption = ("Pathogen type"),
+ covariate.labels=c("Linear score"), out="models.html")
+
+stargazer(path_q_nnet, type="html",
+ dep.var.caption = ("Pathogen type"),
+ covariate.labels=c("Linear score"), out="models2.html")
+
+stargazer(path_nnet, type="html", out="models.htm")
+
+```
+
+```{r}
+library(GGally)
+##prep data frame for logistic regression with multiple predictors
+df$housing_type<-ifelse(df$farm== "Butterworks" | df$farm== "Choiniere" | df$farm== "StonyPond"  | df$farm== "Swallowdale"  | df$farm== "Lynd", df$housing_type<-"BP", "TS") #categorize by housing type, BP (bedded pack) vs. TS (tiestall)
+df %>% count(farm, housing_type) #check that above if, then worked
+
+df$IMI_series[df$IMI_series == "no"] <-""
+df %>% count(IMI_series) #changed IMI series to all yes or ""
+
+df$success<-ifelse(df$IMI_series== "yes", df$success<-1, 0)
+df %>% count(success, IMI_series)#check that above if, then worked
+
+IMI_add <- glm(success~ls + housing_type, data=df); summary(IMI_add)
+stargazer(IMI_add, type="html",
+ #dep.var.caption = (""),
+ dep.var.labels=c("Intramammary infection"),
+ covariate.labels=c("Linear score", "Housing type (BP=ref)"), out="IMI1.html")
+
+#interaction allowed
+IMI_int <- glm(success~ls * housing_type, data=df); summary(IMI_int)
+stargazer(IMI_int, type="html",
+ #dep.var.caption = (""),
+ dep.var.labels=c("Intramammary infection"),
+ covariate.labels=c("Linear score", "Housing type (BP=ref)"), out="IMI2.html")
+
+```
+

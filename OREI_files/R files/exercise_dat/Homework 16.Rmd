@@ -1,0 +1,62 @@
+---
+title: "Homework 16"
+author: "Caitlin Jeffrey"
+date: "March 21, 2019"
+output: html_document
+---
+
+```{r}
+lek <- "C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat/gsg_leks.csv"
+lek<- read.csv("gsg_leks.csv", header = T, na.strings = ".");
+table(lek$year)
+```
+
+```{r}
+install.packages("plyr", dependencies = T, repos = 'http://cran.us.r-project.org')
+library(plyr)
+```
+
+```{r}
+n <- count(lek, c("year", "complex")); dim(n)
+```
+
+
+```{r}
+dim(y_sd); dim(y_mn); dim(y_mi); dim(y_ma)
+```
+See that my objects from ex. 14 have 118 rows, but new object has 119
+
+```{r}
+str(n); any(is.na(n))
+```
+Find that it's "complex"" with a missing value (not just an NA)
+
+```{r}
+which(n$complex =="")
+```
+
+```{r}
+new_n <- n[-c(99), ]; dim(new_n); which(new_n$complex =="")
+```
+
+```{r}
+o1 <- merge(y_ma, y_mi); head(o1); o2 <- merge(y_sd, y_mn); head(o2); o3 <- merge(o1, o2); head(o3)
+```
+
+merged all 4 data objects from ex. 14 into "o3"
+
+```{r}
+o4 <- merge(o3, new_n); head(o4); dim(o4)
+```
+```{r}
+save(o4, file = "o4.Rdata"); write.csv(o4, "o4.csv", row.names = F)
+```
+
+
+
+
+
+
+
+
+

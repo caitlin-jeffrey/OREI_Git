@@ -1,0 +1,65 @@
+---
+title: "Untitled"
+author: "Caitlin Jeffrey"
+date: "February 3, 2019"
+output: html_document
+---
+
+---
+
+Googled **R package reshape** and downloaded PDF to R_manual folder
+
+---
+
+Installed **reshape**
+
+
+```{r}
+install.packages("reshape", dependencies = T)
+```
+
+
+        
+---
+
+Determined active packages in current R session
+
+```{r}
+search()
+```
+
+ 
+
+---
+
+Loaded reshape into R session and documented packages in my R session 
+
+```{r}
+library("reshape")
+search()
+
+```
+
+ 
+ ---
+ 
+ Unloaded reshape, then checked to see it was gone from active packages
+ 
+```{r}
+detach("package:reshape", unload=TRUE)
+```
+
+
+```{r}
+search()
+```
+
+ 
+
+---
+
+Updated existing packages
+
+```{r}
+update.packages(ask = F)
+```

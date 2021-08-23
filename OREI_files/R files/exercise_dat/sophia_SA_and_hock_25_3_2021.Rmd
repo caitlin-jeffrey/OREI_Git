@@ -1,0 +1,198 @@
+---
+title: "Untitled"
+author: "Caitlin Jeffrey"
+date: "March 25, 2021"
+output: html_document
+---
+
+
+```{r}
+#chi square for cns
+cns_200k <- matrix(c(192,425, 108,2180),nrow=2,ncol=2)
+chisq.test(cns_200k)
+
+cns_100k <- matrix(c(319,298, 181,2107),nrow=2,ncol=2)
+chisq.test(cns_100k)
+
+cns_chron200k <- matrix(c(165,321, 108,2180),nrow=2,ncol=2)
+chisq.test(cns_chron200k)
+
+cns_chron100k <- matrix(c(278,208, 181,2107),nrow=2,ncol=2)
+chisq.test(cns_chron100k)
+
+
+#chi square for coryne
+coryne_200k <- matrix(c(6,76, 108,2180),nrow=2,ncol=2)
+chisq.test(coryne_200k)
+
+coryne_100k <- matrix(c(7,75, 181,2107),nrow=2,ncol=2)
+chisq.test(coryne_100k)
+
+coryne_chron200k <- matrix(c(2,11, 108,2180),nrow=2,ncol=2)
+chisq.test(coryne_chron200k)
+
+coryne_chron100k <- matrix(c(2,11, 181,2107),nrow=2,ncol=2)
+chisq.test(coryne_chron100k)
+```
+
+```{r}
+# mosaicplot(x=cns_200k,
+#            col=c("goldenrod", "grey", "black"),
+#            shade=FALSE)
+
+# template for straight ahead chi-square; first, make matrix, then name rows and columns
+
+cns_200k <- matrix(c(192,425, 108,2180),nrow=2,ncol=2)
+rows<-c("elevated SCC (above 200k)", "normal SCC (below 200k)")
+rownames(cns_200k)<-rows
+columns<-c("Positive IMI","Negative IMI")
+colnames(cns_200k)<-columns
+
+chisq.test(cns_200k)
+
+###Pearson Chi-squared Test###
+(cns_200k_pearson <- chisq.test(cns_200k)) # same as above, really; but saves output to an object
+
+#Pearson residuals = (p_ij - p_i(p_j))/sqrt(p_i(p_j)/N)
+cns_200k_pearson$residuals
+
+# tiff(file="pear_plot.tiff",
+# width=8, height=6, units="in", res=100)
+mosaicplot(t(cns_200k), shade = T, main="Shading Using Pearson Residuals for elevated SCC and IMI status
+           of a quarter")
+# dev.off()
+
+print(cns_200k)
+```
+
+
+```{r}
+
+# template for straight ahead chi-square; first, make matrix, then name rows and columns
+
+SA_hock <- matrix(c(28,4,41,5),nrow=2,ncol=2)
+rows<-c("Pos. hock lesion", "Neg. hock lesion")
+rownames(SA_hock)<-rows
+columns<-c("Pos. Staph. aureus","Neg. Staph. aureus")
+colnames(SA_hock)<-columns
+
+chisq.test(SA_hock)
+
+###Pearson Chi-squared Test###
+(SA_hock_pearson <- chisq.test(SA_hock)) # same as above, really; but saves output to an object
+
+#Pearson residuals = (p_ij - p_i(p_j))/sqrt(p_i(p_j)/N)
+SA_hock_pearson$residuals
+
+tiff(file="hock_plot.tiff",
+width=8, height=6, units="in", res=100)
+mosaicplot(t(SA_hock), shade = T, main="Shading Using Pearson Residuals for Presence
+           of S. aureus as a Function of Hock Lesion Status")
+dev.off()
+
+print(SA_hock)
+```
+
+
+```{r}
+################################################################################
+######################Fisher's Tea Test#########################################
+################################################################################
+##Entering in the results
+(tea <- as.table(matrix(c(3,1,1,3), nrow=2, 
+                        dimnames = list(Guess = c("Milk","Tea"),
+                                        Truth = c("Milk","Tea")))))
+SA_hock
+
+SA_3hock <- matrix(c(15,17,7,14,27,4),nrow=3,ncol=2)
+rows3<-c("Hock score 3", "Hock score 2", "Hock score 1")
+rownames(SA_3hock)<-rows3
+columns3<-c("Pos. Staph. aureus","Neg. Staph. aureus")
+colnames(SA_3hock)<-columns3
+
+hi_lo <- matrix(c(3,8,5,1,10,3,3,1,9,2,15,2,9,7,5,2,8,0,13,0),nrow=10,ncol=2, byrow = T)
+rows10<-c("SP","BJ","BW","CF","GV","LF","OB","PB","SW", "VT")
+rownames(hi_lo)<-rows10
+columns2<-c("stay_high","stay_low")
+colnames(hi_lo)<-columns2
+
+##Fisher's Exact Test
+?fisher.test()
+
+#Not using the mid p-value
+fisher.test(tea, alternative = "greater")
+fisher.test(SA_hock, alternative = "greater")
+
+fisher.test(hi_lo, alternative = "greater", simulate.p.value = T)
+
+fisher.test(SA_3hock, alternative = "greater")
+
+###Need another package to use a function to find the mid pvalue
+library(exact2x2)
+fisher.exact(tea, alternative = "greater", midp=T)
+fisher.exact(SA_hock, alternative = "greater", midp=T)
+
+fisher.exact(hi_lo, alternative = "greater", midp=T)
+
+# fisher.exact(SA_3hock, alternative = "greater", midp=T) # can't use midpoint ones for 3x2
+
+##Risk ratio will calculate the midpoint and the regular pvalue
+##Need to cut it in half for our two tail test
+library(epitools)
+riskratio(tea)$p.value/2
+fisher.test(tea, alternative="greater")$p.value
+fisher.exact(tea, alternative="greater", midp=T)$p.value
+
+library(epitools)
+riskratio(SA_hock)$p.value/2
+fisher.test(SA_hock, alternative="greater")$p.value
+fisher.exact(SA_hock, alternative="greater", midp=T)$p.value
+
+
+
+######What happens if the sample size is very big?#######
+data(UCBAdmissions)
+UCB_tab <- apply(UCBAdmissions, 1:2, sum)
+fisher.test(UCB_tab)
+
+###Still worked quickly!###
+
+###But what if the table is very big?####
+UCB_df <- data.frame(UCBAdmissions)
+UCB_df <- UCB_df %>% mutate(GA = paste0(Gender, ":", Admit))
+
+(UCB_tab2 <-xtabs(Freq ~ GA + Dept, data = UCB_df))
+fisher.test(UCB_tab2)
+
+#Too many permutations to test to see if there is an association!
+#Can calculate a simulated p-value. B= Number of samples to simulate
+fisher.test(UCB_tab2, simulate.p.value = T, B=10000)
+print(SA_3hock)
+```
+
+
+
+
+```{r}
+library(epiR)
+
+#cns
+epi.tests(cns_200k, conf.level=0.95)
+
+epi.tests(cns_100k, conf.level=0.95)
+
+epi.tests(cns_chron200k, conf.level=0.95)
+
+epi.tests(cns_chron100k, conf.level=0.95)
+
+#coryne
+epi.tests(coryne_200k, conf.level=0.95)
+
+epi.tests(coryne_100k, conf.level=0.95)
+
+epi.tests(coryne_chron200k, conf.level=0.95)
+
+epi.tests(coryne_chron100k, conf.level=0.95)
+
+```
+

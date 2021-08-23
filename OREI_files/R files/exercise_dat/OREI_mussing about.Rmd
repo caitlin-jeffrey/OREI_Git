@@ -1,0 +1,384 @@
+---
+title: "Untitled"
+author: "Caitlin Jeffrey"
+date: "May 7, 2020"
+output: html_document
+---
+
+
+```{r}
+
+all_cns<-filter(OREI, (path_1=="cns" | path_2=="cns" | path_3=="cns" | path_4=="cns") & (quarter_code == "1" | quarter_code == "2" | quarter_code == "21" | quarter_code == "24" | quarter_code == "27" | quarter_code == "29" | quarter_code =="35")) # 683 quarters that are IMI and CNS
+
+all_cns_not_necc_IMI<-filter(OREI, (path_1=="cns" | path_2=="cns" | path_3=="cns" | path_4=="cns")) # 748 quarters
+
+cns<-table(all_cns_not_necc_IMI$path_1_maldi_final_id)
+cns2<-table(all_cns_not_necc_IMI$path_2_maldi_final_id)
+cns3<-table(all_cns_not_necc_IMI$path_3_maldi_final_id)
+cns4<-table(all_cns_not_necc_IMI$path_4_maldi_final_id)
+
+chrom<-filter(all_cns_not_necc_IMI, path_1_maldi_final_id=="staphylococcus chromogenes" | path_2_maldi_final_id=="staphylococcus chromogenes") # 167
+
+chrom$scc<-as.numeric(chrom$scc)
+fivenum(chrom$scc)
+
+chrom_nomixed<-filter(chrom, quarter_code!="27")
+
+print(cns)
+print(cns2)
+print(cns3)
+print(cns4)
+
+write.csv(chrom_nomixed, "chrom_nomixed.csv", row.names = T)
+
+chrom_ed<-read.csv("chrom_nomixed1.csv", na.strings= ".", header = T) # csv with all chromogenes isolates so far, quarters at one point in time, causing an IMI - then manually assigned trans/chronic - BUT the trans ones need to be verified that on either side quarter is negative, and the chron ones sometimes only had 2 visits and not three - so need to decide what consitutes "chronic"
+
+chrom_ed %>% group_by(inf_type, over_200k) %>% summarise(n = n())
+
+chrom_addedstatus<-read.csv("chrom_nomixed1.csv", na.strings= ".", header = T) # edited to make best conjecture about a type of infection quarter was involved with (looked at all three visits for each quarter)
+
+chrom_addedstatus %>% group_by(inf_type_conjecture, over_200k) %>% summarise(n = n())
+
+## repeat process for staph haemolyticus
+
+hem<-filter(all_cns_not_necc_IMI, path_1_maldi_final_id=="staphylococcus haemolyticus" | path_2_maldi_final_id=="staphylococcus haemolyticus") # 20 observations
+
+write.csv(hem, "cns_hem.csv", row.names = T)
+
+## repeat process for staph simulans
+sim<-filter(all_cns_not_necc_IMI, path_1_maldi_final_id=="staphylococcus simulans" | path_2_maldi_final_id=="staphylococcus simulans") # 21 observations
+
+write.csv(hem, "cns_sim.csv", row.names = T)
+
+```
+
+
+
+```{r}
+sample_check<-read.csv("sample_check_amplicon.csv", na.strings= ".", header = T) #327 obs. (removed the "not replaced" 3 quarters that are nynt)
+
+nnn<-subset(sample_check, status=="nnn")
+unique(nnn$UniqueID) # 80 nnn, no duplicates - we were aiming for 80
+
+nnnt<-subset(sample_check, status=="nnnt") # 30 observations
+unique(nnnt$UniqueID) # 30 nnnt, no duplicates; made sure 1-2-3 for all in list
+
+yyy<-subset(sample_check, status=="yyy") # 80 yyy
+unique(yyy$UniqueID) # 80 yyy, no duplicates
+
+yyyt<-subset(sample_check, status=="yyyt") # 30 observations
+unique(yyyt$UniqueID) # 30 yyt, no duplicates; made sure 1-2-3 for all in list
+
+stat<-table(sample_check$status)
+print(stat)
+
+nyn<-subset(sample_check, status=="nynt")
+nyy<-subset(sample_check, status=="nyyt")
+unique(nyy$Cow.Name) # 11 cows, 2 from CF have 4 obs each (4x4=16, plus 3x7=21)
+
+milk<-read.csv("sample_check_MILKamplicon.csv", na.strings= ".", header = T) #297
+milk<-select(milk, -c(status))
+teat<-read.csv("sample_check_TEATamplicon.csv", na.strings= ".", header = T) #292
+teat<-select(teat, -c(status))
+diff<-setdiff(teat, milk)
+
+print(diff)
+
+write.csv(diff, "teat_milk_diff.csv", row.names = T)
+
+
+```
+
+# checking if pellet treatment makes a difference
+```{r}
+data<-read.csv("pellet_treat.csv", na.strings= ".", header = T)
+library(dplyr)
+
+summarise(group_by(data, IMI_species), mean=mean(SCC), min=min(SCC), max=max(SCC)) 
+data %>% group_by(pellet_treatment, bands) %>% summarise(n = n())
+```
+
+
+
+```{r}
+
+all_cns<-filter(OREI, (path_1=="cns" | path_2=="cns" | path_3=="cns" | path_4=="cns") & (quarter_code == "1" | quarter_code == "2" | quarter_code == "21" | quarter_code == "24" | quarter_code == "27" | quarter_code == "29" | quarter_code =="35")) # 683 quarters that are IMI and CNS
+
+all_cns_not_necc_IMI<-filter(OREI, (path_1=="cns" | path_2=="cns" | path_3=="cns" | path_4=="cns")) # 748 quarters
+
+cns<-table(all_cns_not_necc_IMI$path_1_maldi_final_id)
+cns2<-table(all_cns_not_necc_IMI$path_2_maldi_final_id)
+cns3<-table(all_cns_not_necc_IMI$path_3_maldi_final_id)
+cns4<-table(all_cns_not_necc_IMI$path_4_maldi_final_id)
+
+second_contam <- filter(all_trim, second_quarter_code=="8" | second_quarter_code=="4" | second_quarter_code=="7" | second_quarter_code=="13" )
+
+write.csv(all_trim, "all_trim_3_9_21.csv", row.names = T)
+
+write.csv(no_second, "no_second.csv", row.names = T)
+
+write.csv(second_contam, "second_contam.csv", row.names = T)
+
+fours<-filter(OREI, quarter_code=="4")
+
+eights<-filter(OREI, quarter_code=="8")
+
+threes<-filter(OREI, quarter_code=="3")
+
+john_corynebac<-filter(all_trim, (first_path_1=="corynebac" | first_path_2=="corynebac" | first_path_3=="corynebac" | first_path_4=="corynebac" | second_path_1=="corynebac" | second_path_2=="corynebac" | second_path_3=="corynebac" | second_path_4=="corynebac" | third_path_1=="corynebac" | third_path_2=="corynebac" | third_path_3=="corynebac" | third_path_4=="corynebac" | fourth_path_1=="corynebac" | fourth_path_2=="corynebac" | fourth_path_3=="corynebac" | fourth_path_4=="corynebac")) #123 quarters had corynebac isolated at some point
+
+
+write.csv(john_corynebac, "all_coryne_john.csv", row.names = T)
+unique(box_plot$path)
+
+hannah_sa<-filter(all_trim, (first_path_1=="sa" | first_path_2=="sa" | first_path_3=="sa" | first_path_4=="sa" | second_path_1=="sa" | second_path_2=="sa" | second_path_3=="sa" | second_path_4=="sa" | third_path_1=="sa" | third_path_2=="sa" | third_path_3=="sa" | third_path_4=="sa" | fourth_path_1=="sa" | fourth_path_2=="sa" | fourth_path_3=="sa" | fourth_path_4=="sa")) 
+
+write.csv(hannah_sa, "hannah_sa.csv", row.names = T)
+
+john_sa<-filter(OREI, (path_1=="sa" | path_2=="sa" | path_3=="sa" | path_4=="sa") & (quarter_code == "1" | quarter_code == "2" | quarter_code == "21" | quarter_code == "24" | quarter_code == "27" | quarter_code == "29" | quarter_code =="35"))
+
+john_cns<-filter(OREI, (path_1=="cns" | path_2=="cns" | path_3=="cns" | path_4=="cns") & (quarter_code == "1" | quarter_code == "2" | quarter_code == "21" | quarter_code == "24" | quarter_code == "27" | quarter_code == "29" | quarter_code =="35"))
+
+john_noIMI<-filter(OREI, (quarter_code == "3" | quarter_code == "5" | quarter_code =="6"))
+
+write.csv(john_sa, "sa_IMI_quarters_single_measurement.csv", row.names = T)
+write.csv(john_cns, "cns_IMI_quarters_single_measurement.csv", row.names = T)
+write.csv(john_noIMI, "no_IMI_quarters_single_measurement.csv", row.names = T)
+
+write.csv(hannah_sa1, "hannah_sa1.csv", row.names = T)
+
+write.csv(cns, "cns_id1.csv", row.names = T)
+write.csv(cns2, "cns_id2.csv", row.names = T)
+```
+
+```{r}
+##sa all quarters over time
+sa_all_orei<-filter(OREI, (path_1=="sa" | path_2=="sa" | path_3=="sa" | path_4=="sa")) #138 observations
+
+sa_orei_strictIMI<-filter(sa_all_orei, (quarter_code == "1" | quarter_code == "2" | quarter_code == "21" | quarter_code =="35")) #121 observations, over 4 visits
+
+#now, find any where coryne may have been isolated, BUT was not causing the IMI, and remove from list
+write.csv(sa_orei_strictIMI, "sa_orei_strictIMI.csv", row.names = T)
+
+unique(sa_all_orei$farm)
+```
+
+```{r}
+box_plot<-read.csv("for_box_plot_withzeros.csv", na.strings= ".", header = T)
+
+box_plot %>%
+  ggplot(aes(x=path, y=ls)) +
+  geom_boxplot(shape=8)+
+  geom_jitter(shape=1, position=position_jitter(0.1))+
+  labs(title="Linear score by pathogen type",
+       x="Pathogen type",
+       y="Linear score")+
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(axis.title.x = element_text(margin = margin(t = 20)))+
+  theme(axis.title.y = element_text(margin = margin(r = 20)))+
+  theme(plot.title = element_text(margin = margin(b = 20)))
+
+
+library(RColorBrewer)
+library(hrbrthemes)
+
+#tiff("rplot.tiff", units="in", width=5, height=5, res=300)
+box_plot %>%
+  ggplot(aes(x=path, y=ls, fill=path)) +
+    geom_boxplot() +
+    #scale_fill_brewer(palatte="Blues", discrete = TRUE, alpha=0.6) +
+    scale_fill_brewer(palette="Blues")+
+    geom_jitter(color="black", size=0.4, alpha=0.9) +
+    geom_hline(yintercept=4, linetype="dashed", color = "red", size=1.1)+
+    labs(title="Linear score by pathogen type",
+       x="Pathogen type",
+       y="Linear score")+
+    theme(plot.title = element_text(hjust = 0.5))+
+    theme(axis.title.x = element_text(margin = margin(t = 20)))+
+    theme(axis.title.y = element_text(margin = margin(r = 20)))+
+    theme(plot.title = element_text(margin = margin(b = 20)))+
+    #theme(legend.position="none")+
+    #theme_bw()
+    theme(panel.grid.major = element_line(colour = "grey"))+
+    theme(panel.grid.minor = element_blank())+
+    theme(panel.background = element_blank())+
+    theme(axis.line = element_line(colour = "grey"))
+#dev.off()
+```
+
+
+
+```{r}
+coryne_IMI<-filter(OREI, (path_1=="corynebac" | path_2=="corynebac" | path_3=="corynebac" | path_4=="corynebac") & IMI_series=="yes")
+coryne_IMI_john<-table(coryne_IMI$farm)
+write.csv(coryne_IMI_john, "IMI_coryne_john.csv", row.names = T)
+```
+
+```{r}
+cns<-filter(OREI, (path_1=="cns" | path_2=="cns" | path_3=="cns" | path_4=="cns")) #& IMI_series=="yes")
+cns$cow_quarter<-paste(cns$farm, cns$cow_id, cns$quarter, sep='_')
+unique(cns$cow_quarter)
+
+write.csv(cns, "cns.csv", row.names = T)
+```
+
+
+##don't think i actually need anything below
+
+```{r}
+#make data fram with no choin visits, so rest of farms 1-2-3
+notchoin123<-filter(onetwothree, first_farm != "Choiniere")
+
+### give all but choiniere blank columns for fourth visit
+fournames<-colnames(fourth)
+notchoin123[c(fournames)] <- NA 
+
+choin123<-filter(onetwothree, first_farm=="Choiniere") #make data frame with 1-2-3 choin visit
+choin123$fourth_uniqueID<-paste(choin$cow_id, choin$quarter, "fourth", sep='_') #populate fourth_unique_ID for 1-2-3 choin visits so can index when merge fourth visit in
+
+allchoin<-merge(choin123, fourth, by=c("fourth_uniqueID"), all = TRUE) #make a data frame with only choin visits, all four
+
+#onetwothree$fourth_uniqueID<-ifelse(onetwothree$ifchoin==1, (onetwothree$fourth_uniqueID <- paste(onetwothree$cow_id, onetwothree$quarter, "fourth", sep='_')), NA) #try to create a column with information in onetwothree that can index with fourth (by actually filling in fourth_uniqueID, only for choiniere)
+
+
+#all<-merge(onetwothree, fourth, by=c("fourth_uniqueID"))
+#names(onetwothree)[names(onetwothree)=="first_farm"] <-"farm"
+#names(fourth)[names(fourth)=="fourth_farm"] <-"farm"
+#all<-merge(onetwothree, fourth, by="farm")
+```
+
+
+```{r}
+
+
+
+
+allchoin<-select(allchoin, -fourth_uniqueID) 
+allchoin$fourth_uniqueID<-paste(allchoin$cow_id, allchoin$quarter, "fourth", sep='_')#drop fourth_uniqueID so can have same column order as rest of , then add back in at end
+
+#now use rbind to put choiniere below other farms in dataframe
+notchoin<-filter(onetwothree, first_farm != "Choiniere")
+notchoin<-select(notchoin, -fourth_uniqueID) 
+notchoin$fourth_uniqueID<-paste(notchoin$cow_id, notchoin$quarter, "fourth", sep='_') #drop fourth_uniqueID so can have same column order as the choin df then add back in at end
+all<-rbind(notchoin, allchoin) #yay! this works- but, only for cows with all 3 visits- have not yet figured out keeping ALL cows and just putting in NA yet
+```
+
+
+```{r}
+chronic<-filter(all, first_IMI_series=="yes" & second_IMI_series=="yes" & third_IMI_series=="yes")
+```
+
+
+#onetwothree$fourth_uniqueID<-ifelse(onetwothree$ifchoin==1, (onetwothree$fourth_uniqueID <- paste(onetwothree$cow_id, onetwothree$quarter, "fourth", sep='_')), NA) #try to create a column with information in onetwothree that can index with fourth (by actually filling in fourth_uniqueID, only for choiniere)
+
+
+```{r}
+levels(OREI$path1_IMI)
+```
+
+```{r}
+levels(OREI$IMI_series)
+unique(OREI$IMI_series)
+```
+
+```{r}
+levels(OREI$IMI_series) <- c(levels(OREI$IMI_series), "yes ")
+OREI$IMI_series[OREI$IMI_series == "yes "] <- "yes"
+OREI$IMI_series <- factor(OREI$IMI_series)
+unique(OREI$IMI_series)
+```
+
+
+```{r}
+count(OREI$path_1); count(OREI$path_2); count(OREI$path_3)
+```
+
+
+```{r}
+count(OREI, 'IMI_series'); count(OREI, 'date')
+```
+
+```{r}
+codelist<-count(OREI, 'quarter_code')
+```
+
+```{r}
+any(is.na(OREI$quarter_code)); which(OREI$quarter_code =="NA")
+```
+```{r}
+is.factor(OREI$quarter_code)
+qc <- as.factor(c(OREI$quarter_code))
+OREI <-read.csv("OREIculture_results_csv.csv", na.strings= ".", header = T, colClasses= c("factor", "factor", "factor", "factor", "factor", "factor", "factor", "factor", "factor", "factor", "factor", "factor", "factor", "factor", "factor"))
+str(OREI)
+```
+
+```{r}
+write.csv(qc, "quartercodes.csv", row.names = F)
+```
+```{r}
+qc<-count(OREI$quarter_code)
+```
+
+as.data.frame(BW); levels(BW$date)
+```{r}
+BW<-subset(OREI, farm =="Butterworks");
+BWdates<-data.frame(BW$date); unique(BW$date)
+```
+
+```{r}
+SW<-subset(OREI, farm =="Swallowdale");
+unique(SW$cow_id)
+```
+
+```{r}
+unique(SW$date); unique(LF$date); unique(VT$date); unique(SP$date); unique(BJ$date); unique(CF$date); unique(PB$date); unique(OB$date); unique(GV$date)
+```
+
+
+
+```{r}
+bwIMI<-subset(BW, quarter_code == "1" | quarter_code == "2" | quarter_code == "21" | quarter_code == "24" | quarter_code == "27" | quarter_code == "29" | quarter_code =="35")
+```
+
+#get cows from CF who are: yes-yes-yes-no(1), yes-yes-yes-yes(2), yes-yes-yes-[NOT OBSERVED](5); interestingly, all cows fall into 2 or 5!
+#cf_scenario125<-filter(all_trim, (first_IMI_series=="yes" & second_IMI_series=="yes" & third_IMI_series=="yes") &  (first_farm == "Choiniere" | second_farm == "Choiniere" | third_farm == "Choiniere" | fourth_farm =="Choiniere"))#22 observations
+
+#get cows from CF who are: no["" or "no"]-yes-yes-yes(3), [NOT OBSERVED]-yes-yes-yes(4)
+#cf_scenario34<-filter(all_trim, (first_IMI_series != "yes" & second_IMI_series=="yes" & third_IMI_series=="yes" & fourth_IMI_series == "yes") &  (first_farm == "Choiniere" | second_farm == "Choiniere" | third_farm == "Choiniere" | fourth_farm =="Choiniere"))
+
+
+#checking all scenarios for choiniere captured above
+
+```{r}
+check_cf_chronic<-filter(chronic_all, first_farm == "Choiniere" | second_farm == "Choiniere" | third_farm == "Choiniere" | fourth_farm =="Choiniere") #capture all entries in chronic from choiniere
+cf_pos<-filter(all_trim, (first_farm == "Choiniere" | second_farm == "Choiniere" | third_farm == "Choiniere" | fourth_farm =="Choiniere") & (first_IMI_series == "yes" | second_IMI_series=="yes" | third_IMI_series=="yes" | fourth_IMI_series=="yes")) #make object with any choiniere entry that's positive for IMI
+#is_cf_pos_good<-filter(all_trim, first_farm == "Choiniere" | second_farm == "Choiniere" | third_farm == "Choiniere" | fourth_farm =="Choiniere") 
+#working<-filter(is_cf_pos_good, first_IMI_series == "yes" | second_IMI_series=="yes" | third_IMI_series=="yes" | fourth_IMI_series=="yes") checking above code works- yes- both are 85 observations
+scen125<-filter(cf_pos, first_IMI_series == "yes" & second_IMI_series=="yes" & third_IMI_series=="yes") #check if chronic scenario 1, 2, or 5 captured- only see 1 and 5
+#unique(cfchron$fourth_IMI_series) #all cows with fourth visit who were IMI positive 1-2-3 also IMI positive 4... interesting
+does_scen2_exist<-filter(all_trim, (first_IMI_series == "yes" & second_IMI_series=="yes" & third_IMI_series=="yes") & (first_farm == "Choiniere" | second_farm == "Choiniere" | third_farm == "Choiniere" | fourth_farm =="Choiniere")) #check if scen 2 exists from file with all obs- same obs as captured in scen125, and no, appears scen 2 doesn't exist
+scen34<-filter(all_trim, (second_IMI_series=="yes" & third_IMI_series == "yes" & fourth_IMI_series=="yes") & (first_farm == "Choiniere" | second_farm == "Choiniere" | third_farm == "Choiniere" | fourth_farm =="Choiniere")) #from big file, first IMI 4 "", 1 no, 23 yes
+scen34_chronic<-filter(chronic_all, (second_IMI_series=="yes" & third_IMI_series=="yes" & fourth_IMI_series=="yes") & (first_farm == "Choiniere" | second_farm == "Choiniere" | third_farm == "Choiniere" | fourth_farm =="Choiniere"))
+table(scen34_chronic$first_IMI_series)
+```
+
+cf_chronic<-filter(cf, (first_IMI_series=="yes" & second_IMI_series=="yes" & third_IMI_series=="yes" ) | (second_IMI_series=="yes" & third_IMI_series=="yes" & fourth_IMI_series == "yes")) #27 observations
+
+
+#always infected- need to ensure same path_ID, AND what about Stony Pond? go back and put them in- yes-yes
+```{r}
+#get cows from farms with only three visits (no CF) who are: yes-yes-yes
+chronic_nocf<-filter(all_trim, (first_IMI_series=="yes" & second_IMI_series=="yes" & third_IMI_series=="yes") & (first_farm != "Choiniere" | second_farm != "Choiniere" | third_farm != "Choiniere" | fourth_farm !="Choiniere")) #162 obserations
+
+#get all CF cows, then always infected within CF
+cf<-filter(all_trim, first_farm == "Choiniere" | second_farm == "Choiniere" | third_farm == "Choiniere" | fourth_farm == "Choiniere") #164 observations
+cf_chronic<-filter(cf, (first_IMI_series=="yes" & second_IMI_series=="yes" & third_IMI_series=="yes" & fourth_IMI_series == "yes")) #20 observations
+
+#combine CF with rest of farms
+chronic_all<-rbind(chronic_nocf, cf_chronic) #182 quarters
+
+samepath<-filter(chronic_all, ((first_path_1==second_path_1) & (second_path_1==third_path_1)) | ((second_path_1==third_path_1) & (third_path_1==fourth_path_1)))
+#not 100% perfect, could have become mixed infection or multiple pathogens isolated but not neccessarily called "path_1"; 160 observations
+
+cf_always<-filter(cf, (first_IMI_series=="yes" & second_IMI_series=="yes" & third_IMI_series=="yes" & fourth_IMI_series == "yes")) 
+```

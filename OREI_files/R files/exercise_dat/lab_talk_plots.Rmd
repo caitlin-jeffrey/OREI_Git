@@ -1,0 +1,96 @@
+---
+title: "Untitled"
+author: "Caitlin Jeffrey"
+date: "July 22, 2019"
+output: html_document
+---
+
+```{r}
+setwd(path.exercise)
+counts<-read.csv("plots_for_lab_meeting_7_22.csv", na.strings= ".", header = T)
+str(counts)
+```
+```{r}
+boxplot(counts$SCC)
+points(counts$Herd, counts$SCC)
+```
+```{r}
+install.packages("ggplot2")
+```
+
+```{r}
+library(ggplot2)
+```
+
+```{r}
+ggplot(counts, aes(Herd, scc)) +
+  geom_jitter()
+```
+```{r}
+boxplot(counts$SCC, lwd = 0.5, ylab = 'SCC in cells/mL', xlab = "Bulk tank milk samples")
+stripchart(counts$SCC, vertical = TRUE, 
+    method = "jitter", add = TRUE, pch = 20, col = 'blue')
+```
+
+
+```{r}
+boxplot(counts$RAW_CFU_ML, lwd = 0.5, ylab = 'Raw CFU/mL', xlab = "Bulk tank milk samples")
+stripchart(counts$RAW_CFU_ML, vertical = TRUE, 
+    method = "jitter", add = TRUE, pch = 20, col = 'blue')
+```
+
+```{r}
+boxplot(counts$M_COLIFORMS, lwd = 0.5, ylab = 'Coliforms (colonies/mL)', xlab = "Bulk tank milk samples")
+stripchart(counts$M_COLIFORMS, vertical = TRUE, 
+    method = "jitter", add = TRUE, pch = 20, col = 'blue')
+```
+
+```{r}
+boxplot(counts$M_NON_AG_STREP, lwd = 0.5, ylab = 'Non-Ag Strep (colonies/mL)', xlab = "Bulk tank milk samples")
+stripchart(counts$M_NON_AG_STREP, vertical = TRUE, 
+    method = "jitter", add = TRUE, pch = 20, col = 'blue')
+```
+
+```{r}
+boxplot(counts$M_STAPH_AUREUS, lwd = 0.5, ylab = 'Staph. aureus (colonies/mL)', xlab = "Bulk tank milk samples")
+stripchart(counts$M_STAPH_AUREUS, vertical = TRUE, 
+    method = "jitter", add = TRUE, pch = 20, col = 'blue')
+```
+
+```{r}
+boxplot(counts$M_STAPH_SPP, lwd = 0.5, ylab = 'Staph. species (colonies/mL)', xlab = "Bulk tank milk samples")
+stripchart(counts$M_STAPH_SPP, vertical = TRUE, 
+    method = "jitter", add = TRUE, pch = 20, col = 'blue')
+```
+```{r}
+boxplot(counts$M_STREP_AG, lwd = 0.5, ylab = 'Strep. agalactiae (colonies/mL)', xlab = "Bulk tank milk samples")
+stripchart(counts$M_STREP_AG, vertical = TRUE, 
+    method = "jitter", add = TRUE, pch = 20, col = 'blue')
+```
+```{r}
+boxplot(counts$log_B_BACILLUS, lwd = 0.5, ylab = 'Bacillus count (log10 of colonies/mL)', xlab = "Used bedding samples")
+stripchart(counts$log_B_BACILLUS, vertical = TRUE, 
+    method = "jitter", add = TRUE, pch = 20, col = 'red')
+```
+```{r}
+boxplot(counts$log_B_COLIFORMS, lwd = 0.5, ylab = 'Coliforms count (log10 of colonies/mL)', xlab = "Used bedding samples")
+stripchart(counts$log_B_COLIFORMS, vertical = TRUE, 
+    method = "jitter", add = TRUE, pch = 20, col = 'red')
+```
+
+```{r}
+boxplot(counts$log_B_ENV_STREP, lwd = 0.5, ylab = 'Env. Strep. count (log10 of colonies/mL)', xlab = "Used bedding samples")
+stripchart(counts$log_B_ENV_STREP, vertical = TRUE, 
+    method = "jitter", add = TRUE, pch = 20, col = 'red')
+```
+
+```{r}
+boxplot(counts$log_B_GRAM_NEG, lwd = 0.5, ylab = 'Gram neg. count (log10 of colonies/mL)', xlab = "Used bedding samples")
+stripchart(counts$log_B_GRAM_NEG, vertical = TRUE, 
+    method = "jitter", add = TRUE, pch = 20, col = 'red')
+```
+```{r}
+boxplot(counts$log_B_STAPH_SPP, lwd = 0.5, ylab = 'Staph. spp. count (log10 of colonies/mL)', xlab = "Used bedding samples")
+stripchart(counts$log_B_STAPH_SPP, vertical = TRUE, 
+    method = "jitter", add = TRUE, pch = 20, col = 'red')
+```

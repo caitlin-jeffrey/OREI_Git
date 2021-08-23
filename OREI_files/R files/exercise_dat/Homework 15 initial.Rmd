@@ -1,0 +1,45 @@
+---
+title: "Homework 15"
+author: "Caitlin Jeffrey"
+date: "March 14, 2019"
+output: html_document
+---
+
+```{r}
+poppy <- "C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat/bearclawpoppy.csv"
+poppy<- read.csv("bearclawpoppy.csv", header = T, na.strings = c("", "99", "?", "na", "NA")); str(poppy)
+```
+
+
+```{r}
+levels(poppy$LANDFORM)
+```
+
+Took first 2 letters from landform variable and created new object with them
+```{r}
+lf <- substr(poppy$LANDFORM, 1, 2); head(lf)
+```
+
+
+used ifelse to act on object lf that has first two letters of old landform variable
+```{r}
+poppy$LANDFORM = ifelse(lf == "af", "af_type", ifelse(lf == "bf", "bf_type", ifelse(lf == "wb", "ws_type", ifelse(lf == "ws", "ws_type", ifelse(lf == "lb", "lb_type", "ub"))))); poppy$LANDFORM <- as.factor(poppy$LANDFORM); levels(poppy$LANDFORM)
+```
+
+
+Checking to make sure type "ub" not just a typo, but there are a number of observations with this variable name.
+
+```{r}
+which(poppy$LANDFORM == "ub")
+```
+
+creating new variable "presab"
+
+```{r}
+poppy$presab <- ifelse(poppy$PLANT %in% c("poppydead", "poppyalive", "poppy"), 1, ifelse(poppy$PLANT == "absence", 0, "NA")); poppy$presab <- as.factor(poppy$presab); levels(poppy$presab)
+```
+
+
+
+
+

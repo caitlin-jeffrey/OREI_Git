@@ -1,0 +1,37 @@
+---
+title: "Homework 22"
+author: "Caitlin Jeffrey"
+date: "April 23, 2019"
+output: html_document
+---
+
+
+```{r}
+coy<- read.csv("coyote_drugs.csv", header = T, na.strings = ""); str(coy)
+```
+
+```{r}
+means <- aggregate(coy[, 3], by = list(coy$age, coy$drugtype), FUN = mean, na.rm = T); names(means)[3] <- "Mean.drug.level"; names(means)[1] <- "Age.group"; names(means)[2] <- "Drug.type"; means
+```
+
+```{r}
+sd <- aggregate(coy[, 3], by = list(coy$age, coy$drugtype), FUN = sd, na.rm = T); two_sd<-(sd$x*2); two_sd; all<-cbind(means, two_sd); all
+```
+
+
+```{r}
+toplot <- xtabs(all$Mean.drug.level ~ all$Drug.type + all$Age.group); toplot
+barz <- xtabs(all$two_sd ~ all$Drug.type + all$Age.group); barz
+```
+
+
+
+```{r}
+plot.new()
+yht<-range(min(0), max(110));
+plt<-barplot(toplot, ylim=yht, xlab= "Age Group", ylab= "Mean Drug Level", space=c(0,.5), col=c("cyan3", "hot pink", "tomato"), beside=T)
+abline(h=0)
+arrows(x0=plt, y0= toplot + barz, x1=plt, y1= toplot - barz, angle=90, code=3, length=.04, lwd=.4)
+legend("topright", c("Control", "Drug1", "Drug2"), fill=c("cyan3", "hot pink", "tomato"), bty="n", cex=1.25, horiz=T)
+```
+

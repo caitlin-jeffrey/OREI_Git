@@ -1,0 +1,137 @@
+---
+title: "subsetting helath categories"
+author: "Caitlin Jeffrey"
+date: "August 10, 2020"
+output: html_document
+---
+
+
+##identifying cows that fall into health categories; "always infected"; "became infected"; "became infected and recovered"; "never infected"
+
+```{r}
+setwd(path.exercise)
+#all_trim<-read.csv("all_trim.csv", na.strings= ".", header = T)
+```
+
+
+#always infected- need to ensure same path_ID, AND what about Stony Pond? go back and put them in- yes-yes
+```{r}
+#get cows from farms with only three visits (no CF) who are: yes-yes-yes
+always_nocf<-filter(all_trim, (first_IMI_series=="yes" & second_IMI_series=="yes" & third_IMI_series=="yes") & (first_farm != "Choiniere" | second_farm != "Choiniere" | third_farm != "Choiniere" | fourth_farm !="Choiniere")) #162 observations
+
+#get all CF cows, then always infected within CF
+cf<-filter(all_trim, first_farm == "Choiniere" | second_farm == "Choiniere" | third_farm == "Choiniere" | fourth_farm == "Choiniere") #164 observations
+cf_always<-filter(cf, (first_IMI_series=="yes" & second_IMI_series=="yes" & third_IMI_series=="yes" & fourth_IMI_series == "yes") | (first_IMI_series=="yes"  &  second_IMI_series=="yes" & third_IMI_series=="yes" & is.na(fourth_IMI_series)) | (is.na(first_IMI_series) & second_IMI_series=="yes" & third_IMI_series=="yes" & fourth_IMI_series=="yes")) #22 observations; how many visits with "YES" do we want to require? above coding catches 3 consecutive
+
+#get all SP cows, then always infected within SP
+sp<-filter(all_trim, first_farm == "StonyPond" | second_farm == "StonyPond")  #144 observations
+sp_always<-filter(sp, (first_IMI_series=="yes" & second_IMI_series=="yes")) #19 observations
+
+#combine CF and SP with rest of farms
+always_nosp<-rbind(always_nocf, cf_always) #184 quarters
+always_all<-rbind(always_nosp, sp_always) #203 observations
+
+samepath_nosp<-filter(always_all, ((first_path_1==second_path_1) & (second_path_1==third_path_1)) | ((second_path_1==third_path_1) & (third_path_1==fourth_path_1))) #162 observations
+samepath_sp<-filter(sp_always, (first_path_1==second_path_1)) #19 observations
+
+samepath<-rbind(samepath_nosp, samepath_sp)
+#not 100% perfect, could have become mixed infection or multiple pathogens isolated but not neccessarily called "path_1"; 181 observations
+```
+
+```{r}
+always_csv<-table(samepath$second_farm) #79 tiestalls, 102 bedded pack; includes Stony Pond "yes"-"yes"
+table(samepath$second_path_1) #144 CNS, 21 SA, 13 Strep, 2 Corynebac
+write.csv(always_csv, "always_inf.csv", row.names = T)
+not_same<-filter(chronic_all, ((first_path_1!=second_path_1) & (second_path_1!=third_path_1)) | ((second_path_1!=third_path_1) & (third_path_1!=fourth_path_1)))
+```
+
+
+
+#never infected- what about Stony Pond? Discluding non-negative quarters (called "no" in IMI_series vs. " ")
+```{r}
+#get cows from all farms with 3 visits who were no-no-no
+never_nocf<-filter(all_trim, (first_IMI_series==""  & second_IMI_series==""  & third_IMI_series=="") & (first_farm != "Choiniere" | second_farm != "Choiniere" | third_farm != "Choiniere" | fourth_farm !="Choiniere")) #625 observations
+
+#get object all with CF cows
+cf<-filter(all_trim, first_farm == "Choiniere" | second_farm == "Choiniere" | third_farm == "Choiniere" | fourth_farm == "Choiniere") #164 observations
+
+#get never infected CF cows
+cf_never<-filter(cf, (first_IMI_series==""  &  second_IMI_series=="" & third_IMI_series=="" & fourth_IMI_series=="") | (first_IMI_series==""  &  second_IMI_series=="" & third_IMI_series=="" & is.na(fourth_IMI_series)) | (is.na(first_IMI_series) & second_IMI_series=="" & third_IMI_series=="" & fourth_IMI_series=="")) #60 observations
+
+#get SP never infected
+sp_never<-filter(sp, (first_IMI_series==""  &  second_IMI_series=="")) #90
+
+#combine CF and SP with rest of farms
+never_nosp<-rbind(never_nocf, cf_never) #685 observations
+never_all_withblind<-rbind(never_nosp, sp_never) #775 observations
+
+#remove any quarters that were or became blind
+never_all_noblind<-filter(never_all_withblind, (first_blind=="" | is.na(first_blind)) & (second_blind=="" | is.na(second_blind)) & (third_blind=="" | is.na(third_blind)) & (fourth_blind=="" | is.na(fourth_blind))) #750 observations
+
+# just checking using quarter codes
+#qc_check<-filter(never_all_withblind, (first_quarter_code!="16" | is.na(first_quarter_code)) & (second_quarter_code!="16" | is.na(second_quarter_code)) & (third_quarter_code!="16" | is.na(third_quarter_code)) & (fourth_quarter_code!="16" | is.na(fourth_quarter_code))) #also 750 observations
+
+never_3farms_qc<-filter(all_trim, (first_quarter_code=="3" | first_quarter_code=="4" | first_quarter_code=="5" | first_quarter_code=="6") & (second_quarter_code=="3" | second_quarter_code=="4" | second_quarter_code=="5" | second_quarter_code=="6") & (third_quarter_code=="3" | third_quarter_code=="4" | third_quarter_code=="5" | third_quarter_code=="6") & (first_farm != "Choiniere" | second_farm != "Choiniere" | third_farm != "Choiniere" | fourth_farm !="Choiniere")) #402 observations vs 625
+
+cf_never_qc<-filter(cf, ((first_quarter_code=="3" | first_quarter_code=="4" | first_quarter_code=="5" | first_quarter_code=="6") & (second_quarter_code=="3" | second_quarter_code=="4" | second_quarter_code=="5" | second_quarter_code=="6") & (third_quarter_code=="3" | third_quarter_code=="4" | third_quarter_code=="5" | third_quarter_code=="6") & (fourth_quarter_code=="3" | fourth_quarter_code=="4" | fourth_quarter_code=="5" | fourth_quarter_code=="6")) | ((first_quarter_code=="3" | first_quarter_code=="4" | first_quarter_code=="5" | first_quarter_code=="6") & (second_quarter_code=="3" | second_quarter_code=="4" | second_quarter_code=="5" | second_quarter_code=="6") & (third_quarter_code=="3" | third_quarter_code=="4" | third_quarter_code=="5" | third_quarter_code=="6") & is.na(fourth_IMI_series)) | (is.na(first_IMI_series) & (second_quarter_code=="3" | second_quarter_code=="4" | second_quarter_code=="5" | second_quarter_code=="6") & (third_quarter_code=="3" | third_quarter_code=="4" | third_quarter_code=="5" | third_quarter_code=="6") & (fourth_quarter_code=="3" | fourth_quarter_code=="4" | fourth_quarter_code=="5" | fourth_quarter_code=="6")))
+
+cf_never_qc1<-filter(cf, ((first_quarter_code=="3" | first_quarter_code=="4" | first_quarter_code=="5" | first_quarter_code=="6") & (second_quarter_code=="3" | second_quarter_code=="4" | second_quarter_code=="5" | second_quarter_code=="6") & (third_quarter_code=="3" | third_quarter_code=="4" | third_quarter_code=="5" | third_quarter_code=="6") & (fourth_quarter_code=="3" | fourth_quarter_code=="4" | fourth_quarter_code=="5" | fourth_quarter_code=="6"))) #11
+                     
+cf_never_qc2<-filter(cf, ((first_quarter_code=="3" | first_quarter_code=="4" | first_quarter_code=="5" | first_quarter_code=="6") & (second_quarter_code=="3" | second_quarter_code=="4" | second_quarter_code=="5" | second_quarter_code=="6") & (third_quarter_code=="3" | third_quarter_code=="4" | third_quarter_code=="5" | third_quarter_code=="6") & is.na(fourth_quarter_code))) #0
+                     
+cf_never_qc3<-filter(cf, (is.na(first_quarter_code) & (second_quarter_code=="3" | second_quarter_code=="4" | second_quarter_code=="5" | second_quarter_code=="6") & (third_quarter_code=="3" | third_quarter_code=="4" | third_quarter_code=="5" | third_quarter_code=="6") & (fourth_quarter_code=="3" | fourth_quarter_code=="4" | fourth_quarter_code=="5" | fourth_quarter_code=="6"))) #5
+
+#16 observations
+```
+
+```{r}
+never_csv<-table(never_all_noblind$second_farm) #404 tiestall, 371 bedded pack
+write.csv(never_csv, "never_inf.csv", row.names = T)
+```
+
+
+#became infected
+```{r}
+became_inf<-filter(all_trim, (first_IMI_series==""  & second_IMI_series=="yes") | (second_IMI_series==""  & third_IMI_series=="yes") | (third_IMI_series==""  & fourth_IMI_series=="yes")) #147 observations
+
+#compare to number observations using quarter codes, stricter definitions
+became_inf_qc<-filter(all_trim, ((first_quarter_code=="3" | first_quarter_code=="4" | first_quarter_code=="5" | first_quarter_code=="6") & (second_IMI_series=="yes")) | ((second_quarter_code=="3" | second_quarter_code=="4" | second_quarter_code=="5" | second_quarter_code=="6") & (third_IMI_series=="yes")) | ((third_quarter_code=="3" | third_quarter_code=="4" | third_quarter_code=="5" | third_quarter_code=="6") & (fourth_IMI_series=="yes"))) #109 observations
+```
+
+
+```{r}
+inf_csv<-table(became_inf$second_farm) #83 tiestall, 64 bedded pack
+write.csv(inf_csv, "became_inf.csv", row.names = T)
+table(became_inf$second_path_1)
+table(became_inf$third_path_1)
+table(became_inf$fourth_path_1)
+```
+
+
+#became infected, then recovered
+```{r}
+recovered<-filter(all_trim, (first_IMI_series==""  & second_IMI_series=="yes" & third_IMI_series=="") | (second_IMI_series==""  & third_IMI_series=="yes" & fourth_IMI_series=="")) #36 observations
+table(recovered$second_path_1)
+
+new_recovered<-filter(all_trim, (first_IMI_series=="yes"  & second_IMI_series=="") | (second_IMI_series=="yes"  & third_IMI_series=="") | (third_IMI_series=="yes" & fourth_IMI_series=="")) #130 observations, less strict- any quarter going from "yes" to "no"
+
+yesnono_recovered<-filter(all_trim, (((first_IMI_series=="yes" & second_IMI_series=="" & third_IMI_series=="") | (second_IMI_series=="yes"  & third_IMI_series=="" & fourth_IMI_series=="")) & ((first_contam != "yes" | is.na(first_contam)) & second_contam != "yes" & third_contam != "yes") & (fourth_contam != "yes" | is.na(fourth_contam)))) #63 observations
+
+#compare to number observations using quarter codes
+recovered_qc<-filter(all_trim, ((first_quarter_code=="3" | first_quarter_code=="4" | first_quarter_code=="5" | first_quarter_code=="6")  & second_IMI_series=="yes" & (third_quarter_code=="3" | third_quarter_code=="4" | third_quarter_code=="5" | third_quarter_code=="6")) | ((second_quarter_code=="3" | second_quarter_code=="4" | second_quarter_code=="5" | second_quarter_code=="6")  & third_IMI_series=="yes" & (fourth_quarter_code=="3" | fourth_quarter_code=="4" | fourth_quarter_code=="5" | fourth_quarter_code=="6"))) #21 observations
+
+new_recovered_qc<-filter(all_trim, (first_IMI_series=="yes"  & (second_quarter_code=="3" | second_quarter_code=="4" | second_quarter_code=="5" | second_quarter_code=="6")) | (second_IMI_series=="yes"  & (third_quarter_code=="3" | third_quarter_code=="4" | third_quarter_code=="5" | third_quarter_code=="6")) | (third_IMI_series=="yes" & (fourth_quarter_code=="3" | fourth_quarter_code=="4" | fourth_quarter_code=="5" | fourth_quarter_code=="6"))) #108 observations vs 130
+
+yesnono_recovered_qc<-filter(all_trim, (first_IMI_series=="yes"  & (second_quarter_code=="3" | second_quarter_code=="4" | second_quarter_code=="5" | second_quarter_code=="6") & (third_quarter_code=="3" | third_quarter_code=="4" | third_quarter_code=="5" |third_quarter_code=="6")) | (second_IMI_series=="yes"  & (third_quarter_code=="3" | third_quarter_code=="4" | third_quarter_code=="5" | third_quarter_code=="6")) & (fourth_quarter_code=="3" | fourth_quarter_code=="4" | fourth_quarter_code=="5" | fourth_quarter_code=="6")) #54 observations vs 63
+```
+
+```{r}
+old_recovered<-table(recovered$second_farm) #24 tiestall, 12 bedded packs
+new_recovered<-table(new_recovered$second_farm) #65 tiestall, #65 bedded 
+write.csv(old_recovered, "old_recovered.csv", row.names = T)
+write.csv(new_recovered, "new_recovered.csv", row.names = T)
+yyn_recovered<-table(yesnono_recovered$second_farm)
+write.csv(yyn_recovered, "ynn_recovered.csv", row.names = T)
+```
+
+

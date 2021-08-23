@@ -1,0 +1,21 @@
+---
+title: "stat201 homework 5"
+author: "Caitlin Jeffrey"
+date: "June 23, 2020"
+output: html_document
+---
+
+#```{r, eval=FALSE}; show me this code, but don't actually run it (like install package)
+
+#links:
+<http://etc>
+
+* And plain text -> bullets
+
+## Double number signs -> title
+
+Free text
+
+**Header with bolding**
+
+\pagebreak

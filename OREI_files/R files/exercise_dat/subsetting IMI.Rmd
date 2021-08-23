@@ -1,0 +1,284 @@
+---
+title: "subsetting IMI"
+author: "Caitlin Jeffrey"
+date: "June 5, 2020"
+output: html_document
+---
+```{r}
+library(dplyr)
+library(data.table)
+```
+
+
+## read in culture data csv
+
+```{r}
+setwd(path.exercise)
+OREI<-read.csv("OREIculture_results_csv.csv", na.strings= ".", header = T)
+str(OREI)
+```
+
+
+### reorganize data set so all obs for 1 cowquarter are lined up
+
+```{r}
+setwd(path.exercise)
+OREI<-read.csv("OREIculture_results_csv.csv", na.strings= ".", header = T)
+str(OREI)
+
+#make SCC column numeric
+OREI$scc<-as.numeric(as.character(OREI$scc))
+```
+
+#first, make 4 data sets- one for each visit
+```{r}
+library(dplyr); library(data.table)
+setwd(path.exercise)
+OREI<-read.csv("OREIculture_results_csv.csv", na.strings= ".", header = T)
+#use dplyr and data.table functions, which seem to conflict some, need to read in OREI each time
+first<-filter(OREI, visit=="first") #select only FIRST visit for each farm
+oldnames<-c(colnames(first)) #make list of column names and save as object
+newnames1<- paste("first_", oldnames, sep="")
+setnames(first, old = c(oldnames), new = c(newnames1))
+names(first)[names(first)=="first_cow_id"] <- "cow_id"
+names(first)[names(first)=="first_quarter"] <- "quarter" #put back to original so can merge later
+first$cow_id<-paste(first$cow_id, first$first_farm, sep='_') #so when go to merge, won't get screwy with same cow names at different farms!
+first$first_uniqueID<-paste(first$cow_id, first$quarter, sep='_') #realized unique ID's in CSV aren't unique bc multiple animals same name different farm
+```
+
+```{r}
+setwd(path.exercise)
+OREI<-read.csv("OREIculture_results_csv.csv", na.strings= ".", header = T)
+second<-filter(OREI, visit=="second") #select only SECOND visit for each farm
+newnames2<- paste("second_", oldnames, sep="") #can still use oldnames, bc are same for all observations in OREI
+setnames(second, old = c(oldnames), new = c(newnames2))
+names(second)[names(second)=="second_cow_id"] <- "cow_id"
+names(second)[names(second)=="second_quarter"] <- "quarter" #put back to original so can merge later
+second$cow_id<-paste(second$cow_id, second$second_farm, sep='_')
+second$second_uniqueID<-paste(second$cow_id, second$quarter, sep='_')
+```
+
+
+```{r}
+setwd(path.exercise)
+OREI<-read.csv("OREIculture_results_csv.csv", na.strings= ".", header = T)
+third<-filter(OREI, visit=="third") #select only THIRD visit for each farm
+newnames3<- paste("third_", oldnames, sep="") #can still use oldnames, bc are same for all observations in OREI
+setnames(third, old = c(oldnames), new = c(newnames3))
+names(third)[names(third)=="third_cow_id"] <- "cow_id"
+names(third)[names(third)=="third_quarter"] <- "quarter" #put back to original so can merge later
+third$cow_id<-paste(third$cow_id, third$third_farm, sep='_')
+third$third_uniqueID<-paste(third$cow_id, third$quarter, sep='_')
+```
+
+```{r}
+#setwd(path.exercise)
+OREI<-read.csv("OREIculture_results_csv.csv", na.strings= ".", header = T)
+fourth<-filter(OREI, visit=="fourth") #select only FOURTH visit for each farm
+newnames4<- paste("fourth_", oldnames, sep="") #can still use oldnames, bc are same for all observations in OREI
+setnames(fourth, old = c(oldnames), new = c(newnames4))
+#names(fourth)[names(fourth)=="fourth_cow_id"] <- "cow_id"
+#names(fourth)[names(fourth)=="fourth_quarter"] <- "quarter" #put back to original so can merge later
+fourth$fourth_cow_id<-paste(fourth$fourth_cow_id, fourth$fourth_farm, sep='_')
+fourth$fourth_uniqueID<-paste(fourth$fourth_cow_id, fourth$fourth_quarter, "fourth", sep='_')
+#fourth<-select(fourth, -c(fourth_cow_id))
+```
+
+
+
+##merge all 4 visits so obs for 1 cow all in one row
+```{r}
+onetwo <- merge(first, second, by=c("cow_id","quarter"), all = TRUE) #should be NA for cows with missing observations
+onetwothree <-merge(onetwo,third, by=c("cow_id", "quarter"), all = TRUE)
+#onetwothree has all farms, visits 1-3
+```
+
+```{r}
+onetwothree$fourth_uniqueID<-paste(onetwothree$cow_id, onetwothree$quarter, "fourth", sep='_') #populate fourth_unique_ID so can index when merge fourth visit in
+all<-merge(onetwothree, fourth, by=c("fourth_uniqueID"), all = TRUE) #make a data frame with all 4 visits
+```
+
+```{r}
+#two cows from choiniere were new 4th visit, so need to manually populate their cow id
+
+all$cow_id[all$fourth_cow_id =="65_Choiniere"] = "65_Choiniere"
+all$quarter[all$fourth_uniqueID=="65_Choiniere_LH_fourth"] = "LH"
+all$quarter[all$fourth_uniqueID=="65_Choiniere_LF_fourth"] = "LF"
+all$quarter[all$fourth_uniqueID=="65_Choiniere_RH_fourth"] = "RH"
+all$quarter[all$fourth_uniqueID=="65_Choiniere_RF_fourth"] = "RF"
+all$cow_id[all$fourth_cow_id =="87_Choiniere"] = "87_Choiniere"
+all$quarter[all$fourth_uniqueID=="87_Choiniere_LH_fourth"] = "LH"
+all$quarter[all$fourth_uniqueID=="87_Choiniere_LF_fourth"] = "LF"
+all$quarter[all$fourth_uniqueID=="87_Choiniere_RH_fourth"] = "RH"
+all$quarter[all$fourth_uniqueID=="87_Choiniere_RF_fourth"] = "RF"
+```
+
+
+```{r}
+#can drop columns fourth cow id, fourth quarter
+all_trim<-select(all, -c(fourth_cow_id, fourth_quarter, fourth_uniqueID))
+
+all_trim$fourth_uniqueID<-paste(all_trim$cow_id, all_trim$quarter, "fourth", sep='_')#drop fourth_uniqueID so can have same column order as rest of , then add back in at end
+```
+
+```{r}
+# error checking between old all_trim csv and new one- setdiff was helpful to tell differences in data sets. immogene vs. imogene for vontrapp was wrong, and fitzi13 (correct) vs fitzi31. somehow, these were not errors in original csv... maybe i had found them already? changed to imogene, and fitzi is 13 not 31
+
+write.csv(all_trim, "all_trim_4_2_2021.csv", row.names = T)
+
+test_alltrim<-read.csv("all_trim_test.csv", na.strings= ".", header = T)
+
+
+vt_new<-filter(all_trim, first_farm== "vonTrapp" | second_farm == "vonTrapp" | third_farm== "vonTrapp")
+vt_old<-filter(test_alltrim, first_farm== "vonTrapp" | second_farm == "vonTrapp" | third_farm== "vonTrapp")
+
+pb_new<-filter(all_trim, first_farm== "Paddlebridge" | second_farm == "Paddlebridge" | third_farm== "Paddlebridge")
+pb_old<-filter(test_alltrim, first_farm== "Paddlebridge" | second_farm == "Paddlebridge" | third_farm== "Paddlebridge")
+
+
+new_cowid_quarter<-select(all_trim, c(cow_id, quarter))
+old_cowid_quarter<-select(test_alltrim, c(cow_id, quarter))
+
+
+setdiff(new_cowid_quarter, old_cowid_quarter)
+setdiff(new_alltrim, all_trim1)
+
+#old_cows<-(all_trim$cow_id)
+new_cows<-(all_trim$cow_id)
+
+setdiff(old_cows, new_cows)
+setdiff(new_cows, old_cows)
+
+# butter from OB had a space after her name for the first visit... so wasn't combining first visit with second and third
+ob_new<-filter(all, first_farm== "OughtaBe" | second_farm == "OughtaBe" | third_farm== "OughtaBe")
+```
+
+
+
+#for some reason this alters colnames for OREI, so returning those to normal
+```{r}
+setwd(path.exercise)
+OREI<-read.csv("OREIculture_results_csv.csv", na.strings= ".", header = T)
+```
+
+#do some checking to ensure farm visits subsetted correctly by checking cow IDs match
+```{r}
+table(OREI$visit)
+#glimpse(first); glimpse(second); glimpse(third); glimpse(fourth)
+table(first$first_farm); table(second$second_farm); table(third$third_farm); table(fourth$fourth_farm)
+
+lf_all<-filter(all_trim, first_farm== "Lynd" | second_farm == "Lynd" | third_farm== "Lynd")
+unique(lf_all$cow_id) #39 cows
+lf_orei<- filter(OREI, farm=="Lynd")
+unique(lf_orei$cow_id) #39 cows
+
+pb_all<-filter(all_trim, first_farm== "Paddlebridge" | second_farm == "Paddlebridge" | third_farm== "Paddlebridge")
+unique(pb_all$cow_id) #35 cows
+pb_orei<- filter(OREI, farm=="Paddlebridge")
+unique(pb_orei$cow_id) #35 cows
+
+vt_all<-filter(all_trim, first_farm== "vonTrapp" | second_farm == "vonTrapp" | third_farm== "vonTrapp")
+unique(vt_all$cow_id) #38 cows
+vt_orei<- filter(OREI, farm=="vonTrapp")
+unique(vt_orei$cow_id) #38 cows
+
+gv_all<-filter(all_trim, first_farm== "Glennview" | second_farm == "Glennview" | third_farm== "Glennview")
+unique(gv_all$cow_id) #37 cows
+gv_orei<- filter(OREI, farm=="Glennview")
+unique(gv_orei$cow_id) #37 cows
+
+sw_all<-filter(all_trim, first_farm== "Swallowdale" | second_farm == "Swallowdale" | third_farm== "Swallowdale")
+unique(sw_all$cow_id) #39 cows
+sw_orei<- filter(OREI, farm=="Swallowdale")
+unique(sw_orei$cow_id) #39 cows
+
+sp_all<-filter(all_trim, first_farm== "StonyPond" | second_farm == "StonyPond" | third_farm== "StonyPond")
+unique(sp_all$cow_id) #36 cows
+sp_orei<- filter(OREI, farm=="StonyPond")
+unique(sp_orei$cow_id) #36 cows
+
+bj_all<-filter(all_trim, first_farm== "BJ" | second_farm == "BJ" | third_farm== "BJ")
+unique(bj_all$cow_id) #39 cows
+bj_orei<- filter(OREI, farm=="BJ")
+unique(bj_orei$cow_id) #39 cows
+
+bw_all<-filter(all_trim, first_farm== "Butterworks" | second_farm == "Butterworks" | third_farm== "Butterworks")
+unique(bw_all$cow_id) #40 cows
+bw_orei<- filter(OREI, farm=="Butterworks")
+unique(bw_orei$cow_id) #40 cows
+
+ob_all<-filter(all_trim, first_farm== "OughtaBe" | second_farm == "OughtaBe" | third_farm== "OughtaBe")
+unique(ob_all$cow_id) #40 cows
+ob_orei<- filter(OREI, farm=="OughtaBe")
+unique(ob_orei$cow_id) #40 cows
+
+cf_all<-filter(all_trim, first_farm== "Choiniere" | second_farm == "Choiniere" | third_farm== "Choiniere" | fourth_farm== "Choiniere")
+unique(cf_all$cow_id) #41 cows
+cf_orei<- filter(OREI, farm=="Choiniere")
+unique(cf_orei$cow_id) #41 cows
+
+```
+
+
+##subset by a farm
+
+```{r}
+BW<-subset(OREI, farm =="Butterworks")
+```
+
+##how many isolates of everything do we have?
+
+```{r}
+library(dplyr)
+count(OREI$path_1); count(OREI$path_2); count(OREI$path_3); count(OREI$path_4)
+```
+
+## chose most strict definitions of IMI yes in series for a farm
+```{r}
+bwIMI<-subset(BW, quarter_code == "1" | quarter_code == "2" | quarter_code == "21" | quarter_code == "24" | quarter_code == "27" | quarter_code == "29" | quarter_code =="35"); unique(bwIMI$quarter_code); count(bwIMI$quarter_code)
+```
+
+##check levels that all IMI series is either yes or no- should all be "yes" for ones that are subsetted as IMI
+
+```{r}
+unique(bwIMI$IMI_series);
+which(bwIMI$IMI_series =="yes ")
+```
+
+##subset of ALL quarters with most strict definition of IMI
+```{r}
+OREI$quarter_code<-as.character(OREI$quarter_code)
+strictIMI<-subset(OREI, quarter_code == "1" | quarter_code == "2" | quarter_code == "21" | quarter_code == "24" | quarter_code == "27" | quarter_code == "29" | quarter_code =="35")
+unique(strictIMI$quarter_code) #checking right quarter codes selected
+table(strictIMI$quarter_code) #seeing frequency of each type of quarter code
+```
+
+
+##check levels that all IMI series is either yes or no- should all be "yes" for ones that are subsetted as IMI
+
+```{r}
+unique(strictIMI$IMI_series)
+table(strictIMI$IMI_series)
+```
+
+
+##how many isolates of everything do we have in STRICT IMI dataset?
+
+```{r}
+count(strictIMI$path_1); count(strictIMI$path_2); count(strictIMI$path_3); count(strictIMI$path_4)
+```
+
+## make spreadsheets for hygiene scoring stuff
+```{r}
+hygiene_OREI<-filter(OREI, quarter == "LH") #4212, down to 1053 (one line for each cow, vs 4 - multiple visits for same cow on seperate row)
+hygiene_OREI<-select(hygiene_OREI, c(date, visit, farm, cow_id, hygiene_scorer_1, hygiene_1, hygiene_scorer_2, hygiene_2))
+
+hygiene_all_trim<-filter(all_trim, quarter == "LH") #1536, down to 384 (one line for each cow, vs 4 - multiple visits for same cow on same row)
+hygiene_all_trim<-select(hygiene_all_trim, c(cow_id, first_date, first_visit, first_farm, first_hygiene_scorer_1, first_hygiene_1, first_hygiene_scorer_2, first_hygiene_2, second_date, second_visit, second_farm, second_hygiene_scorer_1, second_hygiene_1, second_hygiene_scorer_2, second_hygiene_2, third_date, third_visit, third_farm, third_hygiene_scorer_1, third_hygiene_1, third_hygiene_scorer_2, third_hygiene_2, fourth_date, fourth_visit, fourth_farm, fourth_hygiene_scorer_1, fourth_hygiene_1, fourth_hygiene_scorer_2, fourth_hygiene_2))
+
+write.csv(hygiene_OREI, "hygiene_from_OREI.csv", row.names = T)
+write.csv(hygiene_all_trim, "hygiene_from_all_trim.csv", row.names = T)
+```
+
+
+

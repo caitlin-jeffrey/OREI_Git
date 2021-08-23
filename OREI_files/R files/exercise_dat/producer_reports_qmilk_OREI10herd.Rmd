@@ -1,0 +1,163 @@
+---
+title: "Untitled"
+author: "Caitlin Jeffrey"
+date: "February 5, 2021"
+output: html_document
+---
+
+```{r}
+SP<-read.csv("SP_csv.csv", na.strings= ".", header = T)
+SP$SCC<-as.numeric(as.character(SP$SCC))
+str(SP)
+unique(SP$IMI_species)
+
+summarise(group_by(SP, IMI_species), mean=mean(SCC), min=min(SCC), max=max(SCC)) 
+SP %>% group_by(IMI_species) %>% summarise(n = n())
+
+sp_sa<-filter(SP, IMI_species=="SA" | IMI_species=="Mix_SA_Strep")
+
+##trying to pick apart DIM effect on qSCC for summary
+sptest<-read.csv("sp_test.csv", na.strings= ".", header = T) #removed 3 quarters with no SCC bc messes up means
+firstsp<-filter(sptest, visit=="first") #select only FIRST visit for each farm
+
+sptest<-read.csv("sp_test.csv", na.strings= ".", header = T)
+secondsp<-filter(sptest, visit=="second") #select only SECOND visit for each farm
+
+summarise(group_by(firstsp, IMI_species), mean=mean(SCC), min=min(SCC), max=max(SCC)) 
+firstsp %>% group_by(IMI_species) %>% summarise(n = n())
+
+summarise(group_by(secondsp, IMI_species), mean=mean(SCC), min=min(SCC), max=max(SCC)) 
+secondsp %>% group_by(IMI_species) %>% summarise(n = n())
+
+```
+
+```{r}
+SW<-read.csv("SW_csv.csv", na.strings= ".", header = T)
+SW$SCC<-as.numeric(as.character(SW$SCC))
+str(SW)
+unique(SW$IMI_species)
+
+summarise(group_by(SW, IMI_species), mean=mean(SCC), min=min(SCC), max=max(SCC)) 
+SW %>% group_by(IMI_species) %>% summarise(n = n())
+
+sw_sa<-filter(SW, IMI_species=="SA" | IMI_species=="Mix_SA_Strep")
+```
+
+```{r}
+VT<-read.csv("VT_csv.csv", na.strings= ".", header = T)
+VT$SCC<-as.numeric(as.character(VT$SCC))
+str(VT)
+unique(VT$IMI_species)
+
+summarise(group_by(VT, IMI_species), mean=mean(SCC), min=min(SCC), max=max(SCC)) 
+VT %>% group_by(IMI_species) %>% summarise(n = n())
+
+vt_sa<-filter(VT, IMI_species=="SA" | IMI_species=="Mix_SA_Strep")
+```
+
+```{r}
+PB<-read.csv("PB_csv.csv", na.strings= ".", header = T)
+PB$SCC<-as.numeric(as.character(PB$SCC))
+str(PB)
+unique(PB$IMI_species)
+
+summarise(group_by(PB, IMI_species), mean=mean(SCC), min=min(SCC), max=max(SCC)) 
+PB %>% group_by(IMI_species) %>% summarise(n = n())
+
+pb_sa<-filter(PB, IMI_species=="SA" | IMI_species=="Mix_SA_Strep")
+```
+
+```{r}
+OB<-read.csv("OB_csv.csv", na.strings= ".", header = T)
+OB$SCC<-as.numeric(as.character(OB$SCC))
+str(OB)
+unique(OB$IMI_species)
+
+summarise(group_by(OB, IMI_species), mean=mean(SCC), min=min(SCC), max=max(SCC)) 
+OB %>% group_by(IMI_species) %>% summarise(n = n())
+
+ob_sa<-filter(OB, IMI_species=="SA" | IMI_species=="Mix_SA_Strep")
+```
+
+```{r}
+LF<-read.csv("LF_csv.csv", na.strings= ".", header = T)
+LF$SCC<-as.numeric(as.character(LF$SCC))
+str(LF)
+unique(LF$IMI_species)
+
+summarise(group_by(LF, IMI_species), mean=mean(SCC), min=min(SCC), max=max(SCC))
+LF %>% group_by(IMI_species) %>% summarise(n = n())
+
+lf_sa<-filter(LF, IMI_species=="SA" | IMI_species=="Mix_SA_Strep")
+```
+
+
+```{r}
+setwd(path.exercise)
+GV<-read.csv("GV_csv.csv", na.strings= ".", header = T)
+GV$SCC<-as.numeric(as.character(GV$SCC))
+str(GV)
+unique(GV$IMI_species)
+GVtable<-table(GV$IMI_species)
+
+summarise(group_by(GV, IMI_species), mean=mean(SCC), min=min(SCC), max=max(SCC)) 
+summarise(group_by(GV, IMI_species), n=n(IMI_species))
+
+GV %>% group_by(IMI_species) %>% summarise(n = n())
+
+gv_sa<-filter(GV, IMI_species=="SA" | IMI_species=="Mix_SA_Strep")
+```
+
+
+```{r}
+setwd(path.exercise)
+CF<-read.csv("CF_csv.csv", na.strings= ".", header = T)
+CF$SCC<-as.numeric(as.character(CF$SCC))
+str(CF)
+unique(CF$IMI_species)
+CFtable<-table(CF$IMI_species)
+
+summarise(group_by(CF, IMI_species), mean=mean(SCC), min=min(SCC), max=max(SCC)) 
+
+CF %>% group_by(IMI_species) %>% summarise(n = n())
+
+cf_sa<-filter(CF, IMI_species=="SA" | IMI_species=="Mix_Coryne_SA_Strep")
+```
+
+
+
+```{r}
+setwd(path.exercise)
+BW<-read.csv("BW_csv.csv", na.strings= ".", header = T)
+BW$SCC<-as.numeric(as.character(BW$SCC))
+str(BW)
+unique(BW$IMI_species)
+bWtable<-table(BW$IMI_species)
+
+write.table(bWtable, file = "bW.txt", sep = ",", quote = FALSE, row.names = F)
+library(dplyr)
+
+summarise(group_by(BW, IMI_species), mean=mean(SCC), min=min(SCC), max=max(SCC)) 
+
+BW %>% group_by(IMI_species) %>% summarise(n = n())
+
+bw_sa<-filter(BW, IMI_species=="SA" | IMI_species=="Mix_SA_Strep")
+```
+
+```{r}
+setwd(path.exercise)
+BJ<-read.csv("BJ_csv.csv", na.strings= ".", header = T)
+BJ$SCC<-as.numeric(as.character(BJ$SCC))
+str(BJ)
+unique(BJ$IMI_species)
+bjtable<-table(BJ$IMI_species)
+
+write.table(bjtable, file = "bj.txt", sep = ",", quote = FALSE, row.names = F)
+
+summarise(group_by(BJ, IMI_species), mean=mean(SCC), min=min(SCC), max=max(SCC)) 
+
+BJ %>% group_by(IMI_species) %>% summarise(n = n())
+
+bj_sa<-filter(BJ, IMI_species=="SA" | IMI_species=="Mix_SA_Strep")
+```
+

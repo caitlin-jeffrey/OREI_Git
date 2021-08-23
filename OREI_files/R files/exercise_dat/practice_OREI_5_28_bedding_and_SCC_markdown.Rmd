@@ -1,0 +1,20 @@
+---
+title: "bedding and scc"
+author: "Caitlin Jeffrey"
+date: "May 27, 2019"
+output: html_document
+---
+
+
+```{r}
+setwd(path.exercise)
+bedding_SCC<-read.csv("practice_OREI_updated_6_4_2019_bedding_and_SCC.csv", na.strings= ".", header = T)
+str(bedding_SCC)
+```
+
+
+
+```{r}
+mean <- aggregate(bedding_SCC[, 9], by = list(bedding_SCC$Mat_Type), FUN = mean, na.rm = T); names(mean)[2] <- "mean_SCC"; mean
+```
+

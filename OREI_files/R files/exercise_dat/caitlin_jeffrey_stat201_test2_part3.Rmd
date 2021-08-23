@@ -1,0 +1,25 @@
+---
+title: "Part 3"
+author: "Caitlin Jeffrey"
+date: "June 26, 2020"
+output: html_document
+---
+
+##**Part 3: Writing a function and using for loops**
+
+```{r}
+go_mean<-function(v,k) {
+  meanvec<-rep(NaN, k)
+  for (i in 1:k) {
+    s<-sample(v, replace=T)
+    meanvec[i]<-mean(s) 
+    }
+LL<-round(quantile(meanvec,.10),2)
+UL<-round(quantile(meanvec,.90),2)
+print(paste("the lower confidence limit is is =", LL, "and the upper confidence interval is =", UL))
+}
+
+z<-rnorm(8000)
+go_mean(z,1000)
+
+```

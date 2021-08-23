@@ -1,0 +1,78 @@
+---
+title: "Homework 1"
+author: "Caitlin Jeffrey"
+date: "January 23, 2019"
+output:
+  html_document: default
+  word_document: default
+---
+
+#Exercise 1
+
+---
+
+Googled **R package reshape** and downloaded PDF to R_manual folder
+
+---
+
+Installed **reshape**
+
+
+```{r}
+install.packages("reshape", repos = 'http://cran.us.r-project.org')
+```
+
+
+        
+---
+
+Determined active packages in current R session
+
+```{r}
+search()
+```
+
+ 
+
+---
+
+Loaded reshape into R session and documented packages in my R session 
+
+```{r}
+library("reshape")
+search()
+
+```
+
+ 
+ ---
+ 
+ Unloaded reshape, then checked to see it was gone from active packages
+ 
+```{r}
+detach("package:reshape", unload=TRUE)
+```
+
+
+```{r}
+search()
+```
+
+ 
+
+---
+
+Updated existing packages
+
+#```{r}
+update.packages(ask = F)
+```
+
+
+
+
+        
+---
+
+  
+  

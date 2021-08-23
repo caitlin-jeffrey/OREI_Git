@@ -1,0 +1,440 @@
+---
+title: "Untitled"
+author: "Caitlin Jeffrey"
+date: "February 18, 2021"
+output: html_document
+---
+
+```{r}
+setwd(path.exercise)
+bjtest<-read.csv("bj_test.csv", na.strings= ".", header = T)
+
+library(dplyr)
+
+bjtest %>% group_by(IMI_species) %>% summarise(n = n())
+
+bj_coryne<-filter(bjtest, IMI_species == "Corynebacterium species")
+
+bj_coryne %>% group_by(Cow_ID, Quarter) %>% summarise(n = n())
+
+bj_sa<-filter(bjtest, IMI_species == "Staph. aureus")
+
+bj_sa %>% group_by(Cow_ID, Quarter) %>% summarise(n = n())
+```
+
+#first, make 3 data sets- one for each visit
+```{r}
+setwd(path.exercise)
+
+first<-filter(bjtest, visit=="first") #select only FIRST visit for each farm
+oldnames<-c(colnames(first)) #make list of column names and save as object
+newnames1<- paste("first_", oldnames, sep="")
+setnames(first, old = c(oldnames), new = c(newnames1))
+names(first)[names(first)=="first_Cow_ID"] <- "cow_id"
+names(first)[names(first)=="first_Quarter"] <- "quarter" #put back to original so can merge later
+```
+
+```{r}
+library(dplyr)
+bjtest<-read.csv("bj_test.csv", na.strings= ".", header = T)
+second<-filter(bjtest, visit=="second") #select only SECOND visit for each farm
+newnames2<- paste("second_", oldnames, sep="") #can still use oldnames, bc are same for all observations in OREI
+setnames(second, old = c(oldnames), new = c(newnames2))
+names(second)[names(second)=="second_Cow_ID"] <- "cow_id"
+names(second)[names(second)=="second_Quarter"] <- "quarter" #put back to original so can merge later
+```
+
+
+```{r}
+setwd(path.exercise)
+bjtest<-read.csv("bj_test.csv", na.strings= ".", header = T)
+third<-filter(bjtest, visit=="third") #select only THIRD visit for each farm
+newnames3<- paste("third_", oldnames, sep="") #can still use oldnames, bc are same for all observations in OREI
+setnames(third, old = c(oldnames), new = c(newnames3))
+names(third)[names(third)=="third_Cow_ID"] <- "cow_id"
+names(third)[names(third)=="third_Quarter"] <- "quarter" #put back to original so can merge later
+```
+
+
+
+```{r}
+onetwo <- merge(first, second, by=c("cow_id","quarter"), all = TRUE) #should be NA for cows with missing observations
+onetwothree <-merge(onetwo,third, by=c("cow_id", "quarter"), all = TRUE)
+#onetwothree has all farms, visits 1-3
+
+onetwothree1<-select(onetwothree, -c(first_visit, first_cow_quarter, first_visit_cow_quarter, second_visit, second_cow_quarter, second_visit_cow_quarter, third_visit, third_cow_quarter, third_visit_cow_quarter))
+
+write.csv(onetwothree1, "bj_all_visits.csv", row.names = T) #wrote out csv to clean by hand in excel
+```
+
+
+
+
+
+
+#bw
+```{r}
+setwd(path.exercise)
+bwtest<-read.csv("bw_test.csv", na.strings= ".", header = T)
+
+first<-filter(bwtest, visit=="first") #select only FIRST visit for each farm
+oldnames<-c(colnames(first)) #make list of column names and save as object
+newnames1<- paste("first_", oldnames, sep="")
+setnames(first, old = c(oldnames), new = c(newnames1))
+names(first)[names(first)=="first_Cow_ID"] <- "cow_id"
+names(first)[names(first)=="first_Quarter"] <- "quarter" #put back to original so can merge later
+
+bwtest<-read.csv("bw_test.csv", na.strings= ".", header = T)
+second<-filter(bwtest, visit=="second") #select only SECOND visit for each farm
+newnames2<- paste("second_", oldnames, sep="") #can still use oldnames, bc are same for all observations in OREI
+setnames(second, old = c(oldnames), new = c(newnames2))
+names(second)[names(second)=="second_Cow_ID"] <- "cow_id"
+names(second)[names(second)=="second_Quarter"] <- "quarter" #put back to original so can merge later
+
+bwtest<-read.csv("bw_test.csv", na.strings= ".", header = T)
+third<-filter(bwtest, visit=="third") #select only THIRD visit for each farm
+newnames3<- paste("third_", oldnames, sep="") #can still use oldnames, bc are same for all observations in OREI
+setnames(third, old = c(oldnames), new = c(newnames3))
+names(third)[names(third)=="third_Cow_ID"] <- "cow_id"
+names(third)[names(third)=="third_Quarter"] <- "quarter" #put back to original so can merge later
+
+onetwo <- merge(first, second, by=c("cow_id","quarter"), all = TRUE) #should be NA for cows with missing observations
+onetwothree <-merge(onetwo,third, by=c("cow_id", "quarter"), all = TRUE)
+#onetwothree has all farms, visits 1-3
+
+onetwothree1<-select(onetwothree, -c(first_visit, second_visit, third_visit))
+
+write.csv(onetwothree1, "bw_all_visits.csv", row.names = T) #wrote out csv to clean by hand in excel
+```
+
+
+#cf
+```{r}
+setwd(path.exercise)
+cftest<-read.csv("cf_test.csv", na.strings= ".", header = T)
+
+str(cftest)
+cftest$Cow_ID<-as.character(cftest$Cow_ID)
+first<-filter(cftest, visit=="first") #select only FIRST visit for each farm
+oldnames<-c(colnames(first)) #make list of column names and save as object
+newnames1<- paste("first_", oldnames, sep="")
+setnames(first, old = c(oldnames), new = c(newnames1))
+names(first)[names(first)=="first_Cow_ID"] <- "cow_id"
+names(first)[names(first)=="first_Quarter"] <- "quarter" #put back to original so can merge later
+
+cftest<-read.csv("cf_test.csv", na.strings= ".", header = T)
+cftest$Cow_ID<-as.character(cftest$Cow_ID)
+second<-filter(cftest, visit=="second") #select only SECOND visit for each farm
+newnames2<- paste("second_", oldnames, sep="") #can still use oldnames, bc are same for all observations in OREI
+setnames(second, old = c(oldnames), new = c(newnames2))
+names(second)[names(second)=="second_Cow_ID"] <- "cow_id"
+names(second)[names(second)=="second_Quarter"] <- "quarter" #put back to original so can merge later
+
+cftest<-read.csv("cf_test.csv", na.strings= ".", header = T)
+cftest$Cow_ID<-as.character(cftest$Cow_ID)
+third<-filter(cftest, visit=="third") #select only THIRD visit for each farm
+newnames3<- paste("third_", oldnames, sep="") #can still use oldnames, bc are same for all observations in OREI
+setnames(third, old = c(oldnames), new = c(newnames3))
+names(third)[names(third)=="third_Cow_ID"] <- "cow_id"
+names(third)[names(third)=="third_Quarter"] <- "quarter" #put back to original so can merge later
+
+cftest<-read.csv("cf_test.csv", na.strings= ".", header = T)
+cftest$Cow_ID<-as.character(cftest$Cow_ID)
+fourth<-filter(cftest, visit=="fourth") #select only fourth visit for each farm
+newnames3<- paste("fourth_", oldnames, sep="") #can still use oldnames, bc are same for all observations in OREI
+setnames(fourth, old = c(oldnames), new = c(newnames3))
+names(fourth)[names(fourth)=="fourth_Cow_ID"] <- "cow_id"
+names(fourth)[names(fourth)=="fourth_Quarter"] <- "quarter" #put back to original so can merge later
+
+onetwo <- merge(first, second, by=c("cow_id","quarter"), all = TRUE) #should be NA for cows with missing observations
+onetwothree <-merge(onetwo,third, by=c("cow_id", "quarter"), all = TRUE)
+#onetwothree has all farms, visits 1-3
+onetwothreefour<-merge(onetwothree,fourth, by=c("cow_id", "quarter"), all = TRUE)
+#onetwothreefour has all farms, visits 1-4
+
+onetwothree1<-select(onetwothreefour, -c(first_visit, second_visit, third_visit, fourth_visit))
+
+write.csv(onetwothree1, "cf_all_visits.csv", row.names = T) #wrote out csv to clean by hand in excel
+```
+
+
+#gv
+```{r}
+setwd(path.exercise)
+gvtest<-read.csv("gv_test.csv", na.strings= ".", header = T)
+
+str(gvtest)
+#gvtest$Cow_ID<-as.character(gvtest$Cow_ID)
+first<-filter(gvtest, visit=="first") #select only FIRST visit for each farm
+oldnames<-c(colnames(first)) #make list of column names and save as object
+newnames1<- paste("first_", oldnames, sep="")
+setnames(first, old = c(oldnames), new = c(newnames1))
+names(first)[names(first)=="first_Cow_ID"] <- "cow_id"
+names(first)[names(first)=="first_Quarter"] <- "quarter" #put back to original so can merge later
+
+gvtest<-read.csv("gv_test.csv", na.strings= ".", header = T)
+#gvtest$Cow_ID<-as.character(gvtest$Cow_ID)
+second<-filter(gvtest, visit=="second") #select only SECOND visit for each farm
+newnames2<- paste("second_", oldnames, sep="") #can still use oldnames, bc are same for all observations in OREI
+setnames(second, old = c(oldnames), new = c(newnames2))
+names(second)[names(second)=="second_Cow_ID"] <- "cow_id"
+names(second)[names(second)=="second_Quarter"] <- "quarter" #put back to original so can merge later
+
+gvtest<-read.csv("gv_test.csv", na.strings= ".", header = T)
+#gvtest$Cow_ID<-as.character(gvtest$Cow_ID)
+third<-filter(gvtest, visit=="third") #select only THIRD visit for each farm
+newnames3<- paste("third_", oldnames, sep="") #can still use oldnames, bc are same for all observations in OREI
+setnames(third, old = c(oldnames), new = c(newnames3))
+names(third)[names(third)=="third_Cow_ID"] <- "cow_id"
+names(third)[names(third)=="third_Quarter"] <- "quarter" #put back to original so can merge later
+
+
+onetwo <- merge(first, second, by=c("cow_id","quarter"), all = TRUE) #should be NA for cows with missing observations
+onetwothree <-merge(onetwo,third, by=c("cow_id", "quarter"), all = TRUE)
+#onetwothree has all farms, visits 1-3
+
+
+onetwothree1<-select(onetwothree, -c(first_visit, second_visit, third_visit))
+
+write.csv(onetwothree1, "gv_all_visits.csv", row.names = T) #wrote out csv to clean by hand in excel
+```
+
+
+#lf
+```{r}
+setwd(path.exercise)
+lftest<-read.csv("lf_test.csv", na.strings= ".", header = T)
+
+str(lftest)
+#lftest$Cow_ID<-as.character(lftest$Cow_ID)
+first<-filter(lftest, visit=="first") #select only FIRST visit for each farm
+oldnames<-c(colnames(first)) #make list of column names and save as object
+newnames1<- paste("first_", oldnames, sep="")
+setnames(first, old = c(oldnames), new = c(newnames1))
+names(first)[names(first)=="first_Cow_ID"] <- "cow_id"
+names(first)[names(first)=="first_Quarter"] <- "quarter" #put back to original so can merge later
+
+lftest<-read.csv("lf_test.csv", na.strings= ".", header = T)
+#lftest$Cow_ID<-as.character(lftest$Cow_ID)
+second<-filter(lftest, visit=="second") #select only SECOND visit for each farm
+newnames2<- paste("second_", oldnames, sep="") #can still use oldnames, bc are same for all observations in OREI
+setnames(second, old = c(oldnames), new = c(newnames2))
+names(second)[names(second)=="second_Cow_ID"] <- "cow_id"
+names(second)[names(second)=="second_Quarter"] <- "quarter" #put back to original so can merge later
+
+lftest<-read.csv("lf_test.csv", na.strings= ".", header = T)
+#lftest$Cow_ID<-as.character(lftest$Cow_ID)
+third<-filter(lftest, visit=="third") #select only THIRD visit for each farm
+newnames3<- paste("third_", oldnames, sep="") #can still use oldnames, bc are same for all observations in OREI
+setnames(third, old = c(oldnames), new = c(newnames3))
+names(third)[names(third)=="third_Cow_ID"] <- "cow_id"
+names(third)[names(third)=="third_Quarter"] <- "quarter" #put back to original so can merge later
+
+
+onetwo <- merge(first, second, by=c("cow_id","quarter"), all = TRUE) #should be NA for cows with missing observations
+onetwothree <-merge(onetwo,third, by=c("cow_id", "quarter"), all = TRUE)
+#onetwothree has all farms, visits 1-3
+
+
+onetwothree1<-select(onetwothree, -c(first_visit, second_visit, third_visit))
+
+write.csv(onetwothree1, "lf_all_visits.csv", row.names = T) #wrote out csv to clean by hand in excel
+```
+
+
+#ob
+```{r}
+setwd(path.exercise)
+obtest<-read.csv("ob_test.csv", na.strings= ".", header = T)
+
+str(obtest)
+#obtest$Cow_ID<-as.character(obtest$Cow_ID)
+first<-filter(obtest, visit=="first") #select only FIRST visit for each farm
+oldnames<-c(colnames(first)) #make list of column names and save as object
+newnames1<- paste("first_", oldnames, sep="")
+setnames(first, old = c(oldnames), new = c(newnames1))
+names(first)[names(first)=="first_Cow_ID"] <- "cow_id"
+names(first)[names(first)=="first_Quarter"] <- "quarter" #put back to original so can merge later
+
+obtest<-read.csv("ob_test.csv", na.strings= ".", header = T)
+#obtest$Cow_ID<-as.character(obtest$Cow_ID)
+second<-filter(obtest, visit=="second") #select only SECOND visit for each farm
+newnames2<- paste("second_", oldnames, sep="") #can still use oldnames, bc are same for all observations in OREI
+setnames(second, old = c(oldnames), new = c(newnames2))
+names(second)[names(second)=="second_Cow_ID"] <- "cow_id"
+names(second)[names(second)=="second_Quarter"] <- "quarter" #put back to original so can merge later
+
+obtest<-read.csv("ob_test.csv", na.strings= ".", header = T)
+#obtest$Cow_ID<-as.character(obtest$Cow_ID)
+third<-filter(obtest, visit=="third") #select only THIRD visit for each farm
+newnames3<- paste("third_", oldnames, sep="") #can still use oldnames, bc are same for all observations in OREI
+setnames(third, old = c(oldnames), new = c(newnames3))
+names(third)[names(third)=="third_Cow_ID"] <- "cow_id"
+names(third)[names(third)=="third_Quarter"] <- "quarter" #put back to original so can merge later
+
+
+onetwo <- merge(first, second, by=c("cow_id","quarter"), all = TRUE) #should be NA for cows with missing observations
+onetwothree <-merge(onetwo,third, by=c("cow_id", "quarter"), all = TRUE)
+#onetwothree has all farms, visits 1-3
+
+
+onetwothree1<-select(onetwothree, -c(first_visit, second_visit, third_visit))
+
+write.csv(onetwothree1, "ob_all_visits.csv", row.names = T) #wrote out csv to clean by hand in excel
+```
+
+
+#pb
+```{r}
+setwd(path.exercise)
+pbtest<-read.csv("pb_test.csv", na.strings= ".", header = T)
+
+str(pbtest)
+#pbtest$Cow_ID<-as.character(pbtest$Cow_ID)
+first<-filter(pbtest, visit=="first") #select only FIRST visit for each farm
+oldnames<-c(colnames(first)) #make list of column names and save as object
+newnames1<- paste("first_", oldnames, sep="")
+setnames(first, old = c(oldnames), new = c(newnames1))
+names(first)[names(first)=="first_Cow_ID"] <- "cow_id"
+names(first)[names(first)=="first_Quarter"] <- "quarter" #put back to original so can merge later
+
+pbtest<-read.csv("pb_test.csv", na.strings= ".", header = T)
+#pbtest$Cow_ID<-as.character(pbtest$Cow_ID)
+second<-filter(pbtest, visit=="second") #select only SECOND visit for each farm
+newnames2<- paste("second_", oldnames, sep="") #can still use oldnames, bc are same for all observations in OREI
+setnames(second, old = c(oldnames), new = c(newnames2))
+names(second)[names(second)=="second_Cow_ID"] <- "cow_id"
+names(second)[names(second)=="second_Quarter"] <- "quarter" #put back to original so can merge later
+
+pbtest<-read.csv("pb_test.csv", na.strings= ".", header = T)
+#pbtest$Cow_ID<-as.character(pbtest$Cow_ID)
+third<-filter(pbtest, visit=="third") #select only THIRD visit for each farm
+newnames3<- paste("third_", oldnames, sep="") #can still use oldnames, bc are same for all observations in OREI
+setnames(third, old = c(oldnames), new = c(newnames3))
+names(third)[names(third)=="third_Cow_ID"] <- "cow_id"
+names(third)[names(third)=="third_Quarter"] <- "quarter" #put back to original so can merge later
+
+
+onetwo <- merge(first, second, by=c("cow_id","quarter"), all = TRUE) #should be NA for cows with missing observations
+onetwothree <-merge(onetwo,third, by=c("cow_id", "quarter"), all = TRUE)
+#onetwothree has all farms, visits 1-3
+
+
+onetwothree1<-select(onetwothree, -c(first_visit, second_visit, third_visit))
+
+write.csv(onetwothree1, "pb_all_visits.csv", row.names = T) #wrote out csv to clean by hand in excel
+```
+
+
+#vt
+```{r}
+setwd(path.exercise)
+vttest<-read.csv("vt_test.csv", na.strings= ".", header = T)
+
+str(vttest)
+#vttest$Cow_ID<-as.character(vttest$Cow_ID)
+first<-filter(vttest, visit=="first") #select only FIRST visit for each farm
+oldnames<-c(colnames(first)) #make list of column names and save as object
+newnames1<- paste("first_", oldnames, sep="")
+setnames(first, old = c(oldnames), new = c(newnames1))
+names(first)[names(first)=="first_Cow_ID"] <- "cow_id"
+names(first)[names(first)=="first_Quarter"] <- "quarter" #put back to original so can merge later
+
+vttest<-read.csv("vt_test.csv", na.strings= ".", header = T)
+#vttest$Cow_ID<-as.character(vttest$Cow_ID)
+second<-filter(vttest, visit=="second") #select only SECOND visit for each farm
+newnames2<- paste("second_", oldnames, sep="") #can still use oldnames, bc are same for all observations in OREI
+setnames(second, old = c(oldnames), new = c(newnames2))
+names(second)[names(second)=="second_Cow_ID"] <- "cow_id"
+names(second)[names(second)=="second_Quarter"] <- "quarter" #put back to original so can merge later
+
+vttest<-read.csv("vt_test.csv", na.strings= ".", header = T)
+#vttest$Cow_ID<-as.character(vttest$Cow_ID)
+third<-filter(vttest, visit=="third") #select only THIRD visit for each farm
+newnames3<- paste("third_", oldnames, sep="") #can still use oldnames, bc are same for all observations in OREI
+setnames(third, old = c(oldnames), new = c(newnames3))
+names(third)[names(third)=="third_Cow_ID"] <- "cow_id"
+names(third)[names(third)=="third_Quarter"] <- "quarter" #put back to original so can merge later
+
+
+onetwo <- merge(first, second, by=c("cow_id","quarter"), all = TRUE) #should be NA for cows with missing observations
+onetwothree <-merge(onetwo,third, by=c("cow_id", "quarter"), all = TRUE)
+#onetwothree has all farms, visits 1-3
+
+
+onetwothree1<-select(onetwothree, -c(first_visit, second_visit, third_visit))
+
+write.csv(onetwothree1, "vt_all_visits.csv", row.names = T) #wrote out csv to clean by hand in excel
+```
+
+#sp
+```{r}
+setwd(path.exercise)
+sptest<-read.csv("sp_test.csv", na.strings= ".", header = T)
+
+str(sptest)
+#sptest$Cow_ID<-as.character(sptest$Cow_ID)
+first<-filter(sptest, visit=="first") #select only FIRST visit for each farm
+oldnames<-c(colnames(first)) #make list of column names and save as object
+newnames1<- paste("first_", oldnames, sep="")
+setnames(first, old = c(oldnames), new = c(newnames1))
+names(first)[names(first)=="first_Cow_ID"] <- "cow_id"
+names(first)[names(first)=="first_Quarter"] <- "quarter" #put back to original so can merge later
+
+sptest<-read.csv("sp_test.csv", na.strings= ".", header = T)
+#sptest$Cow_ID<-as.character(sptest$Cow_ID)
+second<-filter(sptest, visit=="second") #select only SECOND visit for each farm
+newnames2<- paste("second_", oldnames, sep="") #can still use oldnames, bc are same for all observations in OREI
+setnames(second, old = c(oldnames), new = c(newnames2))
+names(second)[names(second)=="second_Cow_ID"] <- "cow_id"
+names(second)[names(second)=="second_Quarter"] <- "quarter" #put back to original so can merge later
+
+
+onetwo <- merge(first, second, by=c("cow_id","quarter"), all = TRUE) #should be NA for cows with missing observations
+
+onetwo1<-select(onetwo, -c(first_visit, second_visit))
+
+write.csv(onetwo1, "sp_all_visits.csv", row.names = T) #wrote out csv to clean by hand in excel
+```
+
+
+#sw
+```{r}
+setwd(path.exercise)
+swtest<-read.csv("sw_test.csv", na.strings= ".", header = T)
+
+str(swtest)
+#swtest$Cow_ID<-as.character(swtest$Cow_ID)
+first<-filter(swtest, visit=="first") #select only FIRST visit for each farm
+oldnames<-c(colnames(first)) #make list of column names and save as object
+newnames1<- paste("first_", oldnames, sep="")
+setnames(first, old = c(oldnames), new = c(newnames1))
+names(first)[names(first)=="first_Cow_ID"] <- "cow_id"
+names(first)[names(first)=="first_Quarter"] <- "quarter" #put back to original so can merge later
+
+swtest<-read.csv("sw_test.csv", na.strings= ".", header = T)
+#swtest$Cow_ID<-as.character(swtest$Cow_ID)
+second<-filter(swtest, visit=="second") #select only SECOND visit for each farm
+newnames2<- paste("second_", oldnames, sep="") #can still use oldnames, bc are same for all observations in OREI
+setnames(second, old = c(oldnames), new = c(newnames2))
+names(second)[names(second)=="second_Cow_ID"] <- "cow_id"
+names(second)[names(second)=="second_Quarter"] <- "quarter" #put back to original so can merge later
+
+swtest<-read.csv("sw_test.csv", na.strings= ".", header = T)
+#swtest$Cow_ID<-as.character(swtest$Cow_ID)
+third<-filter(swtest, visit=="third") #select only THIRD visit for each farm
+newnames3<- paste("third_", oldnames, sep="") #can still use oldnames, bc are same for all observations in OREI
+setnames(third, old = c(oldnames), new = c(newnames3))
+names(third)[names(third)=="third_Cow_ID"] <- "cow_id"
+names(third)[names(third)=="third_Quarter"] <- "quarter" #put back to original so can merge later
+
+
+onetwo <- merge(first, second, by=c("cow_id","quarter"), all = TRUE) #should be NA for cows with missing observations
+onetwothree <-merge(onetwo,third, by=c("cow_id", "quarter"), all = TRUE)
+#onetwothree has all farms, visits 1-3
+
+
+onetwothree1<-select(onetwothree, -c(first_visit, second_visit, third_visit))
+
+write.csv(onetwothree1, "sw_all_visits.csv", row.names = T) #wrote out csv to clean by hand in excel
+```

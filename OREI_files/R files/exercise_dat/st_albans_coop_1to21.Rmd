@@ -1,0 +1,12 @@
+---
+title: "Untitled"
+author: "Caitlin Jeffrey"
+date: "May 27, 2019"
+output: html_document
+---
+
+```{r}
+setwd(path.exercise)
+coop<-read.csv("coop_data_csv_updated_6_4_2019.csv", na.strings= ".", header = T)
+str(coop)
+```

@@ -1,0 +1,54 @@
+---
+title: "Homework 20"
+author: "Caitlin Jeffrey"
+date: "April 21, 2019"
+output: html_document
+---
+
+
+```{r}
+tmin<- read.dbf("tmin.dbf", as.is=TRUE)
+tmax<- read.dbf("tmax.dbf", as.is=TRUE)
+tave<- read.dbf("tave.dbf", as.is=TRUE)
+str(tmin); str(tmax); str(tave)
+```
+
+```{r}
+min_mean<-colMeans(tmin[5:16], na.rm = TRUE)
+max_mean<-colMeans(tmax[5:16], na.rm = TRUE)
+ave_mean<-colMeans(tave[5:16], na.rm = TRUE)
+```
+
+```{r}
+install.packages("reshape", dependencies = T, repos = 'http://cran.us.r-project.org')
+library(reshape)
+```
+
+```{r}
+min<-(min_mean/10); max<-(max_mean/10); ave<-(ave_mean/10); as.numeric(min); as.numeric(max); as.numeric(ave);
+plot<-rbind(min, max, ave); colnames(plot) <- c("_1=JAN", "_2=FEB", "_3=MAR", "_4=APR", "_5=MAY", "_6=JUN", "_7=JUL", "_8=AUG", "_9=SEP", "_10=OCT", "_11=NOV", "_12=DEC"); t(plot)
+```
+
+```{r}
+str(plot)
+```
+
+
+```{r}
+all_range<-range(min(floor(min)), max(ceiling(max))); all_range
+xtick<-seq(1, 12, by=2)
+```
+
+
+```{r}
+pdf("rplot.pdf")
+par(las=1)
+plot(min, type="o", ylim=all_range, col="blue", xaxt="n", pch=11, 
+     ylab="Mean Temperature (degrees C)", xlab="Month")
+lines(max, type="o", col="black", pch=5)
+lines(ave, type="o", col="purple", pch=4)
+abline(h=0, lty=4)
+axis(side=1, at=xtick, lab=c("JAN", "MAR", "MAY", "JUL", "SEP", "NOV"))
+legend(0.8, all_range[2], c("Average Minimum Temp", "Average Maximum Temp", "Average Mean Temp"), cex=.8, col=c("blue", "black", "purple"), pch =c(11, 5, 4), lty=1)
+dev.off()
+```

@@ -1,0 +1,54 @@
+---
+title: "Untitled"
+author: "Caitlin Jeffrey"
+date: "January 31, 2019"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_knit$set(root.dir = ("C:/Users/caitl/OneDrive/Pictures"))
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_knit$set(root.dir = ("C:/Users/caitl/OneDrive/Desktop"))
+knitr::opts_knit$set(root.dir = ("C:/Users/caitl/OneDrive/Documents"))
+```
+
+```{r}
+getwd()
+path.powerpoint=("C:/Users/caitl/OneDrive/Documents/BaseR/data/powerpoint_dat")
+setwd(path.powerpoint)
+getwd()
+```
+
+```{r}
+getwd()
+path.exercise=("C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat")
+setwd(path.exercise)
+getwd()
+```
+
+```{r}
+getwd()
+path.new=("C:/Users/caitl/OneDrive/Documents/BaseR/data/New_folder")
+setwd(path.new)
+getwd()
+```
+```{r}
+save(path.new, path.powerpoint, path.exercise, file = "pathways1.Rdata")
+```
+
+```{r}
+list.files()
+```
+
+
+```{r}
+history()
+savehistory("~/BaseR/r_code/feb5history.Rhistory")
+loadhistory("~/pathways1.Rdata")
+```
+
+
+

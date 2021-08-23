@@ -1,0 +1,29 @@
+---
+title: "Exercise 22"
+author: "Caitlin Jeffrey"
+date: "April 26, 2019"
+output: html_document
+---
+```{r}
+z1 <-read.csv("zapusmorph.csv", na.strings= ".", header = T)
+z2 <-z1[c("SPP", "SEX", "IFWID")]
+z3 <-subset(z2, SPP== 1)
+z4 <-na.omit(z3)
+str(z4)
+```
+
+```{r}
+xlim.r<-range(round(min(z4$IFWID), 1), round(max(z4$IFWID), 1))
+max.m<-max(table(cut(z4$IFWID[z4$SEX == "M"], breaks = 9)))
+max.f<-max(table(cut(z4$IFWID[z4$SEX == "F"], breaks = 9)))
+ylim.r<-range(0, max.m,max.f)
+par(mfrow= c(2, 1))
+hist(z4$IFWID[z4$SEX == "M"], xlab= NA, main = NULL,
+xlim= xlim.r, ylim= ylim.r, breaks = 9, col = "orange")
+title(main="Selected skull characteristic of 1 subspecies of jumping mouse by sex")
+legend("bottomleft", c("Sex=Male"), fill=c("orange"), bty="n", cex=1.25, horiz=T)
+hist(z4$IFWID[z4$SEX == "F"], xaxt='n', xlab= "IFWIDlength (mm)", main = NULL,
+xlim= xlim.r, ylim= ylim.r, breaks = 9, col = "darkorange3")
+legend("topleft", c("Sex=Female"), fill=c("darkorange3"), bty="n", cex=1.25, horiz=T)
+```
+

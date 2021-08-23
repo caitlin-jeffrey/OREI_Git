@@ -1,0 +1,34 @@
+---
+title: "Exercise 18"
+author: "Caitlin Jeffrey"
+date: "April 4, 2019"
+output: html_document
+---
+
+```{r}
+setwd(path.exercise)
+```
+
+
+```{r}
+AnnualLekFunction<-function(lek_file, leks.year) {
+  rd<-read.csv("gsg_leks.csv", header = T, stringsAsFactors = F)
+  yrsub<-subset(rd, year==leks.year)
+  yrsub.mean<-aggregate(yrsub$tot_male, by=list(yrsub$complex), FUN= mean)
+  yrsub.sd<-aggregate(yrsub$tot_male, by=list(yrsub$complex), FUN = sd)
+  yrsub.2sd<-yrsub.sd[,2] * 2
+  yrsub.n<-aggregate(yrsub$tot_male, by=list(yrsub$complex), FUN = length)
+  lwr_CI<-(yrsub.mean[,2] -1.645*(((yrsub.sd[,2])/2)/sqrt(yrsub.n[,2])))
+  upr_CI<-(yrsub.mean[,2] +1.645*(((yrsub.sd[,2])/2)/sqrt(yrsub.n[,2])))
+  merge1<-merge(yrsub.mean, yrsub.sd, by =c(1,1))
+  merge2<-merge(merge1, yrsub.n, by=c(1,1))
+  gsg.CI<-cbind(merge2,yrsub.2sd,lwr_CI,upr_CI)
+  names(gsg.1)<-c("complex", "mean", "sd", "n", "2sd", "lwr_90CI", "upr_90CI")
+  write.csv(gsg.1, file=paste(leks.year, "_gsg.CI.csv", na="",sep=""))
+}
+
+setwd("C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat")
+AnnualLekSummary(lek_file= "C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat/gsg_leks.csv", leks.year=2005)
+```  
+
+

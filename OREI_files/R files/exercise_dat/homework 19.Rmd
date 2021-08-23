@@ -1,0 +1,31 @@
+---
+title: "Untitled"
+author: "Caitlin Jeffrey"
+date: "April 19, 2019"
+output: html_document
+---
+
+
+
+```{r}
+scul<- read.csv("sculpin_modfit.csv", header = T, na.strings = ""); names(scul); min(scul$rawres); max(scul$rawres); min(scul$stdres); max(scul$stdres)
+```
+
+```{r}
+plot.new()
+par(mfrow=c(1,2))
+plot(scul$rawres, col="red",
+     ylim=c(-20, 20),
+     ylab="Raw Residuals", xlab="Observation Number"
+     )
+abline(h=0, lty=3)
+plot(scul$stdres, col="blue",
+     ylim=c(-2, 2),
+     ylab="Standardized Residuals", xlab="Observation Number"
+     )
+abline(h=0, lty=4)
+abline(h=-1.96, lty=2)
+abline(h=1.96, lty=2)
+
+```
+

@@ -1,0 +1,35 @@
+---
+title: "Untitled"
+author: "Ashma"
+date: "April 5, 2019"
+output: html_document
+---
+
+---
+
+
+```{r}
+setwd("C:/Users/Ashma/Documents/baseR-V2018.2CRU/data/exercise_dat") # set working directory
+getwd()
+# create function 
+AnnualLekSummary<-function(filename,year.stat) {
+gl <- read.csv("gsg_leks.csv", stringsAsFactors=FALSE) # import the dataset
+ys1 <- subset(gl,year==year.stat) # filter data using year
+ys1.mean <- aggregate(ys1$tot_male, by = list(ys1$complex), FUN = mean) # mean
+ys1.sd   <- aggregate(ys1$tot_male, by = list(ys1$complex), FUN = sd) # SD
+ys1.2sd  <- ys1.sd[,2] * 2
+ys1.n    <-aggregate(ys1$tot_male, by = list(ys1$complex), FUN = length) # n
+lower_CI <- (ys1.mean[,2] -1.645*(((ys1.sd[,2])/2)/sqrt(ys1.n[,2]))) # 90% Confidence interval
+upper_CI <- (ys1.mean[,2] +1.645*(((ys1.sd[,2])/2)/sqrt(ys1.n[,2])))
+AL  <-merge(ys1.mean, ys1.sd, by = c(1,1))
+AL1 <- merge(AL,ys1.n,by = c(1,1))
+gsg.CI<- cbind (AL1,ys1.2sd,lower_CI, upper_CI)
+names(gsg.CI) <- c('complex', 'Mean', "SD",'n', '2SD', 'lo.CI_90', 'up.CI_90')
+#Write to csv.
+write.csv(gsg.CI, file = paste(year.stat, "_gsg.CI.csv", na ="",sep = ""))
+}
+setwd("C:/Users/Ashma/Documents/baseR-V2018.2CRU/data/exercise_dat")
+AnnualLekSummary(filename= "C:/Users/Ashma/Documents/baseR-V2018.2CRU/data/exercise_dat/gsg_leks.csv", year.stat= 2007)
+getwd()
+read.csv("2007_gsg.CI.csv", stringsAsFactors=FALSE) # read data
+```

@@ -1,0 +1,83 @@
+---
+title: "Homework 1 exercise 2"
+author: "Caitlin Jeffrey"
+date: "January 24, 2019"
+output: pdf_document
+---
+
+**Exercise 2**
+
+
+I've been fighting with Microsoft OneDrive and haven't been able to change any of the working directories, and I have no idea why. I tried to completely disable it and R was still telling me that's where files would go, and would not allow me to change it to just my PC's files. However, this is what it should look like to make 3 new paths:
+
+path.desktop <- "C:Users/caitl/OneDrive/Desktop"
+path.documents <- "C:Users/caitl/OneDrive/Documents"
+path.pictures <- "C:Users/caitl/OneDrive/Pictures"
+
+```{r}
+getwd()
+```
+
+```{r}
+path.desktop <- "C:Users/caitl/OneDrive/Desktop"
+```
+
+ 
+
+---
+
+Then, this was me trying to set the working drive using the 3 new paths I created, and then checking to see where I was after trying to activate each. I could tell it wasn't working because whenever I did getwd() it didn't change from the initial directory
+
+```{r}
+path.desktop <- "C:Users/caitl/OneDrive/Desktop"
+setwd(path.desktop)
+```
+
+setwd(path.desktop)
+Error in setwd(path.desktop) : cannot change working directory
+getwd()
+[1] "C:/Users/caitl/OneDrive/Documents"
+
+setwd(path.documents)
+Error in setwd(path.documents) : cannot change working directory
+getwd()
+[1] "C:/Users/caitl/OneDrive/Documents"
+
+setwd(path.pictures)
+Error in setwd(path.pictures) : cannot change working directory
+getwd()
+[1] "C:/Users/caitl/OneDrive/Documents"
+
+---
+
+Saved paths as "pathways.Rdata"
+
+path.desktop <- "C:Users/caitl/OneDrive/Desktop" <- 1
+path.documents <- "C:Users/caitl/OneDrive/Documents" <- 2
+path.pictures <- "C:Users/caitl/OneDrive/Pictures" <- 3
+
+save(path.desktop, path.documents, path.pictures, file = "pathways.Rdata")
+
+---
+
+Saving last 25 commands as an .r file
+
+history()
+savehistory("~/BaseR/r_code/january24history.Rhistory")
+
+---
+
+Closed R, loaded previously named pathnames, and checked to see that the "pathways.Rdata" was now in data directory
+
+[Workspace loaded from ~/.RData]
+
+loadhistory("~/pathways.Rdata")
+
+list.files()
+ [1] "BaseR"                                "Custom Office Templates"             
+ [3] "desktop.ini"                          "homework1.html"                      
+ [5] "homework1.Rmd"                        "money.xlsx"                          
+ [7] "OREI"                                 "pathways.Rdata"                      
+ [9] "R"                                    "R homework.docx"                     
+[11] "RhomeworkExercise2CaitlinJeffrey.log" "RhomeworkExercise2CaitlinJeffrey.Rmd"
+[13] "soil ecology.docx"   

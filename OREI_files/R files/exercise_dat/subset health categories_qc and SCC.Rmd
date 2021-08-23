@@ -1,0 +1,328 @@
+---
+title: "subsetting helath categories"
+author: "Caitlin Jeffrey"
+date: "August 10, 2020"
+output: html_document
+---
+
+
+##identifying cows that fall into health categories; "always infected"; "became infected"; "became infected and recovered"; "never infected"
+
+```{r}
+setwd(path.exercise)
+
+all_trim$first_scc<-as.numeric(as.character(all_trim$first_scc))
+all_trim$second_scc<-as.numeric(as.character(all_trim$second_scc))
+all_trim$third_scc<-as.numeric(as.character(all_trim$third_scc))
+all_trim$fourth_scc<-as.numeric(as.character(all_trim$fourth_scc))
+
+str(all_trim)
+
+
+#ID quarters as either equal to or above 200,000 cells/mL or below for each test
+all_trim$first_scc_200k<-ifelse(all_trim$first_scc >= 200000, all_trim$first_scc_200k<-"yes", "no")
+all_trim$second_scc_200k<-ifelse(all_trim$second_scc >= 200000, all_trim$second_scc_200k<-"yes", "no")
+all_trim$third_scc_200k<-ifelse(all_trim$third_scc >= 200000, all_trim$third_scc_200k<-"yes", "no")
+all_trim$fourth_scc_200k<-ifelse(all_trim$fourth_scc >= 200000, all_trim$fourth_scc_200k<-"yes", "no")
+
+write.csv(all_trim, "all_trim_withscc.csv", row.names = T) #checked that all above coding for above/below 200k worked, and it did
+```
+
+
+#always infected- need to ensure same path_ID, AND what about Stony Pond (only yes-yes)?
+```{r}
+#get cows from farms with only three visits (no CF) who are: yes-yes-yes
+always_nocf<-filter(all_trim, ((first_quarter_code == "1" | first_quarter_code == "2" | first_quarter_code == "21" | first_quarter_code == "24" | first_quarter_code == "27" | first_quarter_code == "29" | first_quarter_code =="35") & (second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code == "24" | second_quarter_code == "27" | second_quarter_code == "29" | second_quarter_code =="35")
+& (third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code == "24" | third_quarter_code == "27" | third_quarter_code == "29" | third_quarter_code =="35")) & (first_farm != "Choiniere" | second_farm != "Choiniere" | third_farm != "Choiniere" | fourth_farm !="Choiniere")) #161 observations
+
+#get all CF cows, then always infected within CF
+cf<-filter(all_trim, first_farm == "Choiniere" | second_farm == "Choiniere" | third_farm == "Choiniere" | fourth_farm == "Choiniere") #164 observations
+cf_always<-filter(cf, ((first_quarter_code == "1" | first_quarter_code == "2" | first_quarter_code == "21" | first_quarter_code == "24" | first_quarter_code == "27" | first_quarter_code == "29" | first_quarter_code =="35") & (second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code == "24" | second_quarter_code == "27" | second_quarter_code == "29" | second_quarter_code =="35") & (third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code == "24" | third_quarter_code == "27" | third_quarter_code == "29" | third_quarter_code =="35") & (fourth_quarter_code == "1" | fourth_quarter_code == "2" | fourth_quarter_code == "21" | fourth_quarter_code == "24" | fourth_quarter_code == "27" | fourth_quarter_code == "29" | fourth_quarter_code =="35")) | ((first_quarter_code == "1" | first_quarter_code == "2" | first_quarter_code == "21" | first_quarter_code == "24" | first_quarter_code == "27" | first_quarter_code == "29" | first_quarter_code =="35") & (second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code == "24" | second_quarter_code == "27" | second_quarter_code == "29" | second_quarter_code =="35") & (third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code == "24" | third_quarter_code == "27" | third_quarter_code == "29" | third_quarter_code =="35") & is.na(fourth_quarter_code)) | (is.na(first_quarter_code) & (second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code == "24" | second_quarter_code == "27" | second_quarter_code == "29" | second_quarter_code =="35")& (third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code == "24" | third_quarter_code == "27" | third_quarter_code == "29" | third_quarter_code =="35") & (fourth_quarter_code == "1" | fourth_quarter_code == "2" | fourth_quarter_code == "21" | fourth_quarter_code == "24" | fourth_quarter_code == "27" | fourth_quarter_code == "29" | fourth_quarter_code =="35"))) #22 observations; how many visits with "YES" do we want to require? above coding catches 3 consecutive (yes-yes-yes-yes, na-yes-yes-yes, yes-yes-yes-na)
+
+#get all SP cows, then always infected within SP
+sp<-filter(all_trim, first_farm == "StonyPond" | second_farm == "StonyPond")  #144 observations
+sp_always<-filter(sp, (first_quarter_code == "1" | first_quarter_code == "2" | first_quarter_code == "21" | first_quarter_code == "24" | first_quarter_code == "27" | first_quarter_code == "29" | first_quarter_code =="35") & (second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code == "24" | second_quarter_code == "27" | second_quarter_code == "29" | second_quarter_code =="35")) #19 observations
+
+
+#combine CF and SP with rest of farms
+always_nosp<-rbind(always_nocf, cf_always) #183 quarters
+always_all<-rbind(always_nosp, sp_always) #202 observations, not necc. same pathogen, need to clean
+
+
+write.csv(always_all, "always_all1.csv", row.names = T) #wrote out csv to clean by hand (only quarters infected all visits with same path)
+always_all_cleaned<-read.csv("always_all_cleaned.csv", na.strings= ".", header = T) #read back in cleaned data set
+table(always_all_cleaned$second_farm)
+```
+
+```{r}
+#now, include criteria that scc greater than or equal to 200,000 cells/mL
+
+#farms with 3 visits, no cf or sp
+always_nocf_sccreq<-filter(always_nocf, first_scc_200k=="yes" & second_scc_200k=="yes" & third_scc_200k=="yes") #26 observations
+
+#sp
+sp_always_sccreq<-filter(sp_always, first_scc_200k=="yes" & second_scc_200k=="yes") #8 observations
+
+#seperate cf by different possible scenarios
+cf_always_1<-filter(cf, ((first_quarter_code == "1" | first_quarter_code == "2" | first_quarter_code == "21" | first_quarter_code == "24" | first_quarter_code == "27" | first_quarter_code == "29" | first_quarter_code =="35") & (second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code == "24" | second_quarter_code == "27" | second_quarter_code == "29" | second_quarter_code =="35") & (third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code == "24" | third_quarter_code == "27" | third_quarter_code == "29" | third_quarter_code =="35") & (fourth_quarter_code == "1" | fourth_quarter_code == "2" | fourth_quarter_code == "21" | fourth_quarter_code == "24" | fourth_quarter_code == "27" | fourth_quarter_code == "29" | fourth_quarter_code =="35"))) #20 observations for yes-yes-yes-yes
+
+cf_always_1_sccreq<-filter(cf_always_1, first_scc_200k=="yes" & second_scc_200k=="yes" & third_scc_200k=="yes" & fourth_scc_200k =="yes")#11 observations for yes-yes-yes-yes with scc requirement
+                          
+cf_always_2<-filter(cf, ((first_quarter_code == "1" | first_quarter_code == "2" | first_quarter_code == "21" | first_quarter_code == "24" | first_quarter_code == "27" | first_quarter_code == "29" | first_quarter_code =="35") & (second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code == "24" | second_quarter_code == "27" | second_quarter_code == "29" | second_quarter_code =="35") & (third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code == "24" | third_quarter_code == "27" | third_quarter_code == "29" | third_quarter_code =="35") & is.na(fourth_quarter_code))) #1 observation of yes-yes-yes-na 
+
+cf_always_2_sccreq<-filter(cf_always_2,  first_scc_200k=="yes" & second_scc_200k=="yes" & third_scc_200k=="yes")#0 observation of yes-yes-yes-na with scc requirement
+                    
+cf_always_3<-filter(cf, (is.na(first_quarter_code) & (second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code == "24" | second_quarter_code == "27" | second_quarter_code == "29" | second_quarter_code =="35")& (third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code == "24" | third_quarter_code == "27" | third_quarter_code == "29" | third_quarter_code =="35") & (fourth_quarter_code == "1" | fourth_quarter_code == "2" | fourth_quarter_code == "21" | fourth_quarter_code == "24" | fourth_quarter_code == "27" | fourth_quarter_code == "29" | fourth_quarter_code =="35"))) #1 observation of na-yes-yes-yes
+
+cf_always_3_sccreq<-filter(cf_always_3, second_scc_200k=="yes" & third_scc_200k=="yes" & fourth_scc_200k=="yes")#0 observation of na-yes-yes-yes with scc requirement
+
+#combine farms with 3 visits, sp, and the only category from cf that met scc requirements
+always_nosp_sccreq<-rbind(always_nocf_sccreq, cf_always_1_sccreq) #37 quarters
+always_all_sccreq<-rbind(always_nosp_sccreq, sp_always_sccreq) #45 quarters
+
+write.csv(always_all_sccreq, "always_all_sccreq.csv", row.names = T) #wrote out csv to clean by hand in excel
+always_all_sccreq_cleaned<-read.csv("always_all_sccreq_cleaned.csv", na.strings= ".", header = T) #40 observations
+
+table(always_all_sccreq_cleaned$second_farm)
+
+#samepath_nosp<-filter(always_all, ((first_path_1==second_path_1) & (second_path_1==third_path_1)) | ((second_path_1==third_path_1) & (third_path_1==fourth_path_1))) #162 observations
+#samepath_sp<-filter(sp_always, (first_path_1==second_path_1)) #19 observations; all stony pond
+
+#samepath<-rbind(samepath_nosp, samepath_sp)
+#not 100% perfect, could have become mixed infection or multiple pathogens isolated but not neccessarily called "path_1"; 181 observations
+```
+
+
+
+#never infected- fair to include Stony Pond (only no-no)?
+```{r}
+#get cows from all farms with 3 visits who were no-no-no; no sp or cf
+never_3farms_qc<-filter(all_trim, (first_quarter_code=="3" | first_quarter_code=="5" | first_quarter_code=="6") & (second_quarter_code=="3" | second_quarter_code=="5" | second_quarter_code=="6") & (third_quarter_code=="3" | third_quarter_code=="5" | third_quarter_code=="6") & (first_farm != "Choiniere" | second_farm != "Choiniere" | third_farm != "Choiniere" | fourth_farm !="Choiniere")) #307 observations vs 625
+
+#get object all with CF cows
+cf<-filter(all_trim, first_farm == "Choiniere" | second_farm == "Choiniere" | third_farm == "Choiniere" | fourth_farm == "Choiniere") #164 observations
+
+#get cf never infected
+cf_never_qc<-filter(cf, ((first_quarter_code=="3" | first_quarter_code=="5" | first_quarter_code=="6") & (second_quarter_code=="3" | second_quarter_code=="5" | second_quarter_code=="6") & (third_quarter_code=="3" | third_quarter_code=="5" | third_quarter_code=="6") & (fourth_quarter_code=="3" | fourth_quarter_code=="5" | fourth_quarter_code=="6")) 
+                    | ((first_quarter_code=="3" | first_quarter_code=="5" | first_quarter_code=="6") & (second_quarter_code=="3" | second_quarter_code=="5" | second_quarter_code=="6") & (third_quarter_code=="3" |  third_quarter_code=="5" | third_quarter_code=="6") & is.na(fourth_quarter_code)) | 
+                      (is.na(first_quarter_code) & (second_quarter_code=="3" | second_quarter_code=="5" | second_quarter_code=="6") & (third_quarter_code=="3" | third_quarter_code=="5" | third_quarter_code=="6") & (fourth_quarter_code=="3" | fourth_quarter_code=="5" | fourth_quarter_code=="6"))) #8 observations vs 60
+
+#get SP never infected
+sp<-filter(all_trim, first_farm == "StonyPond" | second_farm == "StonyPond")  #144 observations
+sp_never<-filter(sp, (first_quarter_code=="3" | first_quarter_code=="5" | first_quarter_code=="6") & (second_quarter_code=="3" | second_quarter_code=="5" | second_quarter_code=="6")) #71 observations vs 90
+
+#combine CF and SP with rest of farms
+never_nosp<-rbind(never_3farms_qc, cf_never_qc) #315 observations vs 685
+never_all_qc<-rbind(never_nosp, sp_never) #386 observations vs 775; need to add scc 
+
+
+##below is just checking code for cf_nevers
+cf_never_qc1<-filter(cf, ((first_quarter_code=="3" | first_quarter_code=="5" | first_quarter_code=="6") & (second_quarter_code=="3" | second_quarter_code=="5" | second_quarter_code=="6") & (third_quarter_code=="3" | third_quarter_code=="5" | third_quarter_code=="6") & (fourth_quarter_code=="3" | fourth_quarter_code=="5" | fourth_quarter_code=="6"))) #3 observations for no-no-no-no
+                     
+cf_never_qc2<-filter(cf, ((first_quarter_code=="3" | first_quarter_code=="5" | first_quarter_code=="6") & (second_quarter_code=="3" | second_quarter_code=="5" | second_quarter_code=="6") & (third_quarter_code=="3" | third_quarter_code=="5" | third_quarter_code=="6") & is.na(fourth_quarter_code))) #0 observations for no-no-no-na
+                     
+cf_never_qc3<-filter(cf, (is.na(first_quarter_code) & (second_quarter_code=="3" | second_quarter_code=="5" | second_quarter_code=="6") & (third_quarter_code=="3" | third_quarter_code=="5" | third_quarter_code=="6") & (fourth_quarter_code=="3" | fourth_quarter_code=="5" | fourth_quarter_code=="6"))) #5 observations for na-no-no-no
+
+table(never_all_qc$second_farm)
+```
+
+```{r}
+write.csv(never_all_qc, "never_all_qc_csv.csv", row.names = T)
+never_test<-read.csv("never_all_qc_csv_test.csv", na.strings= ".", header = T)
+```
+
+
+```{r}
+#now, include criteria that scc less than 200,000 cells/mL
+
+#get cows from all farms with 3 visits who were no-no-no and low scc; no sp or cf
+never_3farms_qc_sccreq<-filter(never_3farms_qc, first_scc_200k=="no" & second_scc_200k=="no" & third_scc_200k=="no") #290 observations (873 visits)
+
+#sp
+sp_never_sccreq<-filter(sp_never, first_scc_200k=="no" & second_scc_200k=="no") #51 observations (102 visits)
+
+#seperate cf by different possible scenarios
+cf_never_qc1_sccreq<-filter(cf_never_qc1, first_scc_200k=="no" & second_scc_200k=="no" & third_scc_200k=="no" & fourth_scc_200k=="no") #3 observations for no-no-no-no (12 visits)
+
+#were no observations that were no-no-no-na for cf
+
+cf_never_qc3_sccreq<-filter(cf_never_qc3, second_scc_200k=="no" & third_scc_200k=="no" & fourth_scc_200k=="no") #5 observations for na-no-no-no (15 visits)
+
+all_cf_never_qc_sccreq<-rbind(cf_never_qc1_sccreq, cf_never_qc3_sccreq) #8 observations
+
+#combine farms with 3 visits, sp, and the 2 categories from cf that met scc requirements
+never_nosp_sccreq<-rbind(never_3farms_qc_sccreq, all_cf_never_qc_sccreq) #299 quarters
+never_all_sccreq<-rbind(never_nosp_sccreq, sp_never_sccreq) #349 quarters
+
+table(never_all_sccreq$second_farm)
+
+write.csv(never_all_sccreq, "never_all_sccreq.csv", row.names = T)
+```
+
+#never infected but persistent high scc
+```{r}
+#get cows from all farms with 3 visits who were no-no-no and HIGH scc; no sp or cf
+never_3farms_highscc<-filter(never_3farms_qc, first_scc_200k=="yes" & second_scc_200k=="yes" & third_scc_200k=="yes") #1 observation
+
+#sp HIGH
+sp_never_highscc<-filter(sp_never, first_scc_200k=="yes" & second_scc_200k=="yes") #6 observations
+
+#seperate cf by different possible scenarios
+cf_never_qc1_highscc<-filter(cf_never_qc1, first_scc_200k=="yes" & second_scc_200k=="yes" & third_scc_200k=="yes" & fourth_scc_200k=="yes") #0 observations for HIGH no-no-no-no
+
+#were no observations that were no-no-no-na for cf
+
+cf_never_qc3_highscc<-filter(cf_never_qc3, second_scc_200k=="yes" & third_scc_200k=="yes" & fourth_scc_200k=="yes") #0 observations for na-no-no-no
+
+
+#combine farms with 3 visits, sp, and the 2 categories from cf that met HIGH scc requirements
+never_all_HIGHscc<-rbind(never_3farms_highscc, sp_never_highscc) #7 quarters
+
+table(never_all_HIGHscc$second_farm)
+```
+
+
+
+#became infected
+```{r}
+#compare to number observations using quarter codes, stricter definitions
+became_inf_qc<-filter(all_trim, ((first_quarter_code=="3" | first_quarter_code=="5" | first_quarter_code=="6") & (second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code == "24" | second_quarter_code == "27" | second_quarter_code == "29" | second_quarter_code =="35")) 
+                      | ((second_quarter_code=="3" | second_quarter_code=="5" | second_quarter_code=="6") & (third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code == "24" | third_quarter_code == "27" | third_quarter_code == "29" | third_quarter_code =="35")) 
+                      | ((third_quarter_code=="3" | third_quarter_code=="5" | third_quarter_code=="6") & (fourth_quarter_code == "1" | fourth_quarter_code == "2" | fourth_quarter_code == "21" | fourth_quarter_code == "24" | fourth_quarter_code == "27" | fourth_quarter_code == "29" | fourth_quarter_code =="35"))) #97 observations vs 147
+```
+
+
+
+```{r}
+#became infected, with scc requirement
+
+#seperate out by when became infected
+became_inf_qc1<-filter(all_trim, ((first_quarter_code=="3" | first_quarter_code=="5" | first_quarter_code=="6") & (second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code == "24" | second_quarter_code == "27" | second_quarter_code == "29" | second_quarter_code =="35"))) #40 observations
+
+became_inf_qc2<-filter(all_trim, ((second_quarter_code=="3" | second_quarter_code=="5" | second_quarter_code=="6") & (third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code == "24" | third_quarter_code == "27" | third_quarter_code == "29" | third_quarter_code =="35"))) #49 observations
+
+became_inf_qc3<-filter(all_trim, ((third_quarter_code=="3" | third_quarter_code=="5" | third_quarter_code=="6") & (fourth_quarter_code == "1" | fourth_quarter_code == "2" | fourth_quarter_code == "21" | fourth_quarter_code == "24" | fourth_quarter_code == "27" | fourth_quarter_code == "29" | fourth_quarter_code =="35"))) #8 observations
+
+inf1_csv<-table(became_inf_qc1$second_farm)
+inf2_csv<-table(became_inf_qc2$second_farm)
+inf3_csv<-table(became_inf_qc3$third_farm)
+
+write.csv(became_inf_qc1, "inf1_csv.csv", row.names = T)
+write.csv(became_inf_qc2, "inf2_csv.csv", row.names = T)
+write.csv(became_inf_qc3, "inf3_csv.csv", row.names = T)
+
+
+#now filter each category by scc req
+became_inf_qc1_sccreq<-filter(became_inf_qc1, first_scc_200k=="no" & second_scc_200k=="yes") #7 observations from visit 1 to 2 meet scc req
+
+became_inf_qc2_sccreq<-filter(became_inf_qc2, second_scc_200k=="no" & third_scc_200k=="yes") #3 observations
+
+became_inf_qc3_sccreq<-filter(became_inf_qc3, third_scc_200k=="no" & fourth_scc_200k=="yes") #0 observations
+
+write.csv(became_inf_qc1_sccreq, "inf1_csv_scc.csv", row.names = T)
+write.csv(became_inf_qc2_sccreq, "inf2_csv_scc.csv", row.names = T)
+```
+
+#became infected, then recovered
+```{r}
+#compare to number observations using quarter codes
+recovered_qc<-filter(all_trim, ((first_quarter_code=="3" | first_quarter_code=="5" | first_quarter_code=="6")  & (second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code == "24" | second_quarter_code == "27" | second_quarter_code == "29" | second_quarter_code =="35") & (third_quarter_code=="3" | third_quarter_code=="5" | third_quarter_code=="6")) 
+                     | ((second_quarter_code=="3" | second_quarter_code=="5" | second_quarter_code=="6")  & (third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code == "24" | third_quarter_code == "27" | third_quarter_code == "29" | third_quarter_code =="35") & (fourth_quarter_code=="3" | fourth_quarter_code=="5" | fourth_quarter_code=="6"))) #11 observations vs 36
+
+new_recovered_qc<-filter(all_trim, ((first_quarter_code == "1" | first_quarter_code == "2" | first_quarter_code == "21" | first_quarter_code == "24" | first_quarter_code == "27" | first_quarter_code == "29" | first_quarter_code =="35")  & (second_quarter_code=="3" | second_quarter_code=="5" | second_quarter_code=="6")) 
+                         | ((second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code == "24" | second_quarter_code == "27" | second_quarter_code == "29" | second_quarter_code =="35") & (third_quarter_code=="3" | third_quarter_code=="5" | third_quarter_code=="6")) 
+                         | ((third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code == "24" | third_quarter_code == "27" | third_quarter_code == "29" | third_quarter_code =="35") & (fourth_quarter_code=="3" | fourth_quarter_code=="5" | fourth_quarter_code=="6"))) #96 observations vs 130
+
+yesnono_recovered_qc<-filter(all_trim, ((first_quarter_code == "1" | first_quarter_code == "2" | first_quarter_code == "21" | first_quarter_code == "24" | first_quarter_code == "27" | first_quarter_code == "29" | first_quarter_code =="35") & (second_quarter_code=="3" | second_quarter_code=="5" | second_quarter_code=="6") & (third_quarter_code=="3" | third_quarter_code=="5" |third_quarter_code=="6")) 
+                             | ((second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code == "24" | second_quarter_code == "27" | second_quarter_code == "29" | second_quarter_code =="35") & (third_quarter_code=="3" | third_quarter_code=="5" | third_quarter_code=="6")) & (fourth_quarter_code=="3" | fourth_quarter_code=="5" | fourth_quarter_code=="6")) #43 observations vs 63
+```
+
+```{r}
+old_recovered<-table(recovered$second_farm)
+new_recovered<-table(new_recovered$second_farm) 
+write.csv(old_recovered, "old_recovered.csv", row.names = T)
+write.csv(new_recovered, "new_recovered.csv", row.names = T)
+yyn_recovered<-table(yesnono_recovered$second_farm)
+write.csv(yyn_recovered, "ynn_recovered.csv", row.names = T)
+```
+
+```{r}
+#became infected, then recovered, using scc req
+
+#most stict no-yes-no
+recovered_qc_1<-filter(all_trim, ((first_quarter_code=="3" | first_quarter_code=="5" | first_quarter_code=="6")  & (second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code == "24" | second_quarter_code == "27" | second_quarter_code == "29" | second_quarter_code =="35") & (third_quarter_code=="3" | third_quarter_code=="5" | third_quarter_code=="6"))) #10 observations
+
+recovered_qc_2<-filter(all_trim, ((second_quarter_code=="3" | second_quarter_code=="5" | second_quarter_code=="6")  & (third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code == "24" | third_quarter_code == "27" | third_quarter_code == "29" | third_quarter_code =="35") & (fourth_quarter_code=="3" | fourth_quarter_code=="5" | fourth_quarter_code=="6"))) #1
+
+write.csv(recovered_qc_1, "recovered_qc_1.csv", row.names = T)
+write.csv(recovered_qc_2, "recovered_qc_2.csv", row.names = T)
+
+recovered_qc_1_sccreq<-filter(recovered_qc_1, first_scc_200k=="no" & second_scc_200k=="yes" & third_scc_200k=="no") #0 observations
+
+recovered_qc_2_sccreq<-filter(recovered_qc_2, second_scc_200k=="no" & third_scc_200k=="yes" & fourth_scc_200k=="no") #0 observations
+
+
+#least strict yes-no (somewhere in here is 1 quarter counted twice- yes-no-yes-no possibly)
+new_recovered_qc1<-filter(all_trim, ((first_quarter_code == "1" | first_quarter_code == "2" | first_quarter_code == "21" | first_quarter_code == "24" | first_quarter_code == "27" | first_quarter_code == "29" | first_quarter_code =="35")  & (second_quarter_code=="3" | second_quarter_code=="5" | second_quarter_code=="6"))) #61 observations
+
+new_recovered_qc2<-filter(all_trim, ((second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code == "24" | second_quarter_code == "27" | second_quarter_code == "29" | second_quarter_code =="35") & (third_quarter_code=="3" | third_quarter_code=="5" | third_quarter_code=="6"))) #34 observations
+
+new_recovered_qc3<-filter(all_trim, ((third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code == "24" | third_quarter_code == "27" | third_quarter_code == "29" | third_quarter_code =="35") & (fourth_quarter_code=="3" | fourth_quarter_code=="5" | fourth_quarter_code=="6"))) #2 observations
+
+write.csv(new_recovered_qc1, "new_recovered_qc1.csv", row.names = T)
+write.csv(new_recovered_qc2, "new_recovered_qc2.csv", row.names = T)
+write.csv(new_recovered_qc3, "new_recovered_qc3.csv", row.names = T)
+
+new_recovered_qc1_sccreq<-filter(new_recovered_qc1, first_scc_200k=="yes" & second_scc_200k=="no") #2 observations
+new_recovered_qc2_sccreq<-filter(new_recovered_qc2, second_scc_200k=="yes" & third_scc_200k=="no") #1 observations
+new_recovered_qc3_sccreq<-filter(new_recovered_qc3, third_scc_200k=="yes" & fourth_scc_200k=="no") #0 observations
+
+new_recovered_qc1_csv<-table(new_recovered_qc1$second_farm)
+new_recovered_qc2_csv<-table(new_recovered_qc2$second_farm)
+new_recovered_qc3_csv<-table(new_recovered_qc3$third_farm)
+
+write.csv(new_recovered_qc1_csv, "new_rec1_csv.csv", row.names = T)
+write.csv(new_recovered_qc2_csv, "new_rec2_csv.csv", row.names = T)
+write.csv(new_recovered_qc3_csv, "new_rec3_csv.csv", row.names = T)
+
+#recovered using definition yes-no-no
+yesnono_recovered_qc_1<-filter(all_trim, ((first_quarter_code == "1" | first_quarter_code == "2" | first_quarter_code == "21" | first_quarter_code == "24" | first_quarter_code == "27" | first_quarter_code == "29" | first_quarter_code =="35") & (second_quarter_code=="3" | second_quarter_code=="5" | second_quarter_code=="6") & (third_quarter_code=="3" | third_quarter_code=="5" |third_quarter_code=="6"))) #40 observations
+
+yesnono_recovered_qc_2<-filter(all_trim,  ((second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code == "24" | second_quarter_code == "27" | second_quarter_code == "29" | second_quarter_code =="35") & (third_quarter_code=="3" | third_quarter_code=="5" | third_quarter_code=="6")) & (fourth_quarter_code=="3" | fourth_quarter_code=="5" | fourth_quarter_code=="6")) #3 observations
+
+write.csv(yesnono_recovered_qc_1, "yes_no_no_1.csv", row.names = T)
+write.csv(yesnono_recovered_qc_2, "yes_no_no_2.csv", row.names = T)
+
+yesnono_recovered_qc_1_sccreq<-filter(yesnono_recovered_qc_1, first_scc_200k=="yes" & second_scc_200k=="no" & third_scc_200k=="no")#1 observations
+yesnono_recovered_qc_2_sccreq<-filter(yesnono_recovered_qc_2, second_scc_200k=="yes" & third_scc_200k=="no" & fourth_scc_200k=="no")#0 observations
+
+```
+
+```{r}
+#became infected, then STAYED INFECTED, using scc req
+
+#no-yes-yes
+stayedinf_1<-filter(all_trim, ((first_quarter_code=="3" | first_quarter_code=="5" | first_quarter_code=="6")  & (second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code == "24" | second_quarter_code == "27" | second_quarter_code == "29" | second_quarter_code =="35") & (third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code == "24" | third_quarter_code == "27" | third_quarter_code == "29" | third_quarter_code =="35"))) #13 observations
+
+stayedinf_2<-filter(all_trim, ((second_quarter_code=="3" | second_quarter_code=="5" | second_quarter_code=="6")  & (third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code == "24" | third_quarter_code == "27" | third_quarter_code == "29" | third_quarter_code =="35") & (fourth_quarter_code == "1" | fourth_quarter_code == "2" | fourth_quarter_code == "21" | fourth_quarter_code == "24" | fourth_quarter_code == "27" | fourth_quarter_code == "29" | fourth_quarter_code =="35"))) #2 observations
+
+write.csv(stayedinf_1, "stayedinf_1.csv", row.names = T) #all 13 clean, 2 quarters do go from mix->solo or vice versa
+write.csv(stayedinf_2, "stayedinf_2.csv", row.names = T) #only 1 of 2 stays inf with same path
+
+stayedinf_1_sccreq<-filter(stayedinf_1, first_scc_200k=="no" & second_scc_200k=="yes" & third_scc_200k=="yes") #1 observations
+
+stayedinf_2_sccreq<-filter(stayedinf_2, second_scc_200k=="no" & third_scc_200k=="yes" & fourth_scc_200k=="yes") #0 observations
+```
+
+
+```{r}
+#no-no-yes
+no_no_yes_1<-filter(all_trim, ((first_quarter_code=="3" | first_quarter_code=="5" | first_quarter_code=="6")  & (second_quarter_code == "3" | second_quarter_code == "5" | second_quarter_code == "6") & (third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code == "24" | third_quarter_code == "27" | third_quarter_code == "29" | third_quarter_code =="35"))) # observations
+```
+
+```{r}
+#yes-yes-no
+yes_yes_no<-filter(all_trim, ((first_quarter_code == "1" | first_quarter_code == "2" | first_quarter_code == "21" | first_quarter_code == "24" | first_quarter_code == "27" | first_quarter_code == "29" | first_quarter_code =="35") & (second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code == "24" | second_quarter_code == "27" | second_quarter_code == "29" | second_quarter_code =="35") & (third_quarter_code == "3" | third_quarter_code == "5" | third_quarter_code == "6")
+                              | (second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code == "24" | second_quarter_code == "27" | second_quarter_code == "29" | second_quarter_code =="35") & (third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code == "24" | third_quarter_code == "27" | third_quarter_code == "29" | third_quarter_code =="35") & (fourth_quarter_code == "3" | fourth_quarter_code == "5" | fourth_quarter_code == "6"))) # observations
+```
+

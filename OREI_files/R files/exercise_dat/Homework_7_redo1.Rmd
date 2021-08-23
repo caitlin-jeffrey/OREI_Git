@@ -1,0 +1,90 @@
+---
+title: "Exercise 7"
+author: "Caitlin Jeffrey"
+date: "February 6, 2019"
+output: html_document
+---
+
+##Exercise 7
+
+---
+
+```{r}
+zapus<- read.csv("zapusmorph.csv", header = T, na.strings = ".")
+head(zapus)
+```
+
+
+```{r}
+str(zapus)
+```
+
+```{r}
+na<-zapus[1, 6]
+class(na)
+```
+
+
+---
+
+```{r}
+coyote<- "C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat/coyotebehav.csv"
+save(coyote, file = "coyote.Rdata")
+coyote<- read.csv("coyotebehav.csv", header = T)
+str(coyote)
+```
+
+```{r}
+is.factor(coyote$habitat)
+habitat <- as.factor(c(coyote$habitat))
+coyote <-read.csv("coyotebehav.csv", header = T, colClasses= c("factor", "factor", "factor", "factor", "factor"))
+str(coyote)
+```
+
+---
+
+```{r}
+sevDate<-as.Date(coyote$date, format = "%m/%d/%Y")
+sevTime<-as.character(coyote$time, format = "%H:%M:%S")
+date_time1<-as.POSIXct(paste(coyote$date, coyote$time), format = "%m/%d/%Y %H:%M:%S")
+head(date_time1)
+```
+
+```{r}
+new_coyote<-data.frame(coyote$coy_id, coyote$habitat, coyote$behav, date_time1)
+head(new_coyote)
+```
+
+```{r}
+library(chron)
+julian(2, 27, 1991, origin = c(1, 1, 1991))
+```
+
+```{r}
+difftime(new_coyote[675,4], new_coyote[1,4], units = "hours")
+```
+
+---
+
+
+```{r}
+fish<- "C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat/fish_recapture.csv"
+save(fish, file = "fish.Rdata")
+fish<- read.csv("fish_recapture.csv", header = T, skip = "1")
+initial<-as.Date(fish$tag.date, format = "%m/%d/%y")
+second<-as.Date(fish$recap.date, format = "%m/%d/%Y")
+days_free<-as.numeric(second) - as.numeric(initial)
+fish_1 <- cbind(fish, days_free)
+str(fish_1)
+```
+
+
+
+
+
+
+
+
+
+
+

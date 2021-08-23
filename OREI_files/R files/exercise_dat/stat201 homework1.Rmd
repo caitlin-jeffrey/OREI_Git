@@ -1,0 +1,200 @@
+---
+title: "stat201"
+author: "Caitlin Jeffrey"
+date: "June 11, 2020"
+output: html_document
+---
+
+##Quiz 1
+
+```{r}
+#Create the below vectors:
+#id: the values 1 through 15
+id<-(1:15)
+v<-rep(1:4, each=2, len=15) #just run this statement
+b<-seq(1, 43, 3) #just run this statement
+y<-rnorm(15, 7, 3) #just run this statement
+
+#group: there will be three groups: A, B, and C. The first 5 observations are assigned to A, the next 5 to B, and the last 5 to C. #write the code to do this.
+group<-c(rep("A", times=5), rep("B", times=5), rep("C", times=5))
+
+#Once you've created these 5 vectors (id, v, b, y, and group) combine them into a data #frame, and name the data frame mydata.
+mydata<-data.frame(id, v, b, y, group)
+
+#You'll notice when you do this that the variable group is stored as a factor data type #within the data frame. Convert it to character type.
+mydata$group<-as.character(mydata$group)
+str(mydata)
+
+#Now, run this code: 
+mode(mydata)
+
+#What is the result in the console?
+str(mydata)
+```
+
+```{r}
+barplot(table(mydata$group))
+```
+
+```{r}
+#setwd(path.exercise)
+#getwd()
+#Consider the "r_lesson1.csv" data. Read the data into R as a data frame and name it "mydata1". What is the 75th percentile of score1?
+mydata1<- read.csv("C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat/r_lesson1.csv", header=T)
+mydata1<-data.frame(mydata1)
+summary(mydata1$score1)
+mean(mydata1$score2, na.rm=T)
+
+```
+
+
+```{r}
+library("readxl")
+```
+
+### STAT201 
+### Introduction to R
+### PRACTICE - module 7
+
+## Part 1: Use R as a calculator to find the following values:
+
+```{r}
+# 4+4
+4+4
+
+# 8/2
+8/2
+
+# 6*3
+6*3
+
+# 14-7
+14-7
+
+# (20-3)*2
+(20-3)*2
+
+# 20-3*2
+20-3*2
+
+# absolute value of 4*-6.345
+abs(4*-6.345)
+
+# 8 squared
+(8)^2
+
+# square root of 9
+sqrt(9)
+
+# standard deviation of the values 4, 5, 6, 7
+sd(c(4,5,6,7))
+
+# mean of the values 4, 5, 6, 7
+mean(c(4,5,6,7))
+
+# variance of the values 4, 5, 6, 7
+var(c(4,5,6,7))
+```
+
+##Part 2: Use the c(), rep(), and seq() functions to create vectors with the below values:
+```{r}
+# 4, 8, 9, 12
+a<-c(4,8,9,12)
+
+# red, green, blue
+b<-c("red", "green", "blue")
+
+# 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
+c<-seq(1:20)
+
+# 1, 2, 3, 4, 5, 1, 2, 3, 4, 5
+d<-rep(1:5, 2)
+
+# 1, 1, 2, 2, 3, 3, 4, 4, 5, 5
+e<-rep(1:5, each=2)
+
+# 4, 6, 8, 10, 12, 14, 16, 18, 20
+f<-seq(4,20, by=2)
+
+# 6, 6, 6, 7, 8, 8, 8, 9
+g<-c(rep(6,3), 7, rep(8,3), 9)
+
+# 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5
+h<-rep(rep(1:5, each=2), 3)
+
+# red, green, blue, red, green, blue, red, green, blue, red, green, blue
+rep(b, 4)
+```
+
+## Part 3: Create a data.frame called "mydata" with two variables:
+           # Score: 50, 55, 67, 52,  58, 60
+           # Color: blue, red, red, blue, red, blue
+
+```{r}
+score<-c(50,55,67,52,58,60)
+color<-c("blue", "red", "red", "blue", "red", "blue");
+mydata<-data.frame(score,color)
+
+# Calculate the average and median score
+summary(mydata$score)
+
+# Create a histogram that shows the distribution of score
+hist(mydata$score)
+
+# Create a boxplot that shows the distribution of score
+boxplot(mydata$score)
+```
+
+## Part 4: Create a data.frame called "mydata2" with three variables:
+```{r}
+## Be sure missing values are correctly assigned
+## Calculate descriptive statistics on x, y, and z
+## Create a scatterplot to examine the relationship between x and y
+
+x<-c(5,6,7,8,9,NA,10)
+y<-c(8,9,11,8,13,12,9)
+z<-c("A","A","A","B","B","B","A")
+mydata2<-data.frame(x,y,z)
+summary(mydata2)
+plot(mydata2$x, mydata2$y)
+```
+
+## Part 5: 
+```{r}
+#Create a vector called "hours" with the values: 5,6,7,99,10
+hours<-c(5,6,7,99,10)
+
+# create a vector called "score" with the values: 88, 89, 72, 55, 93
+score<-c(88,89,72,55,93)
+
+# create a vector called "class" with the values: A, B, B, A, A
+class<-c("a", "b", "b", "a", "a")
+
+# calculate the average, median, and standard deviation of "hours"
+summary(hours); sd(hours)
+
+# calculate the average, median, and standard deviation of "score"
+summary(score); sd(score)
+
+# use the class() function to determine the data object type of each vector
+class(score); class(hours); class(class)
+```
+
+
+## Part 6: 
+```{r}
+#setwd(path.exercise)
+#getwd()
+#Read in the lesson_1.xlsx data set and save it as a data.frame named "less1a"
+less1a<- read_excel("C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat/r_lesson1.xlsx")
+
+# create a bar graph that shows the distribution of the variable "color"
+barplot(table(color))
+
+# calculate the 5 number summary and create a box plot for the variable score1
+summary(less1a$score1); boxplot(less1a$score1)
+
+# calculate the mean of score2
+mean(less1a$score2, na.rm=T)
+```
+

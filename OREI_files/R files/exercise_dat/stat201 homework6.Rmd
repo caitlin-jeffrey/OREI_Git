@@ -1,0 +1,329 @@
+---
+title: "stat201 homework6"
+author: "Caitlin Jeffrey"
+date: "June 23, 2020"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+For this week's practice you'll need to write your own function, called bs(). It should produce a 95% bootstrap confidence interval for a mean. The user will provide a vector and the number of repetitions for the simulation.  
+
+Your function should: 
+
+* Draw a sample the same size as the vector, selecting from the vector itself, with replacement.  
+* Compute the mean of the vector, and store it in another vector. 
+* Repeat the steps above n times.  
+* Compute the interval as the 2.5% and 97.5% quantiles of the vector of means.
+* Print the interval on the console so that it looks something like this: "95% bootstrap interval for the mean:    -0.309  to  0.073"
+
+Test your new function by creating a vector of 5000 z scores, and applying your function with 100 reps
+
+
+#bootstrap confidence intervals
+```{r}
+z<-rnorm(5)
+```
+
+```{r}
+#take repeated samples from z score- make bootstrap samples
+s1<-sample(z, replace=T) #taken one bootstrap sample from population
+s2<-sample(z, replace=T)
+s3<-sample(z, replace=T)
+s4<-sample(z, replace=T)
+s5<-sample(z, replace=T)
+```
+
+* Draw a sample the same size as the vector, selecting from the vector itself, with replacement.  
+* Compute the mean of the vector, and store it in another vector. 
+* Repeat the steps above n times.  
+* Compute the interval as the 2.5% and 97.5% quantiles of the vector of means.
+* Print the interval on the console so that it looks something like this: "95% bootstrap interval for the mean:    -0.309  to  0.073"
+```{r}
+k<-5000
+n<-100
+bs<-function(k){
+  for (z in 1:n) {
+    z<-rnorm(k) #make a sample distribution pop of 5000 numbers, save as object z
+    meanvec<-rep(NaN, k) #make a blank vector 5000 num long
+    for (i in 1:k) {
+      s<-sample(z, replace=T) #make 5000 sample pops by pulling from object z randomly 5000 times
+      meanvec[i]<-mean(s)#take mean of s, put it in k spot in vector
+    }
+  }
+  lowerlim<-quantile(meanvec, 0.025) #lower and upper limit of conf int
+  upperlim<-quantile(meanvec, 0.975)
+  print(paste("the lower confidence limit is is =", lowerlim, "and the upper confidence interval is =", upperlim))
+}
+bs(5000)
+```
+
+```{r}
+lowerlim<-quantile(meanvec, 0.025) #lower and upper limit of conf int
+upperlim<-quantile(meanvec, 0.975)
+print(paste("the lower confidence limit is is =", lowerlim, "and the upper confidence interval is =", upperlim))
+```
+
+
+```{r}
+k<-5000
+n<-100
+```
+
+
+for (i in 1:10) {
+  n<-rnorm(60, 30, 4)
+  m_vec[i]<-mean(n)
+}
+
+```{r}
+#then make a vector
+meanvec<-rep(NaN, 5) 
+meanvec[1]<-mean(s1)#take mean of s1, put it in first spot in vector
+meanvec[2]<-mean(s2)
+meanvec[3]<-mean(s3)
+meanvec[4]<-mean(s4)
+meanvec[5]<-mean(s5)
+meanvec #vector filled with sampling means- 5 avgs from 5 bootstrap samplings
+```
+
+```{r}
+#make lower and upper limit of conf int based on bootstrap means
+lowerlim<-round(quantile(meanvec, 0.025),3) #to 3 dig
+upperlim<-round(quantile(meanvec, 0.975),3)
+```
+
+
+```{r}
+n<-100
+bs(5000)
+```
+
+
+#Before watching the video, begin by creating a new data frame (z) in R that consists of 3 numeric variables: 
+z1 - 50 randomly generated z scores
+z2 - 50 randomly generated z scores
+z3 - 50 randomly generated z scores
+
+```{r}
+z1<-rnorm(50)
+z2<-rnorm(50)
+z3<-rnorm(50) #don't specify mean and SD, default is 0 and 1
+z<-data.frame(z1, z2, z3)
+```
+
+```{r}
+z_stack<-stack(z) #stacking- combines variable in long format
+summary(aov(values~ind, data=z_stack))
+```
+
+```{r}
+View(mtcars)
+mtc<-as.data.frame(t(mtcars)) #t function= transpose
+```
+
+```{r}
+z<-rnorm(400)
+y<-rnorm(400, 75, 8)
+u<-round(runif(400)) #round to whole numbers only- uniform distribution, with a min of 0 and a max of 1
+g<-round(runif(400,1,3)) #400 obs min 1 max 3
+x<-as.data.frame(cbind(z,y,u,g))
+```
+
+
+```{r}
+summary(x) #summary applies to entire dataframe, mean doesn't
+mean(x$z) #mean need to use a variable inside dataframe
+```
+
+
+#Writing a new function (name of new func is "new"), takes some argument "k" and adds 3 to it- "K" can be called anything
+
+```{r}
+new<-function(k) {
+  k+3
+}
+```
+
+```{r}
+new(4)
+```
+
+#function with 2 arguments
+```{r}
+new2<-function(k,p){
+  k+p
+}
+```
+
+
+```{r}
+new2(6,4)
+```
+
+```{r}
+des1<-function(k){
+  summary(k)
+  mean(k)
+  sd(k)
+  hist(k)
+}
+```
+
+```{r}
+des1(x$z) #why only return histogram? only returns last one to console
+```
+
+```{r}
+des2<-function(k){ 
+  print(summary(k))
+  print(mean(k))
+  print(sd(k))
+  print(hist(k))
+}
+#will actually see results of function with print
+```
+
+```{r}
+des2(x$z) #will actually see results of function
+```
+
+```{r}
+#dealing with missing values- make any value bigger than 2 NA
+x2<-x
+x2$z[x2$z>2]<-NA
+```
+
+```{r}
+des3<-function(k){ 
+  print(summary(k))
+  print(mean(k, na.rm=T))
+  print(sd(k, na.rm=T))
+  print(hist(k))
+}
+#dealing with missing values
+```
+
+```{r}
+des3(x2$z) #run with missing values
+```
+
+
+```{r}
+#adding labels to results
+des4<-function(k){ 
+  print(summary(k))
+  m<-print(mean(k, na.rm=T))
+  l<-print(sd(k, na.rm=T))
+  print(paste("the std is =", l, "the mean is =", m))
+}
+```
+
+```{r}
+des4(x2$z)
+```
+
+```{r}
+#calc mean from randomly selected sample of size y with a mean of 30 and an sd of 4
+mean_go<-function(y){
+  mean(rnorm(y,30,4))
+}
+```
+
+```{r}
+mean_go(25) #the avg from a sample of size 25
+```
+#now create a sampling distribution 
+```{r}
+x1<-mean_go(60)
+x2<-mean_go(60)
+x3<-mean_go(60)
+x4<-mean_go(60)
+x5<-mean_go(60)
+x6<-mean_go(60)
+x7<-mean_go(60)
+x8<-mean_go(60)
+x9<-mean_go(60)
+x10<-mean_go(60)
+x<-c(x1,x2,x3,x4,x5,x6,x7,x8,x9,x10)
+hist(x)
+```
+
+
+#intro to loops!
+#object = i, what you want to do to that object, 
+
+```{r}
+for (i in 1:4) {
+  print(i)
+}
+
+for (i in 1:4) {
+  print(i) #prints i, then moves on to the next thing
+  print(i^2) #i, i^2, then 4 times
+}
+```
+
+#create an empty vector
+```{r}
+m_vec<-rep(NaN, 10) #has 10 places, a blank vector
+
+for (i in 1:10) {
+  n<-rnorm(60, 30, 4)
+  m_vec[i]<-mean(n)
+}
+hist(m_vec)
+```
+
+#now with a poisson distribution
+
+```{r}
+p_vec<-rep(NaN, 100) #has 100 places, a blank vector
+
+for (i in 1:100) {
+  p<-rpois(60, 3.5)
+  m_vec[i]<-mean(p)
+}
+
+#hist(p_vec)
+```
+
+#bootstrap confidence intervals
+```{r}
+z<-rnorm(5)
+t.test(z) #we think avg z score is... based on 5 scores
+```
+
+```{r}
+#take repeated samples from z score- make bootstrap samples
+s1<-sample(z, replace=T) #taken one bootstrap sample from population
+s2<-sample(z, replace=T)
+s3<-sample(z, replace=T)
+s4<-sample(z, replace=T)
+s5<-sample(z, replace=T)
+```
+
+```{r}
+#then make a vector
+meanvec<-rep(NaN, 5) 
+meanvec[1]<-mean(s1)#take mean of s1, put it in first spot in vector
+meanvec[2]<-mean(s2)
+meanvec[3]<-mean(s3)
+meanvec[4]<-mean(s4)
+meanvec[5]<-mean(s5)
+meanvec #vector filled with sampling means- 5 avgs from 5 bootstrap samplings
+```
+
+```{r}
+#make lower and upper limit of conf int based on bootstrap means
+lowerlim<-round(quantile(meanvec, 0.025),3) #to 3 dig
+upperlim<-round(quantile(meanvec, 0.975),3)
+```
+
+
+
+
+
+
+
+

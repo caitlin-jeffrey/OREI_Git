@@ -1,0 +1,93 @@
+---
+title: "Exercise 17"
+author: "Caitlin Jeffrey"
+date: "March 28, 2019"
+output: html_document
+---
+
+
+```{r}
+poppy <- "C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat/bearclawpoppy.csv"
+poppy<- read.csv("bearclawpoppy.csv", header = T, na.strings = c("", "99", "?", "na", "NA")); poppy[complete.cases(poppy[,10:12]),]; is.na(poppy)
+```
+
+
+#poppy$presab <- ifelse(poppy$PLANT %in% c("poppydead", "poppyalive", "poppy"), 1, ifelse(poppy$PLANT == "absence", 0, "NA")); poppy$presab <- as.factor(poppy$presab); str(poppy); levels(poppy$presab)
+
+
+
+```{r}
+stats<-c("mean", "sd", "length"); stats_l<-length(stats)
+for (i in 1:stats_l) {
+     assign(paste(stats[i]), aggregate(poppy[10:12], 
+       by = list(presab=poppy$presab), FUN = stats[i]))
+} 
+print(mean); print(sd);print(length) ; save(mean,sd,length, file = "newstats")
+```
+
+
+```{r}
+for(i in 1:length(lst)){
+  mn<-aggregate(new1, by=list(new1), mean, na.rm=T)
+  sd<-aggregate(new1, by=list(new1$presab), sd, na.rm=T)
+  lngth<-aggregate(new1, by=list(new1$presab), length)
+}
+save(mn,sd,lngth, file = "newstats")
+```
+
+
+
+
+
+
+
+
+
+#```{r}
+poppy$presab=ifelse(poppy$presab=="0","0", ifelse(poppy$presab=="1", "1", "99")); presab<-poppy[,43]; vars<-poppy[,10:12]; new<-cbind(presab, vars); str(new)
+```
+
+#```{r}
+new<-lapply(new, as.numeric); new1<-as.data.frame(new); str(new1)
+```
+
+aggregate(lek[, 5], by = list(lek$complex, lek$lek_id), FUN = min, na.rm = T)
+
+#```{r}
+lst<-as.list(vars); lst
+```
+mn=list(); sd=list(); lngth=list()
+
+```{r}
+for(i in 1:length(lst)){
+  mn<-aggregate(new1, by=list(new1), mean, na.rm=T)
+  sd<-aggregate(new1, by=list(new1$presab), sd, na.rm=T)
+  lngth<-aggregate(new1, by=list(new1$presab), length)
+}
+save(mn,sd,lngth, file = "newstats")
+```
+
+
+
+
+
+set working directory to powerpoint folder where m1-m4.csv are located; make blank list for file name output (in form of "m1.csv," etc), make list "ms" for output (in form "m1," etc"); loop to make list of m".csv and then read in csv files; then look at list of working objects in R to see that m".csv files were read in
+ 
+#```{r}
+setwd(path.powerpoint)
+files = list(); ms = list()
+for (i in 1:4){
+  files[i] <- paste('m', i, '.csv', sep = '')
+  ms[i] <- paste('m', i, sep = '')
+  assign(ms[[i]], read.csv(files[[i]]))
+}; ls()
+```
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 

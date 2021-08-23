@@ -1,0 +1,99 @@
+---
+title: "Untitled"
+author: "Caitlin Jeffrey"
+date: "April 1, 2019"
+output: html_document
+---
+
+means = array(0, dim=c(3,3))
+sd = array(0, dim=c(3,3))
+n = array(0, dim=c(3,3))
+dimnames(means)[[1]]<-list("poppy$presab==0", "poppy$presab==1", "is.na(poppy$presab)")
+dimnames(means)[[2]]<-list("poppy$ELEV", "poppy$SLOPE", "poppy$ASPECT")
+dimnames(sd)[[1]]<-list("poppy$presab==0", "poppy$presab==1", "is.na(poppy$presab)")
+dimnames(sd)[[2]]<-list("poppy$ELEV", "poppy$SLOPE", "poppy$ASPECT")
+dimnames(n)[[1]]<-list("poppy$presab==0", "poppy$presab==1", "is.na(poppy$presab)")
+dimnames(n)[[2]]<-list("poppy$ELEV", "poppy$SLOPE", "poppy$ASPECT")
+
+
+for (i in c("poppy$presab==0", "poppy$presab==1", "is.na(poppy$presab)")){
+  for (j in c("poppy$ELEV", "poppy$SLOPE", "poppy$ASPECT")){
+    means[i,j] <- mean(eval(parse(text=j))[eval(parse(text=i))], na.rm=TRUE)
+    sd[i,j] = sd(eval(parse(text=j))[eval(parse(text=i))], na.rm=TRUE)
+    n[i,j] = length(eval(parse(text=j))[eval(parse(text=i))]) # not counting NAs
+  } }
+# double check that it worked...
+means; sd; n
+##                     poppy$ELEV poppy$SLOPE poppy$ASPECT
+## poppy$presab==0       2444.154    3.022640     136.6153
+## poppy$presab==1       2277.846    4.070245     134.7960
+## is.na(poppy$presab)   2265.721    3.810533     150.3075
+##                     poppy$ELEV poppy$SLOPE poppy$ASPECT
+## poppy$presab==0      175.34274    4.175694     75.76116
+## poppy$presab==1       42.42477    5.048535     89.39325
+## is.na(poppy$presab)   37.04901    5.015968     71.80549
+##                     poppy$ELEV poppy$SLOPE poppy$ASPECT
+## poppy$presab==0            288         288          288
+## poppy$presab==1             68          68           68
+## is.na(poppy$presab)         15          15           15
+# save as 3 data objects
+save(means, sd, n, file = "poppy_stats")
+
+
+
+
+
+AnnualLekSummary <- function(lek_data, year) {
+  leks <- read.csv(lek_data) # read in lek data
+  # create empty array to store data by year
+  leks_year = array(0, dim=c(length(which(leks$year==year)),5))
+  # set column names
+  dimnames(leks_year)[[2]]<-list("year", "disturbance", "lek_id", "complex", "tot_male")
+  # convert output array to data frame
+  leks_year<- data.frame(leks_year)
+  j = 0
+  # loop through all rows and pull write those of the given year to the output df
+  for (i in 1:length(leks$year)){
+      if (leks$year[i]==year){ j=j+1; leks_year[j,]<-leks[i,]} }
+  # calculate mean by complex in given year and specify column names
+  mean <- aggregate(leks_year$tot_male,by=list(leks_year$complex),FUN=mean)
+  names(mean)<-c("complex","mean_tot_male"); mean
+  # calculate standard deviation and two times sd by complex in given year
+  sd <- aggregate(leks_year$tot_male,by=list(leks_year$complex),FUN=sd)
+  sd2 <- sd*2
+  names(sd2) <- c("complex","2sd_tot_male"); sd2
+  # specify n for each complex in given year
+  n = aggregate(leks_year$tot_male, by=list(leks_year$complex), FUN=length)
+  # calculate 90% confidence intervals per complex in given year
+  lwr_CI = array(0, dim=c(length(mean$complex),2))
+  lwr_CI[,1] <- mean[,1]
+  dimnames(lwr_CI)[[2]]<-list("complex", "lwr_90%_CI")
+  for (i in 1:length(mean$complex)){
+    lwr_CI[i,2] <- mean[i,2] - qnorm(0.95)*sd[i,2]/sqrt(n[i,2]) }
+  upr_CI = array(0, dim=c(length(mean$complex),2))
+  upr_CI[,1] <- mean[,1]
+  dimnames(upr_CI)[[2]]<-list("complex", "upr_90%_CI")
+  for (i in 1:length(mean$complex)){
+    upr_CI[i,2] <- mean[i,2] + qnorm(0.95)*sd[i,2]/sqrt(n[i,2]) }
+  # Merge these into single data object, and export as a .csv file
+  lek_stats = cbind(mean, sd2[,2], n[,2], lwr_CI[,2], upr_CI[,2])
+  # set column names
+  names(lek_stats)<-c("complex", "mean_tot_male", "2*sd", "n", "lwr_90_CI", "upr_90_CI")
+  # specify output filename by year
+  fn = paste(year, "lek_statistics.csv", sep="_")
+  # export statistics data frame as .csv file
+  write.csv(lek_stats, file = fn)}
+  
+  
+  AnnualLekSummary(lek_data = "C:/Users/Maggie/Documents/WILD4580/data/exercise_dat/gsg_leks.csv", year = 2007); read.csv("2007_lek_statistics.csv")
+##   X complex mean_tot_male    X2.sd  n   lwr_90_CI upr_90_CI
+## 1 1       2      26.28571 52.04760  7 10.10681667 42.464612
+## 2 2       3      18.87500 20.15476  8 13.01456486 24.735435
+## 3 3       4       4.50000 13.19091  6  0.07109607  8.928904
+## 4 4       5      13.25000 48.83431 20  4.26936002 22.230640
+AnnualLekSummary(lek_data = "C:/Users/Maggie/Documents/WILD4580/data/exercise_dat/gsg_leks.csv", year = 1996); read.csv("1996_lek_statistics.csv")
+##   X complex mean_tot_male    X2.sd n   lwr_90_CI upr_90_CI
+## 1 1       2      5.333333 14.40370 6   0.4972275  10.16944
+## 2 2       3      5.000000 20.19901 5  -2.4292050  12.42920
+## 3 3       4     20.000000 56.56854 2 -12.8970725  52.89707
+## 4 4       5     23.714286 36.10567 7  12.4909077  34.93766

@@ -1,0 +1,105 @@
+---
+title: "Exercise 17"
+author: "Caitlin Jeffrey"
+date: "March 28, 2019"
+output: html_document
+---
+
+
+```{r}
+poppy <- "C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat/bearclawpoppy.csv"
+poppy<- read.csv("bearclawpoppy.csv", header = T, na.strings = c("", "99", "?", "na", "NA")); poppy$presab <- ifelse(poppy$PLANT %in% c("poppydead", "poppyalive", "poppy"), 1, ifelse(poppy$PLANT == "absence", 0, "NA")); poppy$presab <- as.factor(poppy$presab); str(poppy); levels(poppy$presab)
+```
+
+```{r}
+poppy$presab=ifelse(poppy$presab=="0","0", ifelse(poppy$presab=="1", "1", "2")); presab<-poppy[,43]; vars<-poppy[,10:12]; new<-cbind(presab, vars); str(new)
+```
+
+```{r}
+new<-lapply(new, as.numeric); str(new)
+```
+
+```{r}
+for(i in 2:4){
+  mn<-aggregate(new, by=list(new$presab), mean, na.rm=T)
+  sd<-aggregate(new, by=list(new$presab), sd, na.rm=T)
+  lngth<-aggregate(new, by=list(new$presab), length)
+}
+save(mn,sd,lngth, file = "newstats")
+```
+
+
+
+created 3 empty data objects, one for each statistical function, with appropriately named rows (presab poppy levels) and variable levels from poppy
+
+```{r}
+mn = array(0, dim=c(3,3)); sd = array(0, dim=c(3,3)); lng = array(0, dim=c(3,3)); dimnames(mn)[[1]]<-list("poppy$presab==0", "poppy$presab==1", "is.na(poppy$presab)"); dimnames(mn)[[2]]<-list("poppy$elev", "poppy$slope", "poppy$aspect"); dimnames(sd)[[1]]<-list("poppy$presab==0", "poppy$presab==1", "is.na(poppy$presab)"); dimnames(sd)[[2]]<-list("poppy$elev", "poppy$slope", "poppy$aspect"); dimnames(lng)[[1]]<-list("poppy$presab==0", "poppy$presab==1", "is.na(poppy$presab)"); dimnames(lng)[[2]]<-list("poppy$elev", "poppy$slope", "poppy$aspect")
+```
+
+
+```{r}
+install.packages("PARSE", dependencies = T, repos = 'http://cran.us.r-project.org'); library(PARSE)
+```
+```{r}
+install.packages("evaluate", dependencies = T, repos = 'http://cran.us.r-project.org'); library(evaluate)
+```
+
+
+
+```{r}
+for (i in poppy[10:12])){
+  for (j in c("poppy$elev", "poppy$slope", "poppy$aspect")){
+    mn[i,j] <- aggregate(poppy[, i], by = list(poppy$presab, poppy$elev), FUN = mean, na.rm = T)
+```
+
+
+```{r}
+for (i in c("poppy$presab==0", "poppy$presab==1", "is.na(poppy$presab)")){
+  for (j in c("poppy$elev", "poppy$slope", "poppy$aspect")){
+    mn[i,j] <- mean(eval(parse(text="j"))[eval(parse(text="i"))], na.rm=TRUE)
+    sd[i,j] <- sd(eval(parse(text="j"))[eval(parse(text="i"))], na.rm=TRUE)
+    lng[i,j] <-length(eval(parse(text="j"))[eval(parse(text="i"))])
+  }
+}
+```
+```{r}
+for (i in c("poppy$presab==0", "poppy$presab==1", "is.na(poppy$presab)")){
+  for (j in c("poppy$elev", "poppy$slope", "poppy$aspect")){
+    mn[i,j] <- mean(eval(parse(text=j))[eval(parse(text=i))], na.rm=TRUE)
+    sd[i,j] <- sd(eval(parse(text=j))[eval(parse(text=i))], na.rm=TRUE)
+    lng[i,j] <-length(eval(parse(text=j))[eval(parse(text=i))])
+  }
+}
+```
+
+```{r}
+for (i in c("poppy$presab==0", "poppy$presab==1", "is.na(poppy$presab)")){
+  for (j in c("poppy$ELEV", "poppy$SLOPE", "poppy$ASPECT")){
+    means[i,j] <- mean(eval(parse(text=j))[eval(parse(text=i))], na.rm=TRUE)
+    sd[i,j] = sd(eval(parse(text=j))[eval(parse(text=i))], na.rm=TRUE)
+    n[i,j] = length(eval(parse(text=j))[eval(parse(text=i))])
+  } }
+```
+
+
+
+set working directory to powerpoint folder where m1-m4.csv are located; make blank list for file name output (in form of "m1.csv," etc), make list "ms" for output (in form "m1," etc"); loop to make list of m".csv and then read in csv files; then look at list of working objects in R to see that m".csv files were read in
+ 
+```{r}
+setwd(path.powerpoint)
+files = list(); ms = list()
+for (i in 1:4){
+  files[i] <- paste('m', i, '.csv', sep = '')
+  ms[i] <- paste('m', i, sep = '')
+  assign(ms[[i]], read.csv(files[[i]]))
+}; ls()
+```
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,62 @@
+---
+title: "Exercise 13"
+author: "Caitlin Jeffrey"
+date: "February 22, 2019"
+output: html_document
+---
+
+```{r}
+lichen <- "C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat/lichen_environ.csv"
+lichen<- read.csv("lichens_environ.csv", header = T, na.strings = ".")
+any(is.na(lichen)); str(lichen)
+```
+
+```{r}
+lo1 <- subset(lichen, lichen$LobaOreg == 1, select = c(asp90m, slp90m, elev90m)); str(lo1)
+```
+
+---
+---
+
+```{r}
+pseut <- lichen[c(1, 6:8, 12, 32:39, 46:47)]; str(pseut)
+```
+
+---
+---
+
+#```{r}
+install.packages("data.table", dependencies = T, repos = 'http://cran.us.r-project.org')
+library(data.table)
+```
+Not sure why "data.table" isn't knitting. I installed it fine, loaded it, then used it to rename all the columns. I used name(lichen) to show I changed the column headers to the shorter names, but once data.table stopped working that would no longer run so I used str(lichen)
+
+#```{r}
+setnames(lichen, old=c("LobaOreg", "LobaPulm", "NephBell", "NephHelv", "PseuAnom", "PseuAnth", "PseuCroc"), new=c("LoOr", "LoPu", "NeBe", "NeHe", "PsAno", "PsAnt", "PsCr"))
+```
+```{r}
+rename <- subset(lichen, select = c(2:8))
+```
+
+
+
+```{r}
+str(lichen)
+```
+
+---
+---
+
+```{r}
+attach(lichen)
+r <- sample(PlotNum, 210, replace = T)
+wr <- sample(PlotNum, 210, replace = F)
+```
+
+```{r}
+length(unique(r))
+length(unique(wr))
+```
+
+
+

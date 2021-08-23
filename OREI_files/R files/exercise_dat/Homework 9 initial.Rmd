@@ -1,0 +1,66 @@
+---
+title: "Exercise 9"
+author: "Caitlin Jeffrey"
+date: "February 14, 2019"
+output: html_document
+---
+
+##Exercise 9
+
+```{r}
+grazing <- "C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat/grazing_error.txt"
+grazing<- read.delim("grazing_error.txt", header = T, sep= "",  na.strings = ".")
+str(grazing)
+```
+
+---
+---
+Geology, management are categorical, last three should be numerical. Predator data should be numeric, but initially read in as a character. There's a typo of "granitci" instead of granite in geology, and "shepp" and "catle" in management. Value 73 of Avg_Bank_Angle is 129129.23 and should probably be 129.23. This would make 5 errors in the data.
+
+---
+---
+
+```{r}
+gi<- read.delim("grazing_error.txt", header = T, sep= "",  na.strings = ".")
+str(gi)
+```
+
+```{r}
+unique(gi$Geology)
+unique(gi$Management)
+```
+
+```{r}
+levels(gi$Geology) <- c(levels(gi$Geology), "granitic")
+gi$Geology[gi$Geology == "Granitci"] <- "granitic"
+gi$Geology <- factor(gi$Geology)
+unique(gi$Geology)
+```
+
+```{r}
+levels(gi$Management) <- c(levels(gi$Management), "sheep")
+gi$Management[gi$Management == "shepp"] <- "sheep"
+levels(gi$Management) <- c(levels(gi$Management), "cattle")
+gi$Management[gi$Management == "catle"] <- "cattle"
+gi$Management <- factor(gi$Management)
+unique(gi$Management)
+```
+
+```{r}
+min(gi$Width2Depth_Ratio); max(gi$Width2Depth_Ratio)
+```
+```{r}
+min(gi$Avg_Bank_Angle); max(gi$Avg_Bank_Angle)
+which(gi$Avg_Bank_Angle == 129129.23)
+gi$Avg_Bank_Angle[73] <- 129.23
+gi$Avg_Bank_Angle[73]
+```
+
+```{r}
+min(gi$PC_Predator_Taxa, na.rm = T); max(gi$PC_Predator_Taxa, na.rm = T)
+```
+
+```{r}
+save(gi, file = "grazing_impacts.Rdata")
+```
+

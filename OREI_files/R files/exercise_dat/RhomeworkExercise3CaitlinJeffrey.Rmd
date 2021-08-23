@@ -1,0 +1,49 @@
+---
+title: "Exercise 3"
+author: "Caitlin Jeffrey"
+date: "January 24, 2019"
+output: word_document
+---
+
+Exercise 3
+
+
+```{r}
+help(setwd)
+```
+
+A character string: tilde expansion will be done.
+
+
+```{r}
+help(getwd)
+```
+
+returns an absolute filepath representing the current working directory of the R process
+
+```{r}
+help(save)
+```
+
+The list is a character vector containing the names of objects to be saved.
+
+```{r}
+help(save.image)
+```
+
+Compress = T corresponds to gzip compression when saving my current workspace
+
+---
+
+Below are some options I implemented
+
+
+```{r}
+options(digits=8)
+```
+
+```{r}
+options(max.print = 999998)
+options(timeout=100)
+```
+

@@ -1,0 +1,42 @@
+---
+title: "Homework Exercise 2 revised"
+author: "Caitlin Jeffrey"
+date: "January 30, 2019"
+output: pdf_document
+---
+
+```{r}
+getwd()
+```
+
+
+```{r}
+path.desktop <- ("C:Users/caitl/OneDrive/Desktop")
+path.pictures <- ("C:Users/caitl/OneDrive/Pictures")
+path.documents <- ("C:Users/caitl/OneDrive/Documents")
+```
+
+```{r}
+path.desktop
+path.documents
+path.pictures
+getwd()
+```
+
+```{r}
+setwd(path.desktop)
+```
+
+<"C:Users/caitl/Documents">
+```{r global_options, include=FALSE}
+knitr::opts_knit$set(root.dir = ("C:Users/caitl/Documents"))
+knitr::opts_chunk$set(warning = FALSE)
+getwd()
+setwd(path.whatever)
+```
+
+```{r}
+getwd()
+setwd("C:Users/caitl/OneDrive/Desktop")
+```
+
