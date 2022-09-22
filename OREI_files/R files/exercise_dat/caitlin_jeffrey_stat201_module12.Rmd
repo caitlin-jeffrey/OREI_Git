@@ -1,0 +1,66 @@
+---
+title: "Module 12 quiz"
+author: "Caitlin Jeffrey"
+date: "June 24, 2020"
+output: html_document
+---
+
+For this week's practice you'll need to write your own function, called bs(). It should produce a 95% bootstrap confidence interval for a mean. The user will provide a vector and the number of repetitions for the simulation.  
+
+Your function should: 
+
+* Draw a sample the same size as the vector, selecting from the vector itself, with replacement.  
+* Compute the mean of the vector, and store it in another vector. 
+* Repeat the steps above n times.  
+* Compute the interval as the 2.5% and 97.5% quantiles of the vector of means.
+* Print the interval on the console so that it looks something like this: "95% bootstrap interval for the mean:    -0.309  to  0.073"
+
+Test your new function by creating a vector of 5000 z scores, and applying your function with 100 reps
+
+bs<-function(v,k)  { 
+meanvec<-rep(NaN,k)   
+for (i in 1:k) {   
+s<-sample(v,replace=TRUE)   
+meanvec[i]<-mean(s)  } 
+LL<-round(quantile(meanvec,.025),3)
+UL<-round(quantile(meanvec,.975),3)     
+print(paste('95% bootstrap interval for the mean:',LL,' to ',UL))}
+
+z<-rnorm(5000)bs(z,100)
+
+```{r}
+go_mean<-function(v,k) {
+  meanvec<-rep(NaN, k)
+  for (i in 1:k) {
+    s<-sample(v, replace=T)
+    meanvec[i]<-mean(s) 
+    }
+LL<-round(quantile(meanvec,.10),2)
+UL<-round(quantile(meanvec,.90),2)
+print(paste("the lower confidence limit is is =", LL, "and the upper confidence interval is =", UL))
+}
+
+z<-rnorm(8000)
+go_mean(z,1000)
+
+```
+
+```{r}
+bs<-function(k){
+  for (z in 1:n) { #write loop to repeat next steps n times
+    z<-rnorm(k) #make a sample distribution pop of k/5000 numbers, save as object z
+    meanvec<-rep(NaN, k) #make a blank vector k/5000 num long
+    for (i in 1:k) { 
+      s<-sample(z, replace=T) #make k/5000 sample pops by pulling from object z randomly k/5000 times
+      meanvec[i]<-mean(s)#take mean of s, put it in k spot in vector
+    }
+  }
+  lowerlim<-quantile(meanvec, 0.025) #lower limit of conf int
+  upperlim<-quantile(meanvec, 0.975) #upper limit of conf int
+  print(paste("the lower confidence limit is is =", lowerlim, "and the upper confidence interval is =", upperlim)) #print upper and lower CI to console
+}
+
+k<-5000 #assign value of 5000 for k
+n<-100 #assign value of 100 reps for n
+bs(5000) #check to see if function works
+```

@@ -1,0 +1,182 @@
+---
+title: "checking all cow observations"
+author: "Caitlin Jeffrey"
+date: "July 30, 2020"
+output: html_document
+---
+
+```{r}
+setwd(path.exercise)
+```
+
+
+```{r}
+BW<-subset(OREI, farm =="Butterworks")
+BW1<-filter(BW, visit == "first")
+BW2<-filter(BW, visit == "second")
+BW3<-filter(BW, visit == "third")
+```
+
+```{r}
+bwfirstcows<-unique(BW1$cow_id)
+bwsecondcows<-unique(BW2$cow_id)
+bwthirdcows<-unique(BW3$cow_id)
+unique(BW$cow_id)
+```
+
+```{r}
+bw_fromall<-filter(all_trim, first_farm=="Butterworks" | second_farm=="Butterworks" | third_farm=="Butterworks") #take BW obs from big file, use to check if all cows there
+unique(bw_fromall$cow_id) #40 cows total, which agrees with OREI (original) file
+```
+
+
+```{r}
+BJ<-filter(OREI, farm =="BJ") 
+unique(BJ$cow_id) #39 cow names from original CSV
+bj_fromall<-filter(all_trim, first_farm=="BJ" | second_farm=="BJ" | third_farm=="BJ") #take BJ obs from big file, use to check if all cows there
+unique(bj_fromall$cow_id) #39 cows total, which agrees with OREI (original) file
+BJ1<-filter(BJ, visit == "first")
+BJ2<-filter(BJ, visit == "second")
+BJ3<-filter(BJ, visit == "third")
+BJ1cows<-unique(BJ1$cow_id)
+BJ2cows<-unique(BJ2$cow_id)
+BJ3cows<-unique(BJ3$cow_id)
+write.csv(BJ1cows, "BJ1.csv", row.names = F) #write csv to make cow list to check all entries right in all_trim
+write.csv(BJ2cows, "BJ2.csv", row.names = F)
+write.csv(BJ3cows, "BJ3.csv", row.names = F)
+```
+
+```{r}
+CF<-filter(OREI, farm =="Choiniere") 
+unique(CF$cow_id) #40 cow names from original CSV
+cf_fromall<-filter(all_trim, first_farm=="Choiniere" | second_farm=="Choiniere" | third_farm=="Choiniere" | fourth_farm == "Choiniere") #take Choiniere obs from big file, use to check if all cows there
+unique(cf_fromall$cow_id) #40 cows total, which agrees with OREI (original) file
+CF1<-filter(CF, visit == "first")
+CF2<-filter(CF, visit == "second")
+CF3<-filter(CF, visit == "third")
+CF4<-filter(CF, visit == "fourth")
+CF1cows<-unique(CF1$cow_id)
+CF2cows<-unique(CF2$cow_id)
+CF3cows<-unique(CF3$cow_id)
+CF4cows<-unique(CF4$cow_id)
+write.csv(CF1cows, "CF1.csv", row.names = F) #write csv to make cow list to check all entries right in all_trim
+write.csv(CF2cows, "CF2.csv", row.names = F)
+write.csv(CF3cows, "CF3.csv", row.names = F)
+write.csv(CF4cows, "CF4.csv", row.names = F)
+```
+
+
+```{r}
+GV<-filter(OREI, farm =="Glennview") 
+unique(GV$cow_id) #37 cow names from original CSV
+gv_fromall<-filter(all_trim, first_farm=="Glennview" | second_farm=="Glennview" | third_farm=="Glennview") #take GV obs from big file, use to check if all cows there
+unique(gv_fromall$cow_id) #37 cows total, which agrees with OREI (original) file
+GV1<-filter(GV, visit == "first")
+GV2<-filter(GV, visit == "second")
+GV3<-filter(GV, visit == "third")
+GV1cows<-unique(GV1$cow_id)
+GV2cows<-unique(GV2$cow_id)
+GV3cows<-unique(GV3$cow_id)
+write.csv(GV1cows, "GV1.csv", row.names = F) #write csv to make cow list to check all entries right in all_trim
+write.csv(GV2cows, "GV2.csv", row.names = F)
+write.csv(GV3cows, "GV3.csv", row.names = F)
+```
+
+
+```{r}
+LF<-filter(OREI, farm =="Lynd") 
+unique(LF$cow_id) # 39 cow names from original CSV
+lf_fromall<-filter(all_trim, first_farm=="Lynd" | second_farm== "Lynd" | third_farm=="Lynd") #take LF obs from big file, use to check if all cows there
+unique(lf_fromall$cow_id) #39 cows total, which agrees with OREI (original) file
+LF1<-filter(LF, visit == "first")
+LF2<-filter(LF, visit == "second")
+LF3<-filter(LF, visit == "third")
+LF1cows<-unique(LF1$cow_id)
+LF2cows<-unique(LF2$cow_id)
+LF3cows<-unique(LF3$cow_id)
+write.csv(LF1cows, "LF1.csv", row.names = F) #write csv to make cow list to check all entries right in all_trim
+write.csv(LF2cows, "LF2.csv", row.names = F)
+write.csv(LF3cows, "LF3.csv", row.names = F)
+```
+
+```{r}
+OB<-filter(OREI, farm =="OughtaBe") 
+unique(OB$cow_id) # 40 cow names from original CSV
+ob_fromall<-filter(all_trim, first_farm=="OughtaBe" | second_farm=="OughtaBe" | third_farm=="OughtaBe") #take OB obs from big file, use to check if all cows there
+unique(ob_fromall$cow_id) #41 cows total, which agrees with OREI (original) file
+OB1<-filter(OB, visit == "first")
+OB2<-filter(OB, visit == "second")
+OB3<-filter(OB, visit == "third")
+OB1cows<-unique(OB1$cow_id)
+OB2cows<-unique(OB2$cow_id)
+OB3cows<-unique(OB3$cow_id)
+write.csv(OB1cows, "OB1.csv", row.names = F) #write csv to make cow list to check all entries right in all_trim
+write.csv(OB2cows, "OB2.csv", row.names = F)
+write.csv(OB3cows, "OB3.csv", row.names = F)
+```
+
+
+```{r}
+SP<-filter(OREI, farm =="StonyPond") 
+unique(SP$cow_id) # 37 cow names from original CSV
+sp_fromall<-filter(all_trim, first_farm=="StonyPond" | second_farm=="StonyPond") #take SP obs from big file, use to check if all cows there
+unique(sp_fromall$cow_id) #37 cows total, which agrees with OREI (original) file
+SP1<-filter(SP, visit == "first")
+SP2<-filter(SP, visit == "second")
+SP3<-filter(SP, visit == "third")
+SP1cows<-unique(SP1$cow_id)
+SP2cows<-unique(SP2$cow_id)
+write.csv(SP1cows, "SP1.csv", row.names = F) #write csv to make cow list to check all entries right in all_trim
+write.csv(SP2cows, "SP2.csv", row.names = F)
+```
+
+
+```{r}
+PB<-filter(OREI, farm =="Paddlebridge") 
+unique(PB$cow_id) # 35 cow names from original CSV
+pb_fromall<-filter(all_trim, first_farm=="Paddlebridge" | second_farm=="Paddlebridge" | third_farm=="Paddlebridge") #take PB obs from big file, use to check if all cows there
+unique(pb_fromall$cow_id) #35 cows total, which agrees with OREI (original) file
+PB1<-filter(PB, visit == "first")
+PB2<-filter(PB, visit == "second")
+PB3<-filter(PB, visit == "third")
+PB1cows<-unique(PB1$cow_id)
+PB2cows<-unique(PB2$cow_id)
+PB3cows<-unique(PB3$cow_id)
+write.csv(PB1cows, "PB1.csv", row.names = F) #write csv to make cow list to check all entries right in all_trim
+write.csv(PB2cows, "PB2.csv", row.names = F)
+write.csv(PB3cows, "PB3.csv", row.names = F)
+```
+
+```{r}
+SW<-filter(OREI, farm =="Swallowdale") 
+unique(SW$cow_id) # 39 cow names from original CSV
+sw_fromall<-filter(all_trim, first_farm=="Swallowdale" | second_farm=="Swallowdale" | third_farm=="Swallowdale") #take SW obs from big file, use to check if all cows there
+unique(sw_fromall$cow_id) #39 cows total, which agrees with OREI (original) file
+SW1<-filter(SW, visit == "first")
+SW2<-filter(SW, visit == "second")
+SW3<-filter(SW, visit == "third")
+SW1cows<-unique(SW1$cow_id)
+SW2cows<-unique(SW2$cow_id)
+SW3cows<-unique(SW3$cow_id)
+write.csv(SW1cows, "SW1.csv", row.names = F) #write csv to make cow list to check all entries right in all_trim
+write.csv(SW2cows, "SW2.csv", row.names = F)
+write.csv(SW3cows, "SW3.csv", row.names = F)
+```
+
+
+```{r}
+setwd(path.exercise)
+VT<-filter(OREI, farm =="vonTrapp") 
+unique(VT$cow_id) # 38 cow names from original CSV
+vt_fromall<-filter(all_trim, first_farm=="vonTrapp" | second_farm=="vonTrapp" | third_farm=="vonTrapp") #take VT obs from big file, use to check if all cows there
+unique(vt_fromall$cow_id) #38 cows total, which agrees with OREI (original) file
+VT1<-filter(VT, visit == "first")
+VT2<-filter(VT, visit == "second")
+VT3<-filter(VT, visit == "third")
+VT1cows<-unique(VT1$cow_id)
+VT2cows<-unique(VT2$cow_id)
+VT3cows<-unique(VT3$cow_id)
+write.csv(VT1cows, "VT1.csv", row.names = F) #write csv to make cow list to check all entries right in all_trim
+write.csv(VT2cows, "VT2.csv", row.names = F)
+write.csv(VT3cows, "VT3.csv", row.names = F)
+```

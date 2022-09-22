@@ -1,0 +1,14 @@
+Var1,Freq
+,244
+Blind,4
+CNS,85
+Contaminated,24
+Coryne,4
+Mix_CNS_Coryne,2
+Mix_CNS_Strep,5
+Mix_Coryne_Strep,2
+Other_Gram-positive,2
+SA,19
+Strep,14
+Unknown,2
+Yeast,1

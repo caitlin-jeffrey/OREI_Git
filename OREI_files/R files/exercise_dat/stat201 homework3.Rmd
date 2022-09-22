@@ -1,0 +1,302 @@
+---
+title: "stat201 homework3"
+author: "Caitlin Jeffrey"
+date: "June 16, 2020"
+output: html_document
+---
+##module9 quiz
+#In 1987, is there a difference in average life expectancy between Africa and the Americas?
+
+```{r}
+afam<-gapminder %>%
+  filter(year==1987 & (continent=="Americas" | continent=="Africa"))
+
+qqnorm(afam$lifeExp)
+t.test(afam$lifeExp~afam$continent)
+wilcox.test(afam$lifeExp~afam$continent)
+```
+#In 1987, what was the median life expectancy in Africa
+```{r}
+af87<-gapminder %>%
+  filter(year==1987 & continent=="Africa")
+```
+
+#What would you estimate the average gdpPercap to be in Europe, in 1972?
+```{r}
+eur72<-gapminder %>%
+  filter(year==1972 & continent=="Europe")
+t.test(eur72$gdpPercap)
+```
+
+#In the gapminder dataset there are 5 continent represented, which continent has the most countries
+```{r}
+# how many unique countries does the data contain, by continent?
+gapminder %>%
+  group_by(continent) %>%
+  summarise(n_obs = n(), n_countries = n_distinct(country))
+```  
+
+#Consider the gapminder data, suppose you would like to summarise the average life expectancy in 2007, by continent.
+```{r}
+gap07<-filter(gapminder, year==2007)
+summarise(group_by(gap07, continent), mean=mean(lifeExp))
+```
+
+#you would like to create a new data.frame called "gapsum" which contains the 3 variables: continent, country, and average life expectancy (which is a variable you created that contains the average life expectancy across years for each country). Each country should be represented only once in the resulting data.frame
+
+```{r}
+gapsum<-gapminder %>% 
+  group_by(country) %>%  
+  mutate(meanle=mean(lifeExp))%>%  
+  filter(year==2007) %>%  
+  select(country, continent, meanle)
+```
+
+
+
+###module9 practice
+#In 1952, is there a difference in average life expectancy between Asia and Europe? 
+```{r}
+eurasia52<-gapminder %>%
+  filter(year==1952 &(continent=="Asia"|continent=="Europe"))
+
+qqnorm(eurasia52$lifeExp)
+t.test(eurasia52$lifeExp~eurasia52$continent)
+wilcox.test(eurasia52$lifeExp~eurasia52$continent)
+```
+#In 2007, is there a difference in GDP among continents? Make a nice graph too.
+```{r}
+gdp<-gapminder %>%
+  filter(year==2007)
+summary(aov(gdp$gdpPercap~gdp$continent))
+boxplot(gdp$gdpPercap~gdp$continent)
+```
+#Is there a difference in life expectancy in Africa between 1952 and 2007? 
+```{r}
+afr<-gapminder %>%
+  filter((year==1952 | year==2007) & (continent=="Africa"))
+
+qqnorm(afr$lifeExp); qqline(afr$lifeExp)
+t.test(afr$lifeExp~afr$year, paired=T)
+wilcox.test(afr$lifeExp~afr$year, paired=T)
+```
+#What would you estimate the average gdpPercap to be in Africa, in 1972? 
+```{r}
+afr<-gapminder %>%
+  filter(continent=="Africa" & year==1972)
+ t.test(afr$gdpPercap)
+```
+
+#For each country, what is the average lifeExp across all years (calculate one value that is the average of all years)?
+```{r}
+q5<-gapminder %>%
+  group_by(country) %>%
+  mutate(avglife=mean(lifeExp)) 
+
+summarise(group_by(gapminder, country), avglife=mean(lifeExp))
+```
+
+#Using the variable you created in Q5, is there a difference in average lifeExp among continents?
+```{r}
+summary(aov(q5$avglife~q5$country))
+```
+
+
+
+##module9 video and practice questions
+
+#read in csv's for video lecture
+
+```{r}
+demo<- read.csv("C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat/pt_demo.csv", header=T)
+```
+
+```{r}
+labs<- read.csv("C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat/pt_labs.csv", header=T)
+```
+
+#Create a new variable in the demo data called "bpcat", which categorizes systolic blood pressure as: low (<120), med (>=120 & <132), or high (>=132)
+#Write a command to see the frequencies of each category of "bpcat"
+#Answer the question: "Is there a difference in cbmi between those who have hypertension (htn) and those who don't?" two groups distinct from each other, numeric variable, independent t-test
+
+```{r}
+demo$bpcat[demo$lsystolic<120]<-"low"
+demo$bpcat[demo$lsystolic>=120&132]<-"med"
+demo$bpcat[demo$lsystolic>=132]<-"high"
+table(demo$bpcat, useNA="ifany")
+```
+
+
+```{r}
+demo$htens[demo$bpcat=="low" | demo$bpcat=="medium"]<-"no"
+demo$htens[demo$bpcat=="high"]<-"yes"
+table(demo$htens, useNA="ifany")
+#test first to see if data normally distributed
+qqnorm(demo$cbmi)
+t.test(cbmi~htens, data=demo)
+#non-parametric
+wilcox.test(cbmi~htens, data=demo)
+```
+#print first 6 obs
+
+```{r}
+head(demo)
+```
+
+```{r}
+#Print observations 10 - 25 for columns 4 - 6 to your console
+print( demo[
+  c(10:25),
+  c(4:6) ] )
+#or
+demo[10:25, 4:6]
+
+#or
+colnames(demo); print(demo[10:25, c("smoking", "smokecat", "smoker")])
+```
+
+#clean smoking category so NA's correctly classified
+```{r}
+table(demo$smoking)
+#coerce from factor to character
+demo$smoking<-as.character(demo$smoking)
+demo$smoking[demo$smoking == ""] <-NA
+unique(demo$smoking) #for characters, maybe level only for factors?
+```
+
+#merging data sets
+```{r}
+pts<-merge(demo,labs)
+View(pts)
+```
+
+#using dyplyr
+```{r}
+library("dplyr")
+```
+
+#functions of dplyr
+```{r}
+glimpse(pts) #nice way to peek at structure of data frame
+males<-filter(pts, sex==1) #filter is for choosing rows
+forties<-filter(pts, age>=40 & age <50)
+threevars<-select(pts, ptid, age, sex) #select is for choosing specific columns; pts is db, 3 variables
+```
+
+#Is RBC level associated with diabetes (dm) in current smokers?
+```{r}
+currentsmokersRBC<-filter(pts, smoker==1 & lab=="RBC")
+chisq.test(currentsmokersRBC$dm, currentsmokersRBC$level)
+fisher.test(currentsmokersRBC$dm, currentsmokersRBC$level)
+```
+
+#Is CMBI different between those with low systolic blood pressure and those with high systolic blood pressure (bpcat)?
+```{r}
+lowhi<-filter(pts, bpcat=="low" | bpcat=="high")
+t.test(lowhi$cbmi~lowhi$bpcat)
+```
+
+#Is a1c level different among levels of WBC?
+
+```{r}
+wbc<-filter(pts, lab=="WBC")
+summary(aov(wbc$a1c~wbc$level))
+```
+
+#What is the average age for those with both diabetes (dm) and hypertension (htn)?
+
+```{r}
+dmht<-filter(pts, lab=="RBC" & dm==1 & htn==1) #pick just one record per person
+t.test(dmht$age)
+mean(dmht$age)
+```
+########################
+#summarise()- summary stats on variables within a data set; verb(object, newvariable=function(variable)
+#group_by()-
+
+```{r}
+summarise(pts, avg=mean(age))
+summarise(pts, mean=mean(cbmi, na.rm=T)) #need if have missing values
+summarise(group_by(pts, sex), mean=mean(age)) #group the patients dataframe by the variable sex,then based on these groups summarize the variable age by calculating a mean- avg for each grouping variable
+```
+
+#make dataframe with only those who have htn and select 4 variables
+```{r}
+htn<-filter(pts, htn==1)
+htn<-select(htn, ptid, age, ldiastolic, lsystolic)
+```
+
+#calc avg cmbi by diabetes status
+```{r}
+summarise(group_by(pts, dm), avg=mean(cbmi, na.rm=T))
+```
+
+#pipelining or chaining
+```{r}
+pts%>% #first select dataframe patients, AND THEN do...
+  group_by(dm) %>% #group by diabetes, AND THEN
+  summarise(avg=mean(cbmi, na.rm=T))
+```
+
+#calc median a1c level by hypertension status, JUST for those with diabetes
+```{r}
+pts%>% #first select dataframe patients, AND THEN do...
+  filter(dm==1) %>%
+  group_by(htn) %>%
+  summarise(med=median(a1c, na.rm=T), mean=mean(a1c, na.rm=T))
+```
+
+#calc avg sys bp by smoking cat for individuals older than 35
+```{r}
+pts %>%
+  filter(age>=35) %>%
+  group_by(smokecat) %>%
+  summarise(avgsbp=mean(lsystolic, na.rm=T))
+```
+
+
+###################
+#arrange and mutate
+#arrange will sort data
+```{r}
+pts1<-pts %>%
+  arrange(age) #save new data frame as sorted by age
+```
+
+```{r}
+pts1<-pts %>%
+  arrange(sex, age)
+```
+
+#mutate will create new variables in your dataframe that are functions of existing variables
+#newdataframe <- dataframe %>%
+  #mutate(newvar=function(var))
+  
+```{r}
+pts2<-pts%>%
+  mutate(maxlabval=max(level)) #not super helpful bc max of ALL obs in set
+```
+  
+```{r}
+pts2<-pts%>%
+  group_by(ptid) %>%
+  mutate(maxlabval=max(level)) #grouped by patient, so max for each patient; creates a master variable for patient that has 3 records each in data set
+```
+
+#gapminder
+```{r}
+library("gapminder")
+data(gapminder)
+head(gapminder)
+```
+
+
+
+
+
+
+
+
+
+
+

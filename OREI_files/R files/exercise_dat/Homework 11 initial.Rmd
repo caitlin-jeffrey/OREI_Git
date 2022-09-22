@@ -1,0 +1,37 @@
+---
+title: "Exercise 11"
+author: "Caitlin Jeffrey"
+date: "February 22, 2019"
+output: html_document
+---
+
+```{r}
+path.powerpoint=("C:/Users/caitl/OneDrive/Documents/BaseR/data/powerpoint_dat")
+```
+
+
+```{r}
+setwd(path.powerpoint)
+m1 <- "C:/Users/caitl/OneDrive/Documents/BaseR/data/powerpoint_dat/m1.csv"
+m2 <- "C:/Users/caitl/OneDrive/Documents/BaseR/data/powerpoint_dat/m2.csv"
+m3 <- "C:/Users/caitl/OneDrive/Documents/BaseR/data/powerpoint_dat/m3.csv"
+m4 <- "C:/Users/caitl/OneDrive/Documents/BaseR/data/powerpoint_dat/m4.csv"
+t1 <- "C:/Users/caitl/OneDrive/Documents/BaseR/data/powerpoint_dat/t1.csv"
+w1 <- "C:/Users/caitl/OneDrive/Documents/BaseR/data/powerpoint_dat/w1.csv"
+```
+
+```{r}
+setwd(path.powerpoint)
+m1<- read.csv("m1.csv", header = T, na.strings = ".")
+m2<- read.csv("m2.csv", header = T, na.strings = ".")
+m3<- read.csv("m3.csv", header = T, na.strings = ".")
+m4<- read.csv("m4.csv", header = T, na.strings = ".")
+t1<- read.csv("t1.csv", header = T, na.strings = ".")
+w1<- read.csv("w1.csv", header = T, na.strings = ".")
+```
+
+```{r}
+setwd(path.powerpoint)
+save(m1, m2, m3, m4, t1, w1, file = "mod4dat.Rdata")
+```
+

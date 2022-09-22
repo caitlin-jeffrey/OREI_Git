@@ -1,0 +1,312 @@
+---
+title: "Untitled"
+author: "Caitlin Jeffrey"
+date: "January 31, 2019"
+output:
+  pdf_document: default
+  word_document: default
+  html_document: default
+---
+
+##Exercise 2
+
+## 1. Overview of R and R Studio
+
+* R is case sensitive
+* Missing character and numeric values are stored as NA
+* Comments in scripts are made using #
+* R is powerful, widely used, free, open source
+* R has excellent data visulization capabilities
+* R Studio is a graphic interface for using R
+* R Studio can be accessed here: <http://www.rstudio.com/>.
+
+Base package R comes with a lot of great functions and datasets. One of the real benefits of using R however, comes from accessing the powerful R network and user developed packages. 
+
+```{r, eval=FALSE}
+install.packages("ggplot2")
+library(ggplot2)
+```
+
+
+## 2. Getting Data into R
+
+**Example 1.**
+```{r}
+#making a data frame from scratch
+vec1<-seq(1, 5) 
+vec2<-rep(1, 5)
+vec3<-c(1, 2, 3, 4, 5)
+df1<-data.frame(vec1, vec2, vec3)
+df1
+```
+
+Part 2: Use the c(), rep(), and seq() functions to create vectors with the below values:
+```{r}
+# 4, 8, 9, 12
+a<-c(4,8,9,12)
+
+# red, green, blue
+b<-c("red", "green", "blue")
+
+# 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
+c<-seq(1:20)
+
+# 1, 2, 3, 4, 5, 1, 2, 3, 4, 5
+d<-rep(1:5, 2)
+
+# 1, 1, 2, 2, 3, 3, 4, 4, 5, 5
+e<-rep(1:5, each=2)
+
+# 4, 6, 8, 10, 12, 14, 16, 18, 20
+f<-seq(4,20, by=2)
+
+# 6, 6, 6, 7, 8, 8, 8, 9
+g<-c(rep(6,3), 7, rep(8,3), 9)
+
+# 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5
+h<-rep(rep(1:5, each=2), 3)
+
+# red, green, blue, red, green, blue, red, green, blue, red, green, blue
+rep(b, 4)
+```
+
+**Example 2.**
+```{r}
+nvec<-rnorm(8, 500, 100) #8 random numbers with normal distribution, mean of 500, SD of 100
+nvec
+```
+
+#####Create the below 4 vectors: 
+
+* id: the numbers 1 through 250 
+* stat201_test_1: randomly generate 250 numbers from a normal distribution with a mean=80 and a standard deviation=4. 
+* stat201_test_2: randomly generate 250 numbers from a normal distribution with a mean=83 and a standard deviation=2
+* class: randomly assign the 250 observations to groups: 1, 2 , or 3
+
+```{r}
+id<-1:250
+stat_201_test1<-rnorm(250, 80, 4) #numbers you want, mean of dist, SD of dist
+stat_201_test2<-rnorm(250, 83, 2)
+class<-round(runif(250, 1, 4))
+#2. Combine the vectors id, stat_201_test1, stat_201_test2, and class into a data.frame called "scores" 
+scores<-data.frame(id, stat_201_test1, stat_201_test2, class) 
+```
+
+
+\pagebreak
+
+## 3. Cleaning and Manipulating Data in R
+
+* set values to missing
+* clean typos
+* create new variables
+* rename variables
+* work with dates
+
+```{r}
+#c$sex[c$sex == ""] <-NA - set values to missing
+#c$state[c$state == "YN" | c$state =="nyc"] <-"NY" - clean typos
+#mod10_sort$hgbdiff<-(mod10_sort$hgb_post-mod10_sort$hgb1) - create new variables
+#colnames(b)[colnames(b)=="HGBvalue"]<-"hgbvalue" - rename variables
+#a$date<-as.Date(a$date) - work with dates OR
+#b$date<-as.numeric(b$date)
+#b$date<-as.Date(b$date, origin="1899-12-30")
+#or could do this
+#b$date<-excel_numeric_to_date(as.numeric(b$date,date_system='modern'))
+#b$date[187]<-as.Date('2016-08-04') - OR
+#c$date<-as.Date(c$date, format="%m/%d/%y") #change from character, then as.Date
+```
+
+
+### Explore objects in R
+* dim()
+* str()
+* length()
+* indexing [ ] rows, columns
+
+## 4. Working with data frames using dplyr
+```{r, eval=FALSE}
+install.packages("dplyr")
+library(dplyr)
+```
+
+* glimpse() 
+* select()
+* filter()
+* summarise()
+* group_by()
+* mutate()
+
+```{r}
+#glimpse(pts) #nice way to peek at structure of data frame
+#males<-filter(pts, sex==1) #filter is for choosing rows
+#forties<-filter(pts, age>=40 & age <50)
+#threevars<-select(pts, ptid, age, sex) #select is for choosing specific columns; pts is db, 3 variables
+```
+
+summarise()- summary stats on variables within a data set; verb(object, newvariable=function(variable))
+group_by()-
+
+```{r}
+#summarise(pts, avg=mean(age))
+#summarise(pts, mean=mean(cbmi, na.rm=T)) #need if have missing values
+#summarise(group_by(pts, sex), mean=mean(age)) #group the patients dataframe by the variable sex,then based on these groups summarize the variable age by calculating a mean- avg for each grouping variable
+```
+
+arrange will sort data
+```{r}
+#pts1<-pts %>%
+#  arrange(age) #save new data frame as sorted by age
+```
+
+mutate will create new variables in your dataframe that are functions of existing variables
+newdataframe <- dataframe %>%
+  #mutate(newvar=function(var))
+
+```{r}
+#pts2<-pts%>%
+#  group_by(ptid) %>%
+#  mutate(maxlabval=max(level)) #grouped by patient, so max for each patient; creates a master variable for patient that has 3 records each in data set
+```
+
+
+pipelining or chaining
+```{r}
+#pts%>% #first select dataframe patients, AND THEN do...
+#  group_by(dm) %>% #group by diabetes, AND THEN
+#  summarise(avg=mean(cbmi, na.rm=T))
+```
+
+
+what options are available for each of these functions?
+
+\pagebreak
+
+
+## 5. Data visualization using ggplot2
+
+Install packages
+```{r, eval=FALSE}
+install.packages("ggplot2")
+install.packages("dplyr")
+install.packages("gapminder")
+```
+
+Initiate packages
+```{r, message=FALSE}
+library(dplyr)
+library(ggplot2)
+library(gapminder)
+```
+
+Create a boxplot
+```{r}
+#gapminder %>%
+#  ggplot(aes(x=continent, y=lifeExp, color=year)) +
+#  geom_boxplot()+
+#  facet_wrap(~year) +
+#  labs(title="Life Expectancy by Continent", x="Continent",
+#       y="Life Expectancy (yrs)")
+```
+
+\pagebreak
+
+## 6. Basic descriptive and inferential statistics
+
+**Descriptive Statistics**
+
+* mean, standard deviation, variance
+
+```{r}
+# standard deviation of the values 4, 5, 6, 7
+sd(c(4,5,6,7))
+
+# mean of the values 4, 5, 6, 7
+mean(c(4,5,6,7))
+
+# variance of the values 4, 5, 6, 7
+var(c(4,5,6,7))
+```
+
+* median, quantiles, 5 number summary
+```{r}
+# Calculate the average and median score
+#summary(mydata$score)
+```
+
+* counts, proportions
+
+table(), 
+In the gapminder dataset there are 5 continent represented, which continent has the most countries
+```{r}
+# how many unique countries does the data contain, by continent?
+#gapminder %>%
+#  group_by(continent) %>%
+#  summarise(n_obs = n(), n_countries = n_distinct(country))
+```  
+* base package R graphics
+
+
+**Inferential Statistics**
+
+* confidence interval for single mean & proportion
+
+* t-tests
+What would you estimate the average gdpPercap to be in Europe, in 1972?
+```{r}
+#eur72<-gapminder %>%
+#  filter(year==1972 & continent=="Europe")
+#t.test(eur72$gdpPercap)
+```
+
+* chi-square test
+* ANOVA: summary(aov(1~2))
+* simple linear regression & correlation: plot(), summary(lm(x~y))
+* assessing the normality assumption: qqnorm(), qqline()
+* ranksum test
+* signrank test
+* fishers exact test: fisher.test(1, 2)
+
+
+```{r}
+#are weights 1 and 2 different? paired dependent ttest
+#t.test(mod8$wt1, mod8$wt2, paired=T,  conf.level=.8))
+
+#is weight 1 different between groups? independent ttest, categorical and numeric
+#t.test(outcome~predictor)
+#t.test(mod8$wt1~mod8$group)
+
+
+#single means ttest- is average weight 1 = 197?
+#t.test(mod8$wt1, mu=197) #look in here for 95% CI for what IS the mean
+
+
+#confidence intervals- what is avg wt1, 80% CI
+#t.test(mod8$wt1, conf.level=.8) #why is p value different? default is mu=0
+
+#3 or more groups- ANOVA- is wt1 diff among regions?
+#summary(aov(mod8$wt1~mod8$region)) #why no p? need to summarize resulting table
+#boxplot(mod8$wt1~mod8$region)
+
+#2 categorical variables, region and group- are group and region related? chi square- 2 cat var- or, lin reg if 2 numeric var
+#chisq.test(mod8$group, mod8$region) #if small, do fischer- expected values less than 5
+#fisher.test(mod8$group, mod8$region)
+
+
+#are wt1 and speed1 related- 2 numeric variables
+#plot(mod8$wt1~mod8$speed1);
+#summary(lm(mod8$wt1~mod8$speed1)) #linear model, get summary results-prT is p value
+
+#what if data isn't normally distributed? nonparametric alternatives
+#qqnorm(mod8$wt1) #if obs/expected same, fall along line- this looks normal dist
+#qqnorm(mod8$cost1); qqline(mod8$cost1)
+
+#is cost1 diff between groups
+#wilcox.test(mod8$cost~mod8$group)
+```
+
+
+*Focus on interpretation!*
+
+
+

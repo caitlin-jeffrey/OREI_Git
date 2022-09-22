@@ -1,0 +1,47 @@
+---
+title: "Homework 14"
+author: "Caitlin Jeffrey"
+date: "March 13, 2019"
+output: html_document
+---
+
+
+```{r}
+lek <- "C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat/gsg_leks.csv"
+lek<- read.csv("gsg_leks.csv", header = T, na.strings = "."); names(lek); unique(lek$lek_id); levels(lek$complex)
+```
+
+```{r}
+lek[432,]
+```
+```{r}
+levels(lek$complex)[1] <- "book_cliffs"
+levels(lek$complex)
+```
+
+
+```{r}
+mi <- aggregate(lek[, 5], by = list(lek$complex, lek$lek_id), FUN = min, na.rm = T); names(mi)[1] <- "complex"; names(mi)[2] <- "lek_id"; names(mi)[3] <- "min_Total_males";  head(mi)
+ma <- aggregate(lek[, 5], by = list(lek$complex, lek$lek_id), FUN = max, na.rm = T); names(ma)[1] <- "complex"; names(ma)[2] <- "lek_id"; names(ma)[3] <- "max_Total_males";  head(ma)
+mn <- aggregate(lek[, 5], by = list(lek$complex, lek$lek_id), FUN = mean, na.rm = T); names(mn)[1] <- "complex"; names(mn)[2] <- "lek_id"; names(mn)[3] <- "mean_Total_males";  head(mn)
+sd <- aggregate(lek[, 5], by = list(lek$complex, lek$lek_id), FUN = sd, na.rm = T); names(sd)[1] <- "complex"; names(sd)[2] <- "lek_id"; names(sd)[3] <- "SD_Total_males";  head(sd)
+```
+
+```{r}
+d_mi <- aggregate(lek[, 5], by = list(lek$disturbance), FUN = min, na.rm = T); names(d_mi)[1] <- "disturbance"; names(d_mi)[2] <- "min_Total_males";  head(d_mi)
+d_ma <- aggregate(lek[, 5], by = list(lek$disturbance), FUN = max, na.rm = T); names(d_ma)[1] <- "disturbance"; names(d_ma)[2] <- "max_Total_males";  head(d_ma)
+d_mn <- aggregate(lek[, 5], by = list(lek$disturbance), FUN = mean, na.rm = T); names(d_mn)[1] <- "disturbance"; names(d_mn)[2] <- "mean_Total_males";  head(d_mn)
+d_sd <- aggregate(lek[, 5], by = list(lek$disturbance), FUN = sd, na.rm = T); names(d_sd)[1] <- "disturbance"; names(d_sd)[2] <- "SD_Total_males";  head(d_sd)
+```
+
+```{r}
+y_mi <- aggregate(lek[, 5], by = list(lek$complex, lek$year), FUN = min, na.rm = T); names(y_mi)[1] <- "complex"; names(y_mi)[2] <- "year"; names(y_mi)[3] <- "min_Total_males";  head(y_mi)
+y_ma <- aggregate(lek[, 5], by = list(lek$complex, lek$year), FUN = max, na.rm = T); names(y_ma)[1] <- "complex"; names(y_ma)[2] <- "year"; names(y_ma)[3] <- "max_Total_males";  head(y_ma)
+y_mn <- aggregate(lek[, 5], by = list(lek$complex, lek$year), FUN = mean, na.rm = T); names(y_mn)[1] <- "complex"; names(y_mn)[2] <- "year"; names(y_mn)[3] <- "mean_Total_males";  head(y_mn)
+y_sd <- aggregate(lek[, 5], by = list(lek$complex, lek$year), FUN = sd, na.rm = T); names(y_sd)[1] <- "complex"; names(y_sd)[2] <- "year"; names(y_sd)[3] <- "SD_Total_males";  head(y_sd)
+```
+
+```{r}
+save(y_mi, file = "y_mi.Rdata"); save(y_ma, file = "y_ma.Rdata"); save(y_mn, file = "y_mn.Rdata"); save(y_sd, file = "y_sd.Rdata")
+```
+

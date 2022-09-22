@@ -1,0 +1,180 @@
+---
+title: "Untitled"
+author: "Caitlin Jeffrey"
+date: "September 17, 2020"
+output: html_document
+---
+
+##Question 2
+```{r}
+#Entering the counts into a vector, and naming each element of the vector with choice
+cat_counts <- c(`1`=339, `2`=221, `3`=407, `4`=16, `5`=31)
+
+#Total number of people polled using the sum() function
+N <- sum(cat_counts)
+```
+
+##Conduct both Wald and score test to determine if p_3<0.50
+
+```{r}
+(p_3 = cat_counts[3]/N) #Sample proportion is 0.4013807
+(pi_50 = (0.50)) #Null hypothesis value is 0.50
+
+#Getting the Wald and score SE
+(wald_se <- sqrt(p_3*(1-p_3)/N)) #Wald SE 0.0153934
+(score_se <- sqrt(pi_50*(1-pi_50)/N)) #Score SE 0.01570186
+
+#Get both test statistics
+(z_end <- (p_3-pi_50)/c(wald_se,score_se)) #wald z=-6.406597; score z=-6.280743 
+
+#p-values for wald and score tests: P(Z > |z|)
+pnorm(abs(z_end), lower.tail = F) #p=7.440157e-11 for wald test, p=1.684795e-10 for score test
+```
+
+
+
+```{r}
+(p_3 = cat_counts[3]/N) #Sample proportion is 0.4013807
+(pi0 = (N/5)/N) #Null hypothesis value is 0.2
+
+#Getting the Wald and score SE
+(wald_se <- sqrt(p_3*(1-p_3)/N)) #Wald SE 0.0153934
+(score_se <- sqrt(pi0*(1-pi0)/N)) #Score SE 0.01256149
+
+#Get both test statistics
+(z_end <- (p_3-pi0)/c(wald_se,score_se)) #wald z=13.08227; score z=16.03160 
+
+#p-values for wald and score tests: 2P(Z > |z|)
+2*pnorm(abs(z_end), lower.tail = F) #this is probably not right
+
+```
+
+##B. Conduct both a Wald and likelihood ratio test to determine if p_1=p_3?????????3
+
+```{r}
+(p_3 = cat_counts[3]/N) #Sample proportion p_3 is 0.4013807
+(p_1 = cat_counts[1]/N) #Sample proportion p_1 is 0.3343195
+(p_diff = p_3-p_1) #difference between p_3 and p_1 is 0.06706114 
+
+#Wald SE and z
+(SE_waldB <- sqrt((p_3+p_1 - (p_diff)^2)/N)) #SE for wald is 0.02685344
+(z_waldB <- p_diff/SE_waldB) #z = 2.497301 for wald
+
+##P-value using the normal distribution
+2*pnorm(abs(z_waldB),lower.tail=F) #p is 0.01251426
+
+```
+
+```{r}
+(p_13 = ((339+407)/1014)/2) #p_13 = 0.3678501
+(g = 2*(339*log(p_1/p_13)+407*log(p_3/p_13))) #z statistic for LRT is 6.207004
+#degrees freedom: alternative hypothesis calculated 2, null 1 -> 2-1=1 degree of freedom
+1-pchisq(6.207004,df=1) #p is 0.01272458
+```
+
+
+
+```{r}
+#Likelihood Ratio Test
+#####Likelihood Ratio Test#####
+#Find two probabilities of the sample data using a bin(n,pi0) and bin(n,p_end)
+(L0 <- dbinom(y,n,pi0))   #Restricted Likelihood = max P(Sample | H0 is true)
+(L1 <- dbinom(y,n,p_end)) #Unrestricted Likelihood = max P(Sample)
+
+#Find two probabilities of the sample data using a bin(n,pi0) and bin(n,p_end)
+(L0 <- dbinom(339,1014,p_1))   #Restricted Likelihood = max P(Sample | H0 is true), L0 = 0.02654927
+(L1 <- dbinom(407,1014,p_3)) #Unrestricted Likelihood = max P(Sample), L1 = 0.02555198
+
+#Likelihood Ratio Test statistic
+(Lambda = -2*log(L0/L1)) # Lambda = -0.0765747
+
+#P-value uses a chisquared distribution with 
+#df = difference in estimated parameters between L1 and L0: 1 - 0 = 1
+1-pchisq(Lambda,df=2)
+
+```
+
+#Wald SE
+(SE_wald <- sqrt((p_4pm+p_8pm - (p_4pm-p_8pm)^2)/N))
+
+
+###Tests stats
+(z_diff <- (p_4pm-p_8pm)/c(SE_wald,SE_score))
+
+##P-values using the normal distribution
+2*pnorm(abs(z_diff),lower.tail=F)
+
+```{r}
+##Getting the critical value of a 95% CI using a normal model
+#qnorm(1-0.05/2) = 1.96
+z_star <- qnorm(0.975)
+
+###Calculating the CI interval###
+#The fraction infront of the +-
+(center <- ((153/1014)+z_star^2/2)/(1014+z_star^2)) #0.009423232
+
+#The part infront of the standard error
+(cv_adj <- z_star/(1014+z_star^2)) #0.008915352
+
+#SE equivalent
+(SE_adj <- sqrt((153/1014)*(1014-(153/1014))/1014+z_star^2/4)) #1.05411
+
+###95% CI for pm proportion of wrecks###
+c(center - cv_adj*SE_adj, center + cv_adj*SE_adj) #2.547424e-05 1.882099e-02
+
+##Using the functions in R for it
+BinomCI(x=(153/1014), n=N, method="wilson") # 2.547424e-05 0.01882099
+
+BinomCI(x=20, n=20, method="wilson")
+```
+
+```{r}
+#Combining categories 4-5, then tacking on 1-2-3 counts
+(n_i <- c(sum(cat_counts[4:5]),cat_counts[1:3]))
+
+#Calculating the observed proportions
+(p_obs <- n_i/N) #  0.04635108 for 4/5; 1 is 0.33431953; 2 is 0.21794872; 3 is 0.40138067
+
+#Since HO assumes that the proportions should be the same for 
+#1-3, we sum their observed proportions together and average it
+#rep(pi0, 3) will repeat the null proportions 3 times, one for each category
+(pi_i <- c(p_obs[1], rep(mean(p_obs[2:4]),3))) #list with proportions: 0.04635108, 0.31788297, 0.31788297, 0.31788297 
+
+#Pearson Chi2 Test statistic by hand
+(Pearson_chi <- sum(N*(p_obs-pi_i)^2/pi_i)) #chi-square is 54.9576
+
+#Pearson Chi2 test stat by function
+(pear_test = chisq.test(x=n_i, p=pi_i)) #X-squared = 54.958, df = 3, p-value = 7.011e-12 (although df wrong, should be 2)
+
+
+
+#LRT stat by hand
+(LRT_G = 2*sum(n_i*log(p_obs/pi_i))) #LRT_G = 57.2062
+
+#LRT stat by function
+(G_Test <- GTest(x=n_i, p = pi_i)) #G = 57.206, X-squared df = 3
+
+#P-value using correct df
+pchisq(c(Pearson_chi, LRT_G), df=2, lower.tail=F) # p=1.164417e-12 and p=3.782966e-13
+
+
+###Getting the Pearson residuals for Pearson's test
+pear_test$residuals
+```
+
+```{r}
+(p_new = (19/20)) #Sample proportion is 0.4013807
+(pi_null = (1)) #Null hypothesis value is 0.50
+
+#Getting the Wald and score SE
+(wald_se <- sqrt(p_new*(1-p_new)/20)) #Wald SE 0.0153934
+(score_se <- sqrt(pi_null*(1-pi_null)/20)) #Score SE 0.01570186
+
+#Get both test statistics
+(z_end <- (-.05)/c(wald_se,score_se)) #wald z= -6.406597; score z= -6.280743 
+
+#p-values for wald and score tests: P(Z > |z|)
+pnorm(abs(z_end), lower.tail = F) #p=7.440157e-11 for wald test, p=1.684795e-10 for score test
+
+
+```

@@ -1,0 +1,241 @@
+---
+title: "making quarter by SCC figure for John"
+author: "Caitlin Jeffrey"
+date: "March 15, 2021"
+output: html_document
+---
+
+##getting number of total corynebac, cns, staph aureus, streps, negative quarters
+
+```{r}
+library(dplyr)
+
+OREI<-read.csv("OREIculture_results_csv.csv", na.strings= ".", header = T)
+
+##corynebac all quarters over time
+corynebac_all_orei<-filter(OREI, (path_1=="corynebac" | path_2=="corynebac" | path_3=="corynebac" | path_4=="corynebac")) #142 observations- these are single quarters from a single visit! differs from total number corynebac isolated bc some quarters have 2 corynebac each
+
+corynebac_orei_strictIMI<-filter(corynebac_all_orei, (quarter_code == "1" | quarter_code == "2" | quarter_code == "21" | quarter_code =="35")) #84 observations, over 4 visits
+
+#now, find any where coryne may have been isolated, BUT was not causing the IMI, and remove from list
+write.csv(corynebac_orei_strictIMI, "corynebac_orei_strictIMI_3_2021.csv", row.names = T) #wrote out csv to clean by hand in excel
+
+corynebac_orei_strictIMI_cleaned<-read.csv("corynebac_orei_strictIMI_3_2021.csv", na.strings= ".", header = T) #only had to remove one observation, so down to 83
+
+```
+
+
+```{r}
+##cns all quarters over time
+cns_all_orei<-filter(OREI, (path_1=="cns" | path_2=="cns" | path_3=="cns" | path_4=="cns")) #741 observations- these are single quarters from a single visit! differs from total number cns isolated bc some quarters have 2 cns each
+
+cns_orei_strictIMI<-filter(cns_all_orei, (quarter_code == "1" | quarter_code == "2" | quarter_code == "21" | quarter_code =="35")) #614 observations, over 4 visits
+
+#now, find any where cns may have been isolated, BUT was not causing the IMI, and remove from list
+write.csv(cns_orei_strictIMI, "cns_orei_strictIMI_3_2021.csv", row.names = T) #wrote out csv to clean by hand in excel
+
+
+cns_orei_strictIMI_cleaned<-read.csv("cns_orei_strictIMI_3_2021.csv", na.strings= ".", header = T) #only had to remove one observation, so down to 613
+```
+
+```{r}
+##sa all quarters over time
+sa_all_orei<-filter(OREI, (path_1=="sa" | path_2=="sa" | path_3=="sa" | path_4=="sa")) #136 observations
+
+sa_orei_strictIMI<-filter(sa_all_orei, (quarter_code == "1" | quarter_code == "2" | quarter_code == "21" | quarter_code =="35")) #119 observations, over 4 visits
+
+#now, find any where SA may have been isolated, BUT was not causing the IMI, and remove from list
+write.csv(sa_orei_strictIMI, "sa_orei_strictIMI_3_2021.csv", row.names = T) # didn't need to remove any, 119 observations
+```
+
+```{r}
+##strep all quarters over time
+strep_all_orei<-filter(OREI, (path_1=="strep" | path_2=="strep" | path_3=="strep" | path_4=="strep")) #197 observations- these are single quarters from a single visit! differs from total number strep isolated bc some quarters have 2 strep each
+
+strep_orei_strictIMI<-filter(strep_all_orei, (quarter_code == "1" | quarter_code == "2" | quarter_code == "21" | quarter_code =="35")) #86 observations, over 4 visits
+
+# where is this huge drop coming from??
+missing_strep<-filter(strep_all_orei, quarter_code=="27") # 74 of the strep from all infections were MIXED!!
+table(strep_all_orei$quarter_code) # can also tell us where they all went with this code
+
+#now, find any where strep may have been isolated, BUT was not causing the IMI, and remove from list
+write.csv(strep_orei_strictIMI, "strep_orei_strictIMI_3_2021.csv", row.names = T) #wrote out csv to clean by hand in excel
+
+# didn't have to remove any - still 86 observations
+```
+
+```{r}
+#neg all quarters over time
+OREI$scc<-as.numeric(as.character(OREI$scc))
+all_orei_neg<-filter(OREI, (quarter_code == "3" | quarter_code == "5" | quarter_code =="6")) # 2290 observations
+
+write.csv(all_orei_neg, "all_orei_neg_3_2021.csv", row.names = T) #wrote out csv to clean by hand in excel
+```
+
+
+
+```{r}
+library(ggplot2)
+box_plot<-read.csv("3_2021_for_box_plot.csv", na.strings= ".", header = T)
+
+# how many of each in each category?
+
+table(box_plot$Pathogen_group)
+
+# changes 4.22.2021 to for box plot csv file; (1) took out 9 "CNS" MALDI couldn't ID, (2) added CNS species to a column called "Pathogen_group_specifically", which has CNS by species but other groups just generally still (Strep, Coryne)
+
+
+library(ggplot2)
+library(dplyr)
+library(RColorBrewer)
+library(hrbrthemes)
+
+
+tiff("rplot.tiff", units="in", width=8, height=5, res=300)
+box_plot %>%
+  ggplot(aes(x=Pathogen_group, y=ls, fill=Pathogen_group)) +
+    geom_boxplot() +
+    #scale_fill_brewer(palatte="Blues", discrete = TRUE, alpha=0.6) +
+    scale_fill_brewer(palette="Blues")+
+    geom_jitter(color="black", size=0.4, alpha=0.9) +
+    geom_hline(yintercept=4, linetype="dashed", color = "red", size=1.1)+
+    labs(title="Linear score by pathogen type",
+       x="Pathogen type",
+       y="Linear score")+
+    theme(plot.title = element_text(hjust = 0.5))+
+    theme(axis.title.x = element_text(margin = margin(t = 20)))+
+    theme(axis.title.y = element_text(margin = margin(r = 20)))+
+    theme(plot.title = element_text(margin = margin(b = 20)))+
+    #theme(legend.position="none")+
+    #theme_bw()
+    theme(panel.grid.major = element_line(colour = "grey"))+
+    theme(panel.grid.minor = element_blank())+
+    theme(panel.background = element_blank())+
+    theme(axis.line = element_line(colour = "grey"))
+dev.off()
+
+
+# plot below will use april box plot file
+
+april_box_plot<-read.csv("4_2021_for_box_plot.csv", na.strings= ".", header = T)
+counts1<- april_box_plot %>% group_by(Pathogen_group) %>% summarise(n = n())
+
+tiff("april_plot.tiff", units="in", width=8, height=5, res=300)
+april_box_plot %>%
+  ggplot(aes(x=Pathogen_group, y=ls, fill=Pathogen_group)) +
+    geom_boxplot() +
+    #scale_fill_brewer(palatte="Blues", discrete = TRUE, alpha=0.6) +
+    scale_fill_brewer(palette="Blues", labels = paste(counts1$Pathogen_group, "n =", counts1$n))+
+    geom_jitter(color="black", size=0.4, alpha=0.9) +
+    geom_hline(yintercept=4, linetype="dashed", color = "red", size=1.1)+
+    labs(title="Linear score by pathogen type",
+       x="Pathogen type",
+       y="Linear score")+
+    theme(plot.title = element_text(hjust = 0.5))+
+    theme(axis.title.x = element_text(margin = margin(t = 20)))+
+    theme(axis.title.y = element_text(margin = margin(r = 20)))+
+    theme(plot.title = element_text(margin = margin(b = 20)))+
+    #theme(legend.position="none")+
+    #theme_bw()
+    theme(panel.grid.major = element_line(colour = "grey"))+
+    theme(panel.grid.minor = element_blank())+
+    theme(panel.background = element_blank())+
+    theme(axis.line = element_line(colour = "grey"))
+dev.off()
+
+cns_box_plot<-read.csv("cns_4_2021_for_box_plot.csv", na.strings= ".", header = T)
+
+# make object with counts by species, which then gets referred to in ggplot coding chunk
+counts<- cns_box_plot %>% group_by(NAS_species) %>% summarise(n = n())
+
+library(broman)
+plot_crayons() # shows all the color names
+brocolors("crayons") # to get numerical codes for colors
+
+tiff("cns_plot_withSA.tiff", units="in", width=8, height=5, res=300)
+cns_box_plot %>%
+  ggplot(aes(x=NAS_species, y=ls, fill=NAS_species)) +
+    geom_boxplot() +
+    scale_fill_manual(values=c("#9aceeb", "#324ab2", "#c5d0e6", "#3bb08f", "#2b6cc4", "#979aaa", "#1f75fe", "#93dfb8", "#c8385a"), labels = paste(counts$NAS_species, "n =", counts$n))+ 
+    geom_jitter(color="black", size=0.4, alpha=0.9) +
+    geom_hline(yintercept=4, linetype="dashed", color = "red", size=0.9)+
+    labs(title="Linear score by NAS species",
+       x="NAS species causing IMI",
+       y="Linear score")+
+    theme(plot.title = element_text(hjust = 0.5))+
+    theme(axis.text.x=element_blank())+
+    theme(axis.ticks.x=element_blank())+
+    theme(axis.title.x = element_blank())+
+    theme(axis.title.y = element_text(margin = margin(r = 20)))+
+    theme(plot.title = element_text(margin = margin(b = 20)))+
+    #theme(legend.position="none")+
+    #theme_bw()
+    theme(panel.grid.major = element_line(colour = "grey"))+
+    theme(panel.grid.minor = element_blank())+
+    theme(panel.background = element_blank())+
+    theme(axis.line = element_line(colour = "grey"))
+dev.off()
+
+
+# haven't really used this block of code for plot
+#box_plot %>%
+  # ggplot(aes(x=path, y=ls)) +
+  # geom_boxplot(shape=8)+
+  # geom_jitter(shape=1, position=position_jitter(0.1))+
+  # labs(title="Linear score by pathogen type",
+  #      x="Pathogen type",
+  #      y="Linear score")+
+  # theme(plot.title = element_text(hjust = 0.5))+
+  # theme(axis.title.x = element_text(margin = margin(t = 20)))+
+  # theme(axis.title.y = element_text(margin = margin(r = 20)))+
+  # theme(plot.title = element_text(margin = margin(b = 20)))
+```
+
+
+
+```{r}
+btm<-read.csv("10_herd_btm_culture.csv", na.strings= ".", header = T)
+str(btm)
+btm$farm_ID<-as.character(btm$farm_ID)
+str(btm)
+
+names(btm)[names(btm) == "housing_type"] <- "Housing_type"
+btm$Housing_type<-ifelse(btm$Housing_type=="beddedpack", "Bedded_pack", "Tie_stall")
+
+
+
+library(ggplot2)
+library(RColorBrewer)
+library(hrbrthemes)
+
+tiff("btm.tiff", units="in", width=8, height=5, res=300)
+btm %>%
+  ggplot(aes(x=farm_ID, y=lab_pasteurization, color=Housing_type)) +
+    geom_point() +
+    scale_color_manual(values = c("#ff2b2b", "#30ba8f"))+
+    #scale_fill_brewer(palette="Blues")+
+    #geom_jitter(color="black", size=0.4, alpha=0.9) +
+    labs(title="Lab pasteurization count by housing type",
+       x="Farm",
+       y="Lab pasteurization count")+
+    theme(plot.title = element_text(hjust = 0.5))+
+    theme(axis.title.x = element_text(margin = margin(t = 20)))+
+    theme(axis.title.y = element_text(margin = margin(r = 20)))+
+    theme(plot.title = element_text(margin = margin(b = 20)))+
+    #theme(legend.position="none")+
+    #theme_bw()
+    theme(panel.grid.major = element_line(colour = "grey"))+
+    theme(panel.grid.minor = element_blank())+
+    theme(panel.background = element_blank())+
+    theme(axis.line = element_line(colour = "grey"))
+dev.off()
+```
+
+
+
+
+
+
+
+
+

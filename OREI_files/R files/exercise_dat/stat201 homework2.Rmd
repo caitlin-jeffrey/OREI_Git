@@ -1,0 +1,203 @@
+---
+title: "stat201 homework2"
+author: "Caitlin Jeffrey"
+date: "June 12, 2020"
+output: html_document
+---
+
+##module8 quiz
+
+```{r}
+quiz<- read.csv("C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat/module8_quiz.csv", header=T)
+```
+###Is there a difference in test2 among classes?
+
+```{r}
+colnames(quiz)[colnames(quiz)=="stat201_test_1"]<-"test1"
+colnames(quiz)[colnames(quiz)=="stat201_test_2"]<-"test2"
+```
+
+```{r}
+summary(aov(quiz$test2~quiz$class))
+```
+##Is there a difference in test2 between those who passed test1 and those who didn't?
+```{r}
+quiz$pass1[quiz$test1>=75]<-1
+quiz$pass1[quiz$test1<75]<-0
+t.test(quiz$test2~quiz$pass1)
+```
+```{r}
+summary(lm(quiz$test1~quiz$test2))
+```
+```{r}
+chisq.test(quiz$class, quiz$pass1)
+```
+
+```{r}
+t.test(quiz$test1, quiz$test2, paired=T,  conf.level=.85)
+```
+
+```{r}
+t.test(quiz$test1, mu=85) 
+```
+```{r}
+boxplot(quiz$test2~quiz$class)
+barplot(table(quiz$class))
+```
+
+
+#1. Create the below 4 vectors: 
+  ##id: the numbers 1 through 250 
+  ##stat201_test_1: randomly generate 250 numbers from a normal distribution with a      mean=80 and a standard deviation=4. 
+  ##stat201_test_2: randomly generate 250 numbers from a normal distribution with a      mean=83 and a standard deviation=2. 
+  ##class: randomly assign the 250 observations to groups: 1, 2 , or 3.
+
+```{r}
+id<-1:250
+stat_201_test1<-rnorm(250, 80, 4) #num, mean, SD
+stat_201_test2<-rnorm(250, 83, 2)
+class<-round(runif(250, 1, 4))
+#2. Combine the vectors id, stat_201_test1, stat_201_test2, and class into a data.frame called "scores" 
+scores<-data.frame(id, stat_201_test1, stat_201_test2, class) 
+```
+
+##3. Rename the variables stat201_test_1 and stat201_test_2 in the "mydata" data.frame to test1 and test2, respectively. 
+
+```{r}
+colnames(scores)[colnames(scores)=="stat_201_test1"]<-"test1"
+colnames(scores)[colnames(scores)=="stat_201_test2"]<-"test2"
+```
+
+##4. Create a new variable in the "mydata" data.frame called "pass1" where the value=1 if the student passed test1 (received a score>=75) and a value=0 if the student did not pass test1. 
+
+```{r}
+scores$pass1[scores$test1>=75]<-1
+scores$pass1[scores$test1<75]<-0
+```
+
+##Is there a difference in test2 among classes?
+
+```{r}
+summary(aov(scores$test2~scores$class)) #why no p? need to summarize resulting table
+boxplot(mod8$wt1~mod8$region)
+```
+
+##Is there a difference in test2 between those who passed test1 and those who didn't?
+```{r}
+#t.test(outcome~predictor)
+t.test(scores$test2~scores$pass1)
+```
+
+#Is there a relationship between test1 and test2? 
+```{r}
+summary(lm(scores$test1~scores$test2))
+```
+
+##Is there a difference in test1 and test2? 
+
+##Is there a relationship between class and passing test 1? 
+```{r}
+chisq.test(scores$class, scores$pass1) #if small, do fischer- expected values less than 5
+fisher.test(scores$class, scores$pass1)
+```
+
+
+#What would you estimate the average difference in tests 1 & 2 to be, with 85% confidence? 
+```{r}
+t.test(scores$test1, scores$test2, paired=T,  conf.level=.85)
+```
+#Is the average test1 = 85?
+```{r}
+t.test(scores$test1, mu=85) 
+```
+
+##6. Draw side by side box and whisker plots to show the relationship between test2 and class. 
+##7. Draw a bar graph to show the distribution of class 
+```{r}
+boxplot(scores$test2~scores$class)
+barplot(table(scores$class))
+```
+
+
+```{r}
+#simulate new data set
+id<-1:500
+weight_time_period1<-rnorm(500, 200, 50) #num, mean, SD
+weight_time_period2<-rnorm(500, 189, 76)
+speed1<-rnorm(500, 40, 7)
+cost1<-rexp(500, 6)*100
+group<-round(runif(500, 3, 4)) #rounds to whole num, number of things you want then between 3 and 4 (min and max)
+region<-round(runif(500, 8, 10)) 
+mod8<-data.frame(id, weight_time_period1, weight_time_period2, speed1, cost1, group, region)
+#hist(weight_time_period1)
+#hist(cost1)
+#table(group)
+table(region)
+```
+#explore data frame
+```{r}
+str(mod8)
+head(mod8) #first 6 obs
+tail(mod8) #last 6 obs
+```
+
+#create a difference variable, rename it
+```{r}
+mod8$diff<-mod8$weight_time_period1-mod8$weight_time_period2
+colnames(mod8)[colnames(mod8)=="weight_time_period1"]<-"wt1"
+colnames(mod8)[colnames(mod8)=="weight_time_period2"]<-"wt2"
+```
+
+#create a group variable
+```{r}
+mod8$pos[mod8$diff>=0]<-1
+mod8$pos[mod8$diff<0]<-0
+```
+
+#are weights 1 and 2 different? paired dependent ttest
+```{r}
+t.test(mod8$wt1, mod8$wt2, paired=T,  conf.level=.8))
+```
+
+#is weight 1 different between groups? independent ttest, categorical and numeric
+```{r}
+#t.test(outcome~predictor)
+t.test(mod8$wt1~mod8$group)
+```
+
+#single means ttest- is average weight 1 = 197?
+```{r}
+t.test(mod8$wt1, mu=197) #look in here for 95% CI for what IS the mean
+```
+
+#confidence intervals- what is avg wt1, 80% CI
+```{r}
+t.test(mod8$wt1, conf.level=.8) #why is p value different? default is mu=0
+```
+
+#3 or more groups- ANOVA- is wt1 diff among regions?
+```{r}
+summary(aov(mod8$wt1~mod8$region)) #why no p? need to summarize resulting table
+boxplot(mod8$wt1~mod8$region)
+```
+
+#2 categorical variables, region and group- are group and region related? chi square- 2 cat var- or, lin reg if 2 numeric var
+```{r}
+chisq.test(mod8$group, mod8$region) #if small, do fischer- expected values less than 5
+fisher.test(mod8$group, mod8$region)
+```
+
+#are wt1 and speed1 related- 2 numeric variables
+```{r}
+plot(mod8$wt1~mod8$speed1);
+summary(lm(mod8$wt1~mod8$speed1)) #linear model, get summary results-prT is p value
+```
+
+#what if data isn't normally distributed? nonparametric alternatives
+```{r}
+qqnorm(mod8$wt1) #if obs/expected same, fall along line- this looks normal dist
+qqnorm(mod8$cost1); qqline(mod8$cost1)
+#is cost1 diff between groups
+wilcox.test(mod8$cost~mod8$group)
+```
+

@@ -1,0 +1,13 @@
+Var1,Freq
+,330
+Blind,3
+CNS,34
+Contaminated,20
+Coryne,8
+Gram_negative_non_coliform,1
+Mix_Coryne_Strep,1
+Mix_SA_Strep,2
+Other_Gram_positive,3
+SA,9
+Strep,3
+Unknown,6

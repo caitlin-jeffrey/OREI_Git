@@ -1,0 +1,40 @@
+---
+title: "Exercise 12"
+author: "Caitlin Jeffrey"
+date: "February 22, 2019"
+output: html_document
+---
+```{r}
+library(foreign)
+tmax<- read.dbf("tmax_all.dbf")
+str(tmax)
+```
+
+```{r}
+any(is.na(tmax))
+```
+
+```{r}
+attach(tmax); names(tmax)
+```
+
+
+
+```{r}
+tmax$winav<-rowMeans(tmax[4:6], na.rm = TRUE); tmax$winav <-round(tmax$winav, digits = 0)
+tmax$sprav<-rowMeans(tmax[7:9], na.rm = TRUE); tmax$sprav <-round(tmax$sprav, digits = 0)
+tmax$sumav<-rowMeans(tmax[10:12], na.rm = TRUE); tmax$sumav <-round(tmax$sumav, digits = 0)
+tmax$fallav<-rowMeans(tmax[13:15], na.rm = TRUE);tmax$fallav <-round(tmax$fallav, digits = 0)
+tmax$annav<-rowMeans(tmax[4:15], na.rm = TRUE);tmax$annav <-round(tmax$annav, digits = 0)
+str(tmax)
+```
+
+```{r}
+newmeans <- round(colMeans(tmax[,4:15]), digits = 0); nm <- rbind(newmeans)
+```
+
+
+```{r}
+names(newmeans) <- c("tmax_1mean", "tmax_2mean", "tmax_3mean", "tmax_4mean", "tmax_5mean", "tmax_6mean", "tmax_7mean", "tmax_8mean", "tmax_9mean", "tmax_10mean", "tmax_11mean", "tmax_12mean"); newmeans
+```
+

@@ -1,0 +1,960 @@
+---
+title: '*Exploration of 40 herd bulk tank milk data*'
+author: "Caitlin Jeffrey"
+date: "August 6, 2021"
+output:
+  html_document: default
+  pdf_document: default
+---
+```{r}
+library(ggplot2)
+library(MASS)
+library(ggpubr)
+# library(geoR)
+# library(sgeostat)
+library(dplyr)
+library(tinytex)
+```
+
+
+##***Discrete distributions***
+
+###**Poisson**
+
+* Range: [0,infinity]
+* Parameters: size = number of events, rate = λ
+* Interpretation: Distribution of events that occur during a fixed time interval or sampling effort with a constant rate of independent events; resembles normal with large λ, or exponential with small λ (example: over a 1 month period, what's the probability a bird lays a particular number of eggs; assumes constant rate of egg laying and eggs laid are independent of each other )
+
+###**Binomial**
+
+* Range: [0, # of trials]
+* Parameters: size= number of trials; p = probability of positive outcome
+* Interpretation: Distribution of number of successful independent dichotomous trials, with constant p (coin tossing, certain probability of getting heads)
+
+###**Negative Binomial**
+
+* Range: [0, infinity]
+* Parameters: size=number of successes; p = probability of success
+* Interpretation: Distribution of number of failures in a series of independent Bernouli trials, each with p = probability of a success. Generates a discrete distribution that is more heterogeneous ("overdispersed") than Poisson; (how many coins we have to toss before GETTING 10 heads?)
+
+##***Continuous distributions***
+
+###**Uniform**
+
+* Range: [min,max]
+* Parameters: min = minimum boundary; max = maximum boundary
+* Interpretation: Distribution of a value that is equally likely within a specified range (any possible value prob is constant between two limits; special case of beta distributions)
+
+###**Normal**
+
+* Range: [neg infinity, infinity] 
+* Parameters: mean = central tendency; SD = standard deviation
+* Interpretation: Symmetric bell-shaped curve with unbounded tails
+
+###**Gamma**
+
+* Range: [0, infinity] (doens't go into 0, but continuous)
+* Parameters: shape, scale
+* Interpretation: mean=shape x scale, variance=shape x scale^2; generates a variety of shapes (including normal and exponential) for positive continuous variables; (unlike normal, NO NEG)
+
+###**Beta**
+
+* Range: [0,1] (can be rescaled to any range by simple multiplication and addition)
+* Paramters: shape1, shape2
+* Interpretation: if shape1 and shape 2 are integers, interpret as a coin toss, with shape1 = # of successes + 1, shape2 = # of failures + 1. Gives distribution of value of p, estimated from data, which can range from exponential through uniform through normal (but all are bounded). Setting shape1 and shape2 <1 yields u-shaped distributions. (dist of PROB of getting a certain outcome)
+
+```{r}
+btm<-read.csv("BTM_data_combined_7_1_2021.csv", na.strings= ".", header = T)
+str(btm)
+btm$SCC_1.1000<-as.numeric(btm$SCC_1.1000)
+btm$RAW_CFU_ml_1.100<-as.numeric(btm$RAW_CFU_ml_1.100)
+btm$PI__CFU_ml__1.1000<-as.numeric(btm$PI__CFU_ml__1.1000)
+btm$Coliforms<-as.numeric(btm$Coliforms)
+btm$Non_ag_Strep<-as.numeric(btm$Non_ag_Strep)
+btm$Staph_aureus<-as.numeric(btm$Staph_aureus)
+btm$Staph_sp<-as.numeric(btm$Staph_sp)
+# btm$log10_coliforms<-as.numeric(btm$log10_coliforms)
+# btm$log10_staphsp<-as.numeric(btm$log10_staphsp)
+# btm$log10_aureus<-as.numeric(btm$log10_aureus)
+```
+
+
+### **Maximum likelihood estimators of the parameters**
+* MLE's - probability of the data, given the hypothesis (standard would be null hypothesis - how probable are data given null is true)
+* vs. what is probability of data given the parameters - how well does data fit given parameters of distribution - goodness of fit test
+* vs. what is probability of the parameters, given the data - for a given data set, what is probability that certain set of parameters would be there- want parameter combinations that make it most likely to have come up with the data; maximize this probability (parameters given this data)
+
+### **Q-Q and P-P plots to assess normality**
+* Probability plot: The data are plotted against a theoretical distribution in such a way that the points should form approximately a straight line. Departures from this straight line indicate departures from the specified distribution. The correlation coefficient associated with the linear fit to the data in the probability plot is a measure of the goodness of the fit
+
+* The P-P plot plots the cumulative probability of a variable against the cumulative probability of a particular distribution (e.g., normal distribution). After data are ranked and sorted, the corresponding z-score is calculated. This is the expected value that the score should have in a normal distribution. The scores are then themselves converted to z-scores. The actual z-scores are plotted against the expected z-scores. If the data are normally distributed, the result would be a straight diagonal line
+
+* Q-Q plot is very similar to the P-P plot except that it plots the quantiles (values that split a data set into equal portions) of the data set instead of every individual score in the data
+
+* Residuals skewed to the right = normal plot curves below 45-degree line (convex); residuals skewed to the left = normal plot curves above 45-degree line (concave); residuals too peaked = normal plot will be sigmoid curved
+
+### **Log transformation**
+* Patel 2019 (bacterial counts): "Because bedding bacteria counts (cfu/cm^3) and BTM culture results (cfu/mL) were not normally distributed, results were transformed (log10) before further analysis. Continuous variables underwent correlation analysis to identify variables that were highly associated (R2 >/= 0.60). Simple associations among categorized variables were evaluated using a chi-squared test."
+
+* "BTSCS is a logarithmic transformation of the BTSCC developed by Shook (1982), obtained by the equation: BTSCS = log2(BTSCC/100.000) + 3"
+
+* Cicconi-Hogan 2013 (*Risk factors associated with bulk tank standard plate count, bulk tank coliform count, and the presence of Staphylococcus aureus on organic and conventional dairy farms in the United States;* standard plate count, coliform count, S. aureus): "Outcome variables analyzed were SPC from the bulk tank, the presence of Staph. aureus in the bulk tank, and the CC of the bulk tank milk. The presence of Staph. aureus was analyzed as a binary variable (yes, no). The distribution of the SPC and CC were both truncated on the left at 0 and skewed to the right. The SPC was transformed to log10 cfu/mL (hereafter, LSPC) and reported as a geometric mean. The CC was dichotomized, based on previous research and milk quality recommendations (Jayarao et al., 2004; Schroeder, 2009; Elmoslemany et al., 2010), at either </= 50 cfu/mL (= 0) or >50 cfu/mL (= 1)."
+
+* Cicconi-Hogan 2013 (*Associations of risk factors with somatic cell count in bulk tank milk on organic and conventional dairy farms in the United States;* SCC, SPC, laboratory-pasteurized count, E. coli): "Somatic cell count and SPC were transformed into log10 values of the number of cells per milliliter and log10 values of the number of colony-forming units per milliliter, respectively, and reported as geometric means using the antilog to back-transform the parameters. Due to the large number of negative results, LP count and E. coli were dichotomized."
+
+
+##***SCC***
+
+```{r}
+summary(btm$SCC_1.1000)
+scc_data<-btm$SCC_1.1000
+z <-fitdistr(scc_data,"normal")
+print(z) # mean and SD, the MLE's (best fit for scc data; most likely if scc data is normally distributed)
+
+# plot the density function for the normal data with these parameters and annotate with original data points (see smooth density normal curve, and where our data lie on that curve- does model fit data in reasonable way)
+
+x <- 0:300000 # range of x values across where you want distribution
+p_density <- dnorm(x=x,
+                   mean=z$estimate["mean"],
+                   sd=z$estimate["sd"]) # use mean and sd from actual scc data
+qplot(x,p_density,geom="line") + annotate(geom="point",x=scc_data,y=0.0000001,color="springgreen4") + labs(title="SCC data against a normal distribution density curve",
+       x="BTM SCC of 21 herds",
+       y="Probability density of normal dist.") # see data points (x values) fall right in middle of probability mass curve
+
+ggdensity(btm$SCC_1.1000, 
+          main = "Density plot of BTM SCC",
+          xlab = "SCC of 21 herds")
+
+ggqqplot(btm$SCC_1.1000)
+```
+
+##***BTSCS = log2(BTM/100,000) + 3***
+
+```{r}
+scclog2_data<-btm$log2_SCC
+z <-fitdistr(scclog2_data,"normal")
+print(z)
+x <- 0:5 # range of x values across where you want distribution
+p_density <- dnorm(x=x,
+                   mean=z$estimate["mean"],
+                   sd=z$estimate["sd"]) # use mean and sd from actual scc data
+qplot(x,p_density,geom="line") + annotate(geom="point",x=scclog2_data,y=0.0000001,color="springgreen4") + labs(title="BTSCS data against a normal distribution density curve",
+       x="BTM SCC score (log2) of 21 herds",
+       y="Probability density of normal dist.") # see data points (x values) fall right in middle of probability mass curve
+
+#do the same for the gamma distribution
+z <-fitdistr(scclog2_data,"gamma")
+print(z)
+p_density <- dgamma(x=x,
+                   shape=z$estimate["shape"],
+                   rate=z$estimate["rate"])
+qplot(x,p_density,geom="line") + annotate(geom="point",x=scclog2_data,y=0.001, color="springgreen4") + labs(title="BTSCS data against a gamma distribution density curve",
+       x="BTM SCC score (log2) of 21 herds",
+       y="Probability density of gamma dist.") #bound at 0
+
+ggdensity(btm$log2_SCC, 
+          main = "Density plot of BTM SCC score (log2)",
+          xlab = "BTSCS of 21 herds")
+
+ggqqplot(btm$log2_SCC)
+```
+
+##***Log10 of SCC***
+
+```{r}
+scclog10_data<-btm$log10_scc
+z <-fitdistr(scclog10_data,"normal")
+print(z)
+x <- 3:6 # range of x values across where you want distribution
+p_density <- dnorm(x=x,
+                   mean=z$estimate["mean"],
+                   sd=z$estimate["sd"]) # use mean and sd from actual scc data
+qplot(x,p_density,geom="line") + annotate(geom="point",x=scclog10_data,y=0.0000001,color="springgreen4") + labs(title="Log10 SCC data against a normal distribution density curve",
+       x="BTM SCC (log10) of 21 herds",
+       y="Probability density of normal dist.") # see data points (x values) fall right in middle of probability mass curve
+
+#do the same for the gamma distribution
+z <-fitdistr(scclog10_data,"gamma")
+print(z)
+p_density <- dgamma(x=x,
+                   shape=z$estimate["shape"],
+                   rate=z$estimate["rate"])
+qplot(x,p_density,geom="line") + annotate(geom="point",x=scclog10_data,y=0.001, color="springgreen4") + labs(title="Log10 SCC data against a gamma distribution density curve",
+       x="BTM SCC (log10) of 21 herds",
+       y="Probability density of gamma dist.") #bound at 0
+
+ggdensity(btm$log10_scc, 
+          main = "Density plot of BTM SCC (log10)",
+          xlab = "BTM SCC log10 of 21 herds")
+
+ggqqplot(btm$log10_scc)
+```
+
+
+##***Raw CFU***
+
+```{r}
+summary(btm$RAW_CFU_ml_1.100)
+rawcfu_data<-btm$RAW_CFU_ml_1.100
+z <-fitdistr(rawcfu_data,"normal")
+print(z) # mean and SD, the MLE's
+
+
+x <- 0:100000 # range of x values across where you want distribution
+p_density <- dnorm(x=x,
+                   mean=z$estimate["mean"],
+                   sd=z$estimate["sd"]) # use mean and sd from actual data
+qplot(x,p_density,geom="line") + annotate(geom="point",x=rawcfu_data,y=0.0000001,color="deeppink2") + labs(title="Raw CFU count data against a normal distribution density curve",
+       x="BTM Raw CFU count of 21 herds",
+       y="Probability density of normal dist.") # see data points (x values) fall right in middle of probability mass curve
+
+# # do the same for the gamma distribution
+# z <-fitdistr(rawcfu_data,"gamma")
+# print(z)
+# p_density <- dgamma(x=x,
+#                    shape=z$estimate["shape"],
+#                    rate=z$estimate["rate"])
+# qplot(x,p_density,geom="line") + annotate(geom="point",x=rawcfu_data,y=0.001, color="red") + labs(title="Raw CFU count data against a gamma distribution density curve",
+#        x="BTM Raw CFU count of 21 herds",
+#        y="Probability density of gamma dist.") #bound at 0 #bound at 0
+
+ggdensity(btm$RAW_CFU_ml_1.100, 
+          main = "Density plot of BTM Raw CFU count",
+          xlab = "Raw CFU of 21 herds")
+
+ggqqplot(btm$RAW_CFU_ml_1.100)
+
+#---------------------------------------------------
+
+# remove outlier
+rawcfu_data_trim<-rawcfu_data[rawcfu_data<20000]
+z <-fitdistr(rawcfu_data_trim,"normal")
+print(z) # mean and SD, the MLE's
+
+
+x <- 0:20000 # range of x values across where you want distribution
+p_density <- dnorm(x=x,
+                   mean=z$estimate["mean"],
+                   sd=z$estimate["sd"]) # use mean and sd from actual data
+qplot(x,p_density,geom="line") + annotate(geom="point",x=rawcfu_data_trim,y=0.0000001,color="deeppink2") + labs(title="Raw CFU count data against a normal distribution density curve",
+       x="BTM Raw CFU count of 21 herds",
+       y="Probability density of normal dist.") # see data points (x values) fall right in middle of probability mass curve
+
+ggqqplot(rawcfu_data_trim)
+```
+
+
+##***Raw CFU log10 transformation***
+
+```{r}
+summary(btm$log10_rawcfu)
+rawcfulog_data<-btm$log10_rawcfu
+z <-fitdistr(rawcfulog_data,"normal")
+print(z) # mean and SD, the MLE's
+
+
+x <- 1:6 # range of x values across where you want distribution
+p_density <- dnorm(x=x,
+                   mean=z$estimate["mean"],
+                   sd=z$estimate["sd"]) # use mean and sd from actual data
+qplot(x,p_density,geom="line") + annotate(geom="point",x=rawcfulog_data,y=0.0000001,color="deeppink2") + labs(title="Raw CFU log10 count data against a normal distribution density curve",
+       x="BTM Raw CFU log10 count of 21 herds",
+       y="Probability density of normal dist.") # see data points (x values) fall right in middle of probability mass curve
+
+# do the same for the gamma distribution
+z <-fitdistr(rawcfulog_data,"gamma")
+print(z)
+p_density <- dgamma(x=x,
+                   shape=z$estimate["shape"],
+                   rate=z$estimate["rate"])
+qplot(x,p_density,geom="line") + annotate(geom="point",x=rawcfulog_data,y=0.001, color="red") + labs(title="Raw CFU count log10 data against a gamma distribution density curve",
+       x="BTM Raw CFU count log10 of 21 herds",
+       y="Probability density of gamma dist.") #bound at 0 #bound at 0
+
+ggdensity(btm$log10_rawcfu, 
+          main = "Density plot of BTM Raw CFU log10 count",
+          xlab = "Raw CFU of 21 herds")
+
+ggqqplot(btm$log10_rawcfu)
+```
+
+##***Past CFU***
+
+```{r}
+summary(btm$PAST_CFU_ml_1.10)
+pastcfu_data<-btm$PAST_CFU_ml_1.10
+z <-fitdistr(pastcfu_data,"normal")
+print(z) # mean and SD, the MLE's
+
+
+x <- 0:2000 # range of x values across where you want distribution
+p_density <- dnorm(x=x,
+                   mean=z$estimate["mean"],
+                   sd=z$estimate["sd"]) # use mean and sd from actual data
+qplot(x,p_density,geom="line") + annotate(geom="point",x=pastcfu_data,y=0.0000001,color="deeppink1") + labs(title="Past. CFU count data against a normal distribution density curve",
+       x="BTM Past. CFU count of 21 herds",
+       y="Probability density of normal dist.") # see data points (x values) fall right in middle of probability mass curve
+
+# do the same for the gamma distribution
+z <-fitdistr(pastcfu_data,"gamma")
+print(z)
+p_density <- dgamma(x=x,
+                   shape=z$estimate["shape"],
+                   rate=z$estimate["rate"])
+qplot(x,p_density,geom="line") + annotate(geom="point",x=pastcfu_data,y=0.0000001, color="deeppink1") + labs(title="Past. CFU count data against a gamma distribution density curve",
+       x="BTM Past. CFU count of 21 herds",
+       y="Probability density of gamma dist.") #bound at 0
+
+ggdensity(btm$PAST_CFU_ml_1.10, 
+          main = "Density plot of BTM Past. CFU count",
+          xlab = "Past. CFU of 21 herds")
+
+ggqqplot(btm$PAST_CFU_ml_1.10)
+
+#---------------------------------------------------
+
+# remove outlier
+pastcfu_data_trim<-pastcfu_data[pastcfu_data<200]
+z <-fitdistr(pastcfu_data_trim,"normal")
+print(z) # mean and SD, the MLE's
+
+
+x <- 0:300 # range of x values across where you want distribution
+p_density <- dnorm(x=x,
+                   mean=z$estimate["mean"],
+                   sd=z$estimate["sd"]) # use mean and sd from actual data
+qplot(x,p_density,geom="line") + annotate(geom="point",x=pastcfu_data_trim,y=0.0000001,color="deeppink1") + labs(title="Past. CFU count data against a normal distribution density curve",
+       x="BTM Past. CFU count of 21 herds",
+       y="Probability density of normal dist.") # see data points (x values) fall right in middle of probability mass curve
+
+ggqqplot(pastcfu_data_trim)
+```
+
+##***PI CFU***
+
+```{r}
+summary(btm$PI__CFU_ml__1.1000)
+picfu_data<-btm$PI__CFU_ml__1.1000
+z <-fitdistr(picfu_data,"normal")
+print(z) # mean and SD, the MLE's
+
+
+x <- 0:2000000 # range of x values across where you want distribution
+p_density <- dnorm(x=x,
+                   mean=z$estimate["mean"],
+                   sd=z$estimate["sd"]) # use mean and sd from actual data
+qplot(x,p_density,geom="line") + annotate(geom="point",x=picfu_data,y=0.0000001,color="deeppink3") + labs(title="PI CFU count data against a normal distribution density curve",
+       x="BTM PI CFU count of 21 herds",
+       y="Probability density of normal dist.") # see data points (x values) fall right in middle of probability mass curve
+
+# # do the same for the gamma distribution
+# z <-fitdistr(picfu_data,"gamma")
+# print(z)
+# p_density <- dgamma(x=x,
+#                    shape=z$estimate["shape"],
+#                    rate=z$estimate["rate"])
+# qplot(x,p_density,geom="line") + annotate(geom="point",x=picfu_data,y=0.0000001, color="deeppink3") + labs(title="PI CFU count data against a gamma distribution density curve",
+#        x="BTM PI CFU count of 21 herds",
+#        y="Probability density of gamma dist.") #bound at 0
+
+ggdensity(btm$PI__CFU_ml__1.1000, 
+          main = "Density plot of BTM PI CFU count",
+          xlab = "PI CFU of 21 herds")
+
+ggqqplot(btm$PI__CFU_ml__1.1000)
+```
+
+##***Total coliforms***
+
+```{r}
+summary(btm$Total_Coli__CFU_ml__1.1)
+tcoli_data<-btm$Total_Coli__CFU_ml__1.1
+z <-fitdistr(tcoli_data,"normal")
+print(z) # mean and SD, the MLE's
+
+
+x <- 0:30 # range of x values across where you want distribution
+p_density <- dnorm(x=x,
+                   mean=z$estimate["mean"],
+                   sd=z$estimate["sd"]) # use mean and sd from actual data
+qplot(x,p_density,geom="line") + annotate(geom="point",x=tcoli_data,y=0.0000001,color="deeppink4") + labs(title="Total coliform count data against a normal distribution density curve",
+       x="BTM Total coliform count of 21 herds",
+       y="Probability density of normal dist.") # see data points (x values) fall right in middle of probability mass curve
+
+# do the same for the gamma distribution
+z <-fitdistr(tcoli_data,"gamma")
+print(z)
+p_density <- dgamma(x=x,
+                   shape=z$estimate["shape"],
+                   rate=z$estimate["rate"])
+qplot(x,p_density,geom="line") + annotate(geom="point",x=tcoli_data,y=0.0000001, color="deeppink4") + labs(title="Total coliform count data against a gamma distribution density curve",
+       x="BTM Total coliform count of 21 herds",
+       y="Probability density of gamma dist.") #bound at 0
+
+ggdensity(btm$Total_Coli__CFU_ml__1.1, 
+          main = "Density plot of BTM Total coliform count",
+          xlab = "Total coliform count of 21 herds")
+
+ggqqplot(btm$Total_Coli__CFU_ml__1.1)
+```
+
+
+##***E. coli***
+
+```{r}
+summary(btm$E._coli__CFU_ml__1.1)
+ecoli_data<-btm$E._coli__CFU_ml__1.1
+z <-fitdistr(ecoli_data,"normal")
+print(z) # mean and SD, the MLE's
+
+
+x <- 0:20 # range of x values across where you want distribution
+p_density <- dnorm(x=x,
+                   mean=z$estimate["mean"],
+                   sd=z$estimate["sd"]) # use mean and sd from actual data
+qplot(x,p_density,geom="line") + annotate(geom="point",x=ecoli_data,y=0.0000001,color="mediumorchid") + labs(title="E. coli count data against a normal distribution density curve",
+       x="BTM E. coli count of 21 herds",
+       y="Probability density of normal dist.") # see data points (x values) fall right in middle of probability mass curve
+
+# do the same for the gamma distribution
+z <-fitdistr(ecoli_data,"gamma")
+print(z)
+p_density <- dgamma(x=x,
+                   shape=z$estimate["shape"],
+                   rate=z$estimate["rate"])
+qplot(x,p_density,geom="line") + annotate(geom="point",x=ecoli_data,y=0.0000001, color="mediumorchid") + labs(title="E. coli count data against a gamma distribution density curve",
+       x="BTM E. coli count of 21 herds",
+       y="Probability density of gamma dist.") #bound at 0
+
+ggdensity(btm$Total_Coli__CFU_ml__1.1, 
+          main = "Density plot of BTM E. coli count",
+          xlab = "E. coli count of 21 herds")
+
+ggqqplot(btm$Total_Coli__CFU_ml__1.1)
+```
+
+
+##***Staph***
+
+```{r}
+summary(btm$Staph__CFU_ml__1.10)
+staph_data<-btm$Staph__CFU_ml__1.10
+z <-fitdistr(staph_data,"normal")
+print(z) # mean and SD, the MLE's
+
+
+x <- 0:200 # range of x values across where you want distribution
+p_density <- dnorm(x=x,
+                   mean=z$estimate["mean"],
+                   sd=z$estimate["sd"]) # use mean and sd from actual data
+qplot(x,p_density,geom="line") + annotate(geom="point",x=staph_data,y=0.0000001,color="mediumorchid2") + labs(title="Staph. count data against a normal distribution density curve",
+       x="BTM Staph. count of 21 herds",
+       y="Probability density of normal dist.") # see data points (x values) fall right in middle of probability mass curve
+
+# do the same for the gamma distribution
+z <-fitdistr(staph_data,"gamma")
+print(z)
+p_density <- dgamma(x=x,
+                   shape=z$estimate["shape"],
+                   rate=z$estimate["rate"])
+qplot(x,p_density,geom="line") + annotate(geom="point",x=staph_data,y=0.0000001, color="mediumorchid2") + labs(title="Staph. count data against a gamma distribution density curve",
+       x="BTM Staph. count of 21 herds",
+       y="Probability density of gamma dist.") #bound at 0
+
+ggdensity(btm$Staph__CFU_ml__1.10, 
+          main = "Density plot of BTM Staph count (St. Albans)",
+          xlab = "Staph count of 21 herds")
+
+ggqqplot(btm$Staph__CFU_ml__1.10)
+
+
+#---------------------------------------------------
+
+# remove outlier
+staph_data_trim<-staph_data[staph_data<100]
+z <-fitdistr(staph_data_trim,"normal")
+print(z) # mean and SD, the MLE's
+
+x <- 0:100 # range of x values across where you want distribution
+p_density <- dnorm(x=x,
+                   mean=z$estimate["mean"],
+                   sd=z$estimate["sd"]) # use mean and sd from actual data
+qplot(x,p_density,geom="line") + annotate(geom="point",x=staph_data_trim, y=0.0000001,color="mediumorchid2") + labs(title="Staph. count data against a normal distribution density curve",
+       x="BTM Staph. count of 21 herds",
+       y="Probability density of normal dist.") # see data points (x values) fall right in middle of probability mass curve
+
+ggqqplot(staph_data_trim)
+```
+
+##***Percent butterfat***
+
+```{r}
+summary(btm$perc_BF)
+bf_data<-btm$perc_BF
+z <-fitdistr(bf_data,"normal")
+print(z) # mean and SD, the MLE's
+
+
+x <- 0:10 # range of x values across where you want distribution
+p_density <- dnorm(x=x,
+                   mean=z$estimate["mean"],
+                   sd=z$estimate["sd"]) # use mean and sd from actual data
+qplot(x,p_density,geom="line") + annotate(geom="point",x=bf_data,y=0.0000001,color="royalblue1") + labs(title="Percent butterfat data against a normal distribution density curve",
+       x="BTM Percent butterfat of 21 herds",
+       y="Probability density of normal dist.") # see data points (x values) fall right in middle of probability mass curve
+
+# do the same for the gamma distribution
+z <-fitdistr(bf_data,"gamma")
+print(z)
+p_density <- dgamma(x=x,
+                   shape=z$estimate["shape"],
+                   rate=z$estimate["rate"])
+qplot(x,p_density,geom="line") + annotate(geom="point",x=bf_data,y=0.0000001, color="royalblue1") + labs(title="Percent butterfat data against a gamma distribution density curve",
+       x="BTM Percent butterfat of 21 herds",
+       y="Probability density of gamma dist.") #bound at 0
+
+ggdensity(btm$perc_BF, 
+          main = "Density plot of BTM % Butterfat",
+          xlab = "% Butterfat of 21 herds")
+
+ggqqplot(btm$perc_BF)
+```
+
+##***Percent protein***
+
+```{r}
+summary(btm$perc_Protein)
+pro_data<-btm$perc_Protein
+z <-fitdistr(pro_data,"normal")
+print(z) # mean and SD, the MLE's
+
+
+x <- 0:7 # range of x values across where you want distribution
+p_density <- dnorm(x=x,
+                   mean=z$estimate["mean"],
+                   sd=z$estimate["sd"]) # use mean and sd from actual data
+qplot(x,p_density,geom="line") + annotate(geom="point",x=pro_data,y=0.0000001,color="royalblue2") + labs(title="Percent protein data against a normal distribution density curve",
+       x="BTM Percent protein of 21 herds",
+       y="Probability density of normal dist.") # see data points (x values) fall right in middle of probability mass curve
+
+# do the same for the gamma distribution
+z <-fitdistr(pro_data,"gamma")
+print(z)
+p_density <- dgamma(x=x,
+                   shape=z$estimate["shape"],
+                   rate=z$estimate["rate"])
+qplot(x,p_density,geom="line") + annotate(geom="point",x=pro_data,y=0.0000001, color="royalblue2") + labs(title="Percent protein data against a gamma distribution density curve",
+       x="BTM Percent protein of 21 herds",
+       y="Probability density of gamma dist.") #bound at 0
+
+ggdensity(btm$perc_Protein, 
+          main = "Density plot of BTM % Protein",
+          xlab = "% Protein of 21 herds")
+
+ggqqplot(btm$perc_Protein)
+```
+
+##***Percent lactose***
+
+```{r}
+summary(btm$perc_Lactose)
+lac_data<-btm$perc_Lactose
+z <-fitdistr(lac_data,"normal")
+print(z) # mean and SD, the MLE's
+
+
+x <- 4:6 # range of x values across where you want distribution
+p_density <- dnorm(x=x,
+                   mean=z$estimate["mean"],
+                   sd=z$estimate["sd"]) # use mean and sd from actual data
+qplot(x,p_density,geom="line") + annotate(geom="point",x=lac_data,y=0.00000000000001,color="royalblue3") + labs(title="Percent lactose data against a normal distribution density curve",
+       x="BTM Percent lactose of 21 herds",
+       y="Probability density of normal dist.") # see data points (x values) fall right in middle of probability mass curve
+
+# do the same for the gamma distribution
+z <-fitdistr(lac_data,"gamma")
+print(z)
+p_density <- dgamma(x=x,
+                   shape=z$estimate["shape"],
+                   rate=z$estimate["rate"])
+qplot(x,p_density,geom="line") + annotate(geom="point",x=lac_data,y=0.00000000000001, color="royalblue3") + labs(title="Percent lactose data against a gamma distribution density curve",
+       x="BTM Percent lactose of 21 herds",
+       y="Probability density of gamma dist.") #bound at 0
+
+ggdensity(btm$perc_Lactose, 
+          main = "Density plot of BTM % Lactose",
+          xlab = "% Lactose of 21 herds")
+
+ggqqplot(btm$perc_Lactose)
+```
+
+
+##***Percent other solids***
+
+```{r}
+summary(btm$perc_Other.Solids)
+solids_data<-btm$perc_Other.Solids
+z <-fitdistr(solids_data,"normal")
+print(z) # mean and SD, the MLE's
+
+
+x <- 4:8 # range of x values across where you want distribution
+p_density <- dnorm(x=x,
+                   mean=z$estimate["mean"],
+                   sd=z$estimate["sd"]) # use mean and sd from actual data
+qplot(x,p_density,geom="line") + annotate(geom="point",x=solids_data,y=0.00000000000001,color="royalblue4") + labs(title="Percent other solids data against a normal distribution density curve",
+       x="BTM Percent other solids of 21 herds",
+       y="Probability density of normal dist.") # see data points (x values) fall right in middle of probability mass curve
+
+# do the same for the gamma distribution
+z <-fitdistr(solids_data,"gamma")
+print(z)
+p_density <- dgamma(x=x,
+                   shape=z$estimate["shape"],
+                   rate=z$estimate["rate"])
+qplot(x,p_density,geom="line") + annotate(geom="point",x=solids_data,y=0.00000000000001, color="royalblue4") + labs(title="Percent other solids data against a gamma distribution density curve",
+       x="BTM Percent other solids of 21 herds",
+       y="Probability density of gamma dist.") #bound at 0
+
+ggdensity(btm$perc_Other.Solids, 
+          main = "Density plot of BTM % Other solids",
+          xlab = "% Other solids of 21 herds")
+
+ggqqplot(btm$perc_Other.Solids)
+```
+
+##***MUN***
+
+```{r}
+summary(btm$MUN)
+mun_data<-btm$MUN
+z <-fitdistr(mun_data,"normal")
+print(z) # mean and SD, the MLE's
+
+
+x <- 0:25 # range of x values across where you want distribution
+p_density <- dnorm(x=x,
+                   mean=z$estimate["mean"],
+                   sd=z$estimate["sd"]) # use mean and sd from actual data
+qplot(x,p_density,geom="line") + annotate(geom="point",x=mun_data,y=0.001,color="firebrick2") + labs(title="MUN data against a normal distribution density curve",
+       x="BTM MUN of 21 herds",
+       y="Probability density of normal dist.") # see data points (x values) fall right in middle of probability mass curve
+
+# do the same for the gamma distribution
+z <-fitdistr(mun_data,"gamma")
+print(z)
+p_density <- dgamma(x=x,
+                   shape=z$estimate["shape"],
+                   rate=z$estimate["rate"])
+qplot(x,p_density,geom="line") + annotate(geom="point",x=mun_data,y=0.001, color="firebrick2") + labs(title="MUN data against a gamma distribution density curve",
+       x="BTM MUN of 21 herds",
+       y="Probability density of gamma dist.")
+
+ggdensity(btm$MUN, 
+          main = "Density plot of BTM MUN",
+          xlab = "MUN of 21 herds")
+
+ggqqplot(btm$MUN)
+```
+
+##***Minnesota coliforms***
+
+```{r}
+summary(btm$Coliforms)
+mcoli_data<-btm$Coliforms
+z <-fitdistr(mcoli_data,"normal")
+print(z) # mean and SD, the MLE's
+
+
+x <- 0:10 # range of x values across where you want distribution
+p_density <- dnorm(x=x,
+                   mean=z$estimate["mean"],
+                   sd=z$estimate["sd"]) # use mean and sd from actual data
+qplot(x,p_density,geom="line") + annotate(geom="point", x=mcoli_data,y=0.00000000000001,color="firebrick") + labs(title="Coliforms (Minn.) data against a normal distribution density curve",
+       x="BTM Coliforms (Minn) of 21 herds",
+       y="Probability density of normal dist.") # see data points (x values) fall right in middle of probability mass curve
+
+
+mcoli_data_no0<-mcoli_data[mcoli_data>0]
+
+# # do the same for the gamma distribution
+# z <-fitdistr(mcoli_data_no0,"gamma")
+# print(z)
+# p_density <- dgamma(x=x,
+#                    shape=z$estimate["shape"],
+#                    rate=z$estimate["rate"])
+# qplot(x,p_density,geom="line") + annotate(geom="point",x=mcoli_data_no0,y=0.00000000000001, color="firebrick") + labs(title="Coliforms (Minn.) data against a gamma distribution density curve",
+#        x="BTM Coliforms (Minn.)  of 21 herds",
+#        y="Probability density of gamma dist.") #bound at 0
+
+
+ggdensity(btm$Coliforms, 
+          main = "Density plot of BTM Coliforms (Minn)",
+          xlab = "Coliform counts of 21 herds")
+
+ggqqplot(btm$Coliforms)
+```
+
+##***Minnesota non-ag Streps***
+
+```{r}
+summary(btm$Non_ag_Strep)
+strep_data<-btm$Non_ag_Strep
+z <-fitdistr(strep_data,"normal")
+print(z) # mean and SD, the MLE's
+
+
+x <- 0:2000 # range of x values across where you want distribution
+p_density <- dnorm(x=x,
+                   mean=z$estimate["mean"],
+                   sd=z$estimate["sd"]) # use mean and sd from actual data
+qplot(x,p_density,geom="line") + annotate(geom="point",x=strep_data,y=0.0000001,color="firebrick2") + labs(title="Non-ag Streps (Minn.) data against a normal distribution density curve",
+       x="BTM non-ag Streps (Minn) of 21 herds",
+       y="Probability density of normal dist.") # see data points (x values) fall right in middle of probability mass curve
+
+# do the same for the gamma distribution
+z <-fitdistr(strep_data,"gamma")
+print(z)
+p_density <- dgamma(x=x,
+                   shape=z$estimate["shape"],
+                   rate=z$estimate["rate"])
+qplot(x,p_density,geom="line") + annotate(geom="point",x=strep_data,y=0.00000000000001, color="firebrick2") + labs(title="Non-ag Streps (Minn.) data against a gamma distribution density curve",
+       x="BTM non-ag Streps (Minn.)  of 21 herds",
+       y="Probability density of gamma dist.") #bound at 0
+
+ggdensity(btm$Non_ag_Strep, 
+          main = "Density plot of BTM Non-ag Streps (Minn)",
+          xlab = "Non-ag Strep counts of 21 herds")
+
+ggqqplot(btm$Non_ag_Strep)
+
+#---------------------------------------------------
+
+# remove outlier
+strep_data_trim<-strep_data[strep_data<400]
+z <-fitdistr(strep_data_trim,"normal")
+print(z) # mean and SD, the MLE's
+
+x <- 0:500 # range of x values across where you want distribution
+p_density <- dnorm(x=x,
+                   mean=z$estimate["mean"],
+                   sd=z$estimate["sd"]) # use mean and sd from actual data
+qplot(x,p_density,geom="line") + annotate(geom="point",x=strep_data_trim,y=0.0000001,color="firebrick2") + labs(title="Non-ag Streps (Minn.) data against a normal distribution density curve",
+       x="BTM non-ag Streps (Minn) of 21 herds",
+       y="Probability density of normal dist.") # see data points (x values) fall right in middle of probability mass curve
+
+ggqqplot(strep_data_trim)
+```
+
+
+##***Minnesota non-ag Streps log10 transformation***
+
+```{r}
+summary(btm$log10_strep)
+streplog_data<-btm$log10_strep
+z <-fitdistr(streplog_data,"normal")
+print(z) # mean and SD, the MLE's
+
+
+x <- 0:10 # range of x values across where you want distribution
+p_density <- dnorm(x=x,
+                   mean=z$estimate["mean"],
+                   sd=z$estimate["sd"]) # use mean and sd from actual data
+qplot(x,p_density,geom="line") + annotate(geom="point",x=streplog_data,y=0.0000001,color="firebrick2") + labs(title="Non-ag Streps (Minn.) log10 data against a normal distribution density curve",
+       x="BTM non-ag Streps (Minn) log10 of 21 herds",
+       y="Probability density of normal dist.") # see data points (x values) fall right in middle of probability mass curve
+
+# do the same for the gamma distribution
+z <-fitdistr(streplog_data,"gamma")
+print(z)
+p_density <- dgamma(x=x,
+                   shape=z$estimate["shape"],
+                   rate=z$estimate["rate"])
+qplot(x,p_density,geom="line") + annotate(geom="point",x=streplog_data,y=0.00000000000001, color="firebrick2") + labs(title="Non-ag Streps (Minn.) log10 data against a gamma distribution density curve",
+       x="BTM non-ag Streps (Minn.) log10 of 21 herds",
+       y="Probability density of gamma dist.") #bound at 0
+
+ggdensity(btm$log10_strep, 
+          main = "Density plot of BTM Non-ag Streps (Minn) log10",
+          xlab = "Non-ag Strep counts of 21 herds")
+
+ggqqplot(btm$log10_strep)
+```
+
+##***Minnesota Staph. aureus***
+
+```{r}
+summary(btm$Staph_aureus)
+sa_data<-btm$Staph_aureus
+z <-fitdistr(sa_data,"normal")
+print(z) # mean and SD, the MLE's
+
+
+x <- 0:500 # range of x values across where you want distribution
+p_density <- dnorm(x=x,
+                   mean=z$estimate["mean"],
+                   sd=z$estimate["sd"]) # use mean and sd from actual data
+qplot(x,p_density,geom="line") + annotate(geom="point",x=sa_data,y=0.0000001,color="firebrick3") + labs(title="S. aureus (Minn.) data against a normal distribution density curve",
+       x="BTM S. aureus (Minn) of 21 herds",
+       y="Probability density of normal dist.") # see data points (x values) fall right in middle of probability mass curve
+
+sa_data_no0<-sa_data[sa_data>0]
+# do the same for the gamma distribution, with 0's removed
+z <-fitdistr(sa_data_no0,"gamma")
+print(z)
+p_density <- dgamma(x=x,
+                   shape=z$estimate["shape"],
+                   rate=z$estimate["rate"])
+qplot(x,p_density,geom="line") + annotate(geom="point",x=sa_data_no0,y=0.0000001, color="firebrick3") + labs(title="S. aureus (Minn.) data against a gamma distribution density curve",
+       x="BTM S. aureus (Minn.)  of 21 herds",
+       y="Probability density of gamma dist.") #bound at 0
+
+ggdensity(btm$Staph_aureus, 
+          main = "Density plot of BTM Staph. aureus (Minn)",
+          xlab = "Staph. aureus counts of 21 herds")
+
+ggqqplot(btm$Staph_aureus)
+
+#---------------------------------------------------
+
+# remove outlier
+sa_data_trim<-sa_data[sa_data<200]
+z <-fitdistr(sa_data_trim,"normal")
+print(z) # mean and SD, the MLE's
+
+x <- 0:200 # range of x values across where you want distribution
+p_density <- dnorm(x=x,
+                   mean=z$estimate["mean"],
+                   sd=z$estimate["sd"]) # use mean and sd from actual data
+qplot(x,p_density,geom="line") + annotate(geom="point",x=sa_data_trim,y=0.0000001,color="firebrick3") + labs(title="S. aureus (Minn.) data against a normal distribution density curve",
+       x="BTM S. aureus (Minn) of 21 herds",
+       y="Probability density of normal dist.") # see data points (x values) fall right in middle of probability mass curve
+
+ggqqplot(sa_data_trim)
+```
+
+##***Minnesota Staph. aureus log10 transformation***
+
+```{r}
+summary(btm$log10_aureus)
+aureuslog_data<-btm$log10_aureus
+z <-fitdistr(aureuslog_data,"normal")
+print(z) # mean and SD, the MLE's
+
+
+x <- 0:5 # range of x values across where you want distribution
+p_density <- dnorm(x=x,
+                   mean=z$estimate["mean"],
+                   sd=z$estimate["sd"]) # use mean and sd from actual data
+qplot(x,p_density,geom="line") + annotate(geom="point",x=aureuslog_data,y=0.0000001,color="firebrick3") + labs(title="S. aureus (Minn.) log10 data against a normal distribution density curve",
+       x="BTM S. aureus (Minn.) log10 of 21 herds",
+       y="Probability density of normal dist.") # see data points (x values) fall right in middle of probability mass curve
+
+# # do the same for the gamma distribution - can't do, has zeroes in it
+# z <-fitdistr(aureuslog_data,"gamma")
+# print(z)
+# p_density <- dgamma(x=x,
+#                    shape=z$estimate["shape"],
+#                    rate=z$estimate["rate"])
+# qplot(x,p_density,geom="line") + annotate(geom="point",x=aureuslog_data,y=0.00000000000001, color="firebrick3") + labs(title="S. aureus (Minn.) log10 data against a gamma distribution density curve",
+#        x="BTM S. aureus (Minn.) log10 of 21 herds",
+#        y="Probability density of gamma dist.") #bound at 0
+
+ggdensity(btm$log10_aureus, 
+          main = "Density plot of BTM S. aureus (Minn) log10",
+          xlab = "S. aureus counts of 21 herds")
+
+ggqqplot(btm$log10_aureus)
+```
+
+
+##***Minnesota Staph. species***
+
+```{r}
+summary(btm$Staph_sp)
+sp_data<-btm$Staph_sp
+sp_data_no0<-sp_data[sp_data>0]
+z <-fitdistr(sp_data,"normal")
+print(z) # mean and SD, the MLE's
+
+
+x <- 0:800 # range of x values across where you want distribution
+p_density <- dnorm(x=x,
+                   mean=z$estimate["mean"],
+                   sd=z$estimate["sd"]) # use mean and sd from actual data
+qplot(x,p_density,geom="line") + annotate(geom="point",x=sp_data,y=0.0000001,color="firebrick4") + labs(title="Staph sp. (Minn.) data against a normal distribution density curve",
+       x="BTM Staph. sp. (Minn) of 21 herds",
+       y="Probability density of normal dist.") # see data points (x values) fall right in middle of probability mass curve
+
+# do the same for the gamma distribution, took out 0 value
+z <-fitdistr(sp_data_no0,"gamma")
+print(z)
+p_density <- dgamma(x=x,
+                   shape=z$estimate["shape"],
+                   rate=z$estimate["rate"])
+qplot(x,p_density,geom="line") + annotate(geom="point",x=sp_data_no0,y=0.0000001, color="firebrick4") + labs(title="Staph sp. (Minn.) data against a gamma distribution density curve",
+       x="BTM Staph sp. (Minn.)  of 21 herds",
+       y="Probability density of gamma dist.") #bound at 0
+
+ggdensity(btm$Staph_sp, 
+          main = "Density plot of BTM Staph. species (Minn)",
+          xlab = "Staph. species counts of 21 herds")
+
+ggqqplot(btm$Staph_sp)
+
+#---------------------------------------------------
+
+# remove outlier
+sp_data_trim<-sa_data[sa_data<200]
+z <-fitdistr(sp_data_trim,"normal")
+print(z) # mean and SD, the MLE's
+
+
+x <- 0:200 # range of x values across where you want distribution
+p_density <- dnorm(x=x,
+                   mean=z$estimate["mean"],
+                   sd=z$estimate["sd"]) # use mean and sd from actual data
+qplot(x,p_density,geom="line") + annotate(geom="point",x=sp_data_trim,y=0.0000001,color="firebrick4") + labs(title="Staph sp. (Minn.) data against a normal distribution density curve",
+       x="BTM Staph. sp. (Minn) of 21 herds",
+       y="Probability density of normal dist.") # see data points (x values) fall right in middle of probability mass curve
+
+ggqqplot(sp_data_trim)
+```
+
+
+##***Minnesota Staph. species log10 transformation***
+
+```{r}
+summary(btm$log10_staphsp)
+staphsplog_data<-btm$log10_staphsp
+z <-fitdistr(staphsplog_data,"normal")
+print(z) # mean and SD, the MLE's
+
+
+x <- 0:5 # range of x values across where you want distribution
+p_density <- dnorm(x=x,
+                   mean=z$estimate["mean"],
+                   sd=z$estimate["sd"]) # use mean and sd from actual data
+qplot(x,p_density,geom="line") + annotate(geom="point",x=staphsplog_data,y=0.0000001,color="firebrick4") + labs(title="Staph sp. (Minn.) log10 data against a normal distribution density curve",
+       x="BTM Staph. sp (Minn.) log10 of 21 herds",
+       y="Probability density of normal dist.") # see data points (x values) fall right in middle of probability mass curve
+
+# # do the same for the gamma distribution - can't do, has zeroes in it
+# z <-fitdistr(staphsplog_data,"gamma")
+# print(z)
+# p_density <- dgamma(x=x,
+#                    shape=z$estimate["shape"],
+#                    rate=z$estimate["rate"])
+# qplot(x,p_density,geom="line") + annotate(geom="point",x=staphsplog_data,y=0.00000000000001, color="firebrick3") + labs(title="Staph. sp (Minn.) log10 data against a gamma distribution density curve",
+#        x="BTM Staph. sp (Minn.) log10 of 21 herds",
+#        y="Probability density of gamma dist.") #bound at 0
+
+ggdensity(btm$log10_staphsp, 
+          main = "Density plot of BTM Staph. sp (Minn) log10",
+          xlab = "Staph. sp counts of 21 herds")
+
+ggqqplot(btm$log10_staphsp)
+```
+
+
+

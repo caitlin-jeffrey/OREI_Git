@@ -1,0 +1,51 @@
+---
+title: "Untitled"
+author: "Caitlin Jeffrey"
+date: "January 31, 2019"
+output:
+  html_document: default
+  word_document: default
+  pdf_document: default
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_knit$set(root.dir = ("C:/Users/caitl/OneDrive/Pictures"))
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_knit$set(root.dir = ("C:/Users/caitl/OneDrive/Desktop"))
+knitr::opts_knit$set(root.dir = ("C:/Users/caitl/OneDrive/Documents"))
+```
+
+```{r}
+getwd()
+path.powerpoint=("C:/Users/caitl/OneDrive/Documents/BaseR/data/powerpoint_dat")
+setwd(path.powerpoint)
+getwd()
+```
+
+```{r}
+getwd()
+path.exercise=("C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat")
+setwd(path.exercise)
+getwd()
+```
+
+```{r}
+getwd()
+path.new=("C:/Users/caitl/OneDrive/Documents/BaseR/data/New_folder")
+setwd(path.new)
+getwd()
+```
+```{r}
+path.desktop <- "C:Users/caitl/OneDrive/Desktop" <- 1
+path.documents <- "C:Users/caitl/OneDrive/Documents" <- 2
+path.pictures <- "C:Users/caitl/OneDrive/Pictures" <- 3
+save(path.desktop, path.documents, path.pictures, file = "pathways.Rdata")
+```
+
+```{r}
+history()
+savehistory("~/BaseR/r_code/feb2history.Rhistory")
+loadhistory("~/pathways.Rdata")
+list.files()
+```
+

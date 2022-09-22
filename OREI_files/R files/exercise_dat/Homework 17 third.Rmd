@@ -1,0 +1,59 @@
+---
+title: "Exercise 17"
+author: "Caitlin Jeffrey"
+date: "March 28, 2019"
+output: html_document
+---
+
+
+```{r}
+poppy <- "C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat/bearclawpoppy.csv"
+poppy<- read.csv("bearclawpoppy.csv", header = T, na.strings = c("", "99", "?", "na", "NA")); 
+poppy$presab <- ifelse(poppy$PLANT %in% c("poppydead", "poppyalive", "poppy"), 1, ifelse(poppy$PLANT == "absence", 0, "NA")); poppy$presab <- as.factor(poppy$presab); str(poppy)
+```
+
+The code below works great as a loop for mean and sd for all three groups of poppy$presab, but haven't been able to figure out how to do length in the same loop to include removing NAs from elev, slope, and aspect
+
+```{r}
+stats<-c("mean", "sd"); stats_l<-length(stats)
+for (i in 1:stats_l) {
+     assign(paste(stats[i]), aggregate(poppy[10:12], 
+       by = list(presab=poppy$presab), FUN = stats[i], na.rm=T))
+      
+} 
+print(mean); print(sd); save(mean,sd, file = "newstats1")
+```
+
+The code below is a loop that does all three statisics, but because I can't filter out NAs from mean and sd in the loop, any with NAs show up as NA
+
+```{r}
+stats<-c("mean", "sd", "length"); stats_l<-length(stats)
+for (i in 1:stats_l) {
+     assign(paste(stats[i]), aggregate(poppy[10:12], 
+       by = list(presab=poppy$presab), FUN = stats[i]))
+} 
+print(mean); print(sd);print(length) ; save(mean,sd,length, file = "newstats")
+```
+
+
+
+set working directory to powerpoint folder where m1-m4.csv are located; make blank list for file name output (in form of "m1.csv," etc), make list "ms" for output (in form "m1," etc"); loop to make list of m".csv and then read in csv files; then look at list of working objects in R to see that m".csv files were read in
+ 
+#```{r}
+setwd(path.powerpoint)
+files = list(); ms = list()
+for (i in 1:4){
+  files[i] <- paste('m', i, '.csv', sep = '')
+  ms[i] <- paste('m', i, sep = '')
+  assign(ms[[i]], read.csv(files[[i]]))
+}; ls()
+```
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 

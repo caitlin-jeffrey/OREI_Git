@@ -1,0 +1,30 @@
+---
+title: "example"
+author: "Caitlin Jeffrey"
+date: "April 4, 2019"
+output: html_document
+---
+
+
+
+```{r}
+lw.CI <- function(sd, length)
+{
+  -qnorm(0.95)*sd/sqrt(length)
+}
+two.sd <- function(sd)
+{
+  sd*2
+}
+lstats<-c("mean", "sd", "length"); lstats_l<-length(lstats)
+for (i in 1:lstats_l) {
+     assign(paste(lstats[i]), aggregate(leks[,5], 
+       by = list(leks$complex, leks$lek_id), FUN = stats[i]))
+      twosd<-two.sd(sd)
+} 
+print(mean); print(sd); print(length); print(twosd)
+```
+
+```{r}
+f<-factor(length); as.numeric(f); CI<-lw.CI(f); CI
+```

@@ -1,0 +1,16 @@
+---
+title: "Untitled"
+author: "Caitlin Jeffrey"
+date: "March 4, 2021"
+output: html_document
+---
+
+# hygiene score work
+```{r}
+library(readxl)
+hygiene_scores_both_formats <- read_excel("~/OREI/10-herd data/hygiene_scores_both_formats.xlsx")
+
+h<-hygiene_scores_both_formats
+  
+unique(h$hygiene_scorer_1); unique(h$hygiene_scorer_2)
+```

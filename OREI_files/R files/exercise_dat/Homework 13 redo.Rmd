@@ -1,0 +1,53 @@
+---
+title: "Exercise 13"
+author: "Caitlin Jeffrey"
+date: "February 22, 2019"
+output: html_document
+---
+
+```{r}
+lichen <- "C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat/lichen_environ.csv"
+lichen<- read.csv("lichens_environ.csv", header = T, na.strings = ".")
+any(is.na(lichen)); str(lichen)
+```
+
+```{r}
+lo1 <- subset(lichen, lichen$LobaOreg == 1, select = c(asp90m, slp90m, elev90m)); str(lo1)
+```
+
+---
+---
+
+```{r}
+pseut <- lichen[c(1, 6:8, 12, 32:39, 46:47)]; str(pseut)
+```
+
+---
+---
+
+```{r}
+one <- substr(colnames(lichen)[2:8], 1,2)
+two <- substr(colnames(lichen)[2:8], 5,6)
+nm <- paste(one, two, sep = "")
+colnames(lichen)[2:8] <- nm
+colnames(lichen)[2:8]
+```
+
+
+
+---
+---
+
+```{r}
+attach(lichen)
+r <- sample(PlotNum, 210, replace = T)
+wr <- sample(PlotNum, 210, replace = F)
+```
+
+```{r}
+length(unique(r))
+length(unique(wr))
+```
+
+
+

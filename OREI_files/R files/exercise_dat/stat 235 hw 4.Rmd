@@ -1,0 +1,407 @@
+---
+title: "Untitled"
+author: "Caitlin Jeffrey"
+date: "November 10, 2020"
+output: html_document
+---
+```{r}
+
+setwd(path.exercise)
+library(readxl); library(dplyr); library(tidyverse)
+count <- read_excel("BaseR/data/exercise_dat/Counties.xlsx")
+View(count)
+str(count)
+```
+
+```{r}
+bigcount<-filter(Counties, Population>=50000)
+table(bigcount$Success)
+mean(bigcount$Bach_Degree)
+sd(bigcount$Bach_Degree)
+fivenum(bigcount$Bach_Degree)
+summary(bigcount$Bach_Degree)
+
+demcount<-filter(bigcount, Success=="0")
+summary(demcount$Bach_Degree)
+sd(demcount$Bach_Degree)
+
+repcount<-filter(bigcount, Success=="1")
+summary(repcount$Bach_Degree)
+sd(repcount$Bach_Degree)
+```
+
+```{r}
+countlog <- glm(Success~Bach_Degree, family=binomial(link="logit"), data=bigcount)
+
+
+summary(countlog)$coefficients
+
+####Wald and score confidence intervals#######
+#Wald 95% confidence interval: b +- 1.96 * SE(b)
+(beta_ci <- c(countlog$coef[2] - 1.96*summary(countlog)$coef[2,2], 
+             countlog$coef[2] + 1.96*summary(countlog)$coef[2,2]))
+
+#Score 95% confidence interval
+confint(countlog)
+exp(-0.118243); exp(-0.08503253)
+
+#By default, it will create a confidence interval for all the model parameters
+#We can specify which parameters we want using the parm = command
+confint(td_pct_logistic, parm="yardline_100")
+confint(td_pct_logistic, parm=2)
+```
+```{r}
+bigcount$Model_Prob <- countlog$fitted.values
+
+####To test ungrouped data, we need to make the data into groups.
+####Usually this is done using the predictors, which a common choice being the quartiles
+(yardline_quartile <- summary(PbP30$yardline_100)[-4])
+
+(bach_quartile <- summary(bigcount$Bach_Degree)[-4])
+
+
+#We can use the cut function to create a factor based on which quartile the x value falls in
+PbP30$Yard_quartile <- cut(PbP30$yardline_100, breaks = yardline_quartile, labels=c("1st","2nd","3rd","4th"),
+                           include.lowest = T)
+
+bigcount$Bach_quartile <- cut(bigcount$Bach_Degree, breaks = bach_quartile, labels=c("1st","2nd","3rd","4th"),
+                           include.lowest = T)
+
+
+#If we don't have include.lowest=T, then all the plays at the 1 yardline won't be assigned a group
+
+
+
+#Calculating the estimated TD and Observed TD for each quartile group:
+county_quart_groups <- bigcount %>% group_by(Bach_quartile) %>% 
+                    summarise(counties = n(),                     #number of plays in that quartile
+                              Rep_count = sum(Success),         #Number of observed TDs in that quartile
+                              Dem_count = counties - Rep_count, #Number of observed non-TDs in the quartile
+                              fitted_Rep = sum(Model_Prob),     #Estimated number of TDs in the quartile
+                              fitted_Dem = counties - fitted_Rep)   #Estimated number of non-TDs in the quartile
+
+
+(quart_table <- with(nfl_quart_groups, 
+                    data.frame(observed_counts = c(TD_count, No_count),
+                               model_counts = c(fitted_TD, fitted_No))))
+  
+(quart_table <- with(county_quart_groups, 
+                    data.frame(observed_counts = c(Rep_count, Dem_count),
+                               model_counts = c(fitted_Rep, fitted_Dem))))
+
+
+#Now we can find the test statistic by conducting a chi-squared goodness-of-fit test.
+#observed counts are the actual observed counts, and the null hypothesis is the model probabilities/counts
+(quart_chi <- chisq.test(x=quart_table$observed_counts, p=quart_table$model_counts/955)$statistic)
+
+#Will follow a chi-squared distribution with g df
+pchisq(quart_chi, df=4, lower.tail=F)
+
+#If we reject the null, then we have evidence the model doesn't fit perfectly.
+
+
+library(ResourceSelection)
+
+
+(hltest <- hoslem.test(countlog$y, countlog$fitted.values, g = 10))
+
+#See if adding yardline_100 improves the fit for ungrouped data
+td_pbp2 <- update(td_pbp_logit, .~.+I(yardline_100^2))
+summary(td_pbp2)
+
+(hltest2 <- hoslem.test(td_pbp2$y, td_pbp2$fitted.values, g = 10))
+
+```
+
+
+##making plot for 4 education variables
+```{r}
+library(readxl); library(tidyverse); library(DescTools); library(gtools)
+library(GGally); library(leaps); library(MASS); library(ResourceSelection)
+
+##################GGplot Text Settings##################
+plot_theme <- theme(axis.title = element_text(size = 12),
+                    axis.text = element_text(size = 10),
+                    plot.title = element_text(size = 16, hjust = 0.5),
+                    plot.subtitle = element_text(size = 8, hjust = 0.5),
+                    plot.caption = element_text(size = 8),
+                    legend.position = "none")
+
+##################################################################################################
+###################################### SAT Example ###############################################
+##################################################################################################
+SAT <- read_excel("C:/Users/Jacob/OneDrive - University of Vermont/Data/SATbyState.xlsx")
+SAT <- read_excel("C:/Users/jmarti52/OneDrive - University of Vermont/Data/SATbyState.xlsx")
+
+
+#Assigning a state with 1 if they have over 50% of HS take the SAT
+SAT <- SAT %>% mutate(high_part = if_else(Participation > 0.50, 1, 0),
+                      part_col = if_else(high_part == 1, "blue", "orange"),
+                      part_label = if_else(high_part==1, "High","Low"))
+
+bigcount <- bigcount %>% mutate(
+                      succ_label = if_else(Success==1, "Republican","Democrat"))
+
+bigcount <- bigcount %>% mutate(
+                      succ_col = if_else(Success == 1, "red", "blue"),
+                      succ_label = if_else(Success==1, "Republican","Democrat"))
+
+#Looking at the 3 SAT variables using a base function
+pairs(~Math+Reading+Total, data= SAT, col=SAT$part_col)
+
+pairs(~NoHS_Degree+HS_Degree+Some_College+Bach_Degree, data= bigcount, col=bigcount$succ_col)
+
+
+#using ggplot to plot the pairs (need the GGally package)
+SAT %>% ggpairs(columns=which(colnames(SAT) %in% c("Math","Reading","Total")), 
+                aes(colour=part_label)) + 
+        ggtitle("SAT Scores by Participation") + theme_bw()
+
+
+bigcount %>% ggpairs(columns=which(colnames(bigcount) %in% c("NoHS_Degree","HS_Degree","Some_College", "Bach_Degree")), 
+                aes(colour=succ_label)) + 
+        ggtitle("4 education variables and success") + theme_bw()
+
+```
+
+```{r}
+var(bigcount$NoHS_Degree); var(bigcount$HS_Degree); var(bigcount$Some_College); var(bigcount$Bach_Degree)
+```
+
+```{r}
+
+
+
+pairs(~NoHS_Degree+HS_Degree+Bach_Degree+Unemployment_Rate+Median_Home_Income+Minor_Pov_Pct+MHI_Diff, data= bigcount, col=bigcount$succ_col)
+
+plot_theme <- theme(axis.title = element_text(size = 10),
+                    axis.text = element_text(size = 8),
+                    plot.title = element_text(size = 10, hjust = 0.5),
+                    plot.subtitle = element_text(size = 8, hjust = 0.5),
+                    plot.caption = element_text(size = 8),
+                    legend.position = "none")
+
+countplot<-bigcount %>% ggpairs(columns=which(colnames(bigcount) %in% c("NoHS_Degree","HS_Degree", "Bach_Degree", "Unemployment_Rate", "Median_Home_Income", "Minor_Pov_Pct", "MHI_Diff")), 
+                aes(colour=succ_label)) + 
+        ggtitle("7 numeric predictors and if voted Dem/Rep") + theme_bw()
+
+countplot1<- countplot + scale_color_manual(values = c("blue", "red")) +
+scale_fill_manual(values = c("blue" , "red"))
+
+ggsave("counttplot.png",countplot1, width = 10 , height = 8)
+
+do.cols<-c(10:12, 14:16, 19)
+
+big.plot <- ggpairs(
+  data = bigcount, 
+  mapping = ggplot2::aes(colour = succ_label),
+  columns = do.cols,
+  diag = list(continuous = "densityDiag"), 
+  upper = list(continuous = wrap(ggally_cor, size =6)),
+  axisLabels = "show"
+)
+print(big.plot)
+```
+
+
+```{r}
+#We have a model will all 4 predictors, 
+#so let's create the simplest model:
+iris_null <- glm(subspec~1, data=iris_vv, family=binomial)
+
+count_null <- glm(Success~1, data=bigcount, family=binomial)
+
+count_7 <- glm(Success~NoHS_Degree+HS_Degree+Bach_Degree+Unemployment_Rate+Median_Home_Income+Minor_Pov_Pct+MHI_Diff, family=binomial(link="logit"), data=bigcount)
+
+#There are a couple of different functions you can use.
+#step() in base R:
+?step
+
+#Forward selection: Start with simplest model you'd use
+#Scope tells it what the largest model you'd be willing to look at
+iris_stepF <- step(iris_null, direction="forward", 
+                   scope=list(lower=formula(iris_null),upper=formula(iris_glm4)))
+
+
+
+count_stepF <- step(count_null, direction="forward", 
+                   scope=list(lower=formula(count_null),upper=formula(count_7)))
+summary(count_stepF)
+
+#Backward selection: Start with the most complicated model you'd use,
+#trace = 0 suppresses the step by step results
+iris_stepB <- step(iris_glm4, direction="backward", trace=0,
+                   scope=list(lower=formula(iris_null),upper=formula(iris_glm4)))
+
+count_stepB <- step(count_7, direction="backward",
+                   scope=list(lower=formula(count_null),upper=formula(count_7)))
+
+summary(count_stepB)
+
+
+#Stepwise selection: Start with either the most complicated or simplest
+#Maybe do both and see if they agree!
+iris_stepSF <- step(iris_null, direction="both", trace=0,
+                    scope=list(lower=formula(iris_null),upper=formula(iris_glm4)))
+
+count_stepSF <- step(count_null, direction="both", trace=1,
+                    scope=list(lower=formula(count_null),upper=formula(count_7)))
+summary(count_stepSF)
+
+iris_stepSB <- step(iris_glm4, direction="both", trace=0,
+                    scope=list(lower=formula(iris_null),upper=formula(iris_glm4)))
+
+count_stepSB <- step(count_7, direction="both", trace=1,
+                    scope=list(lower=formula(count_null),upper=formula(count_7)))
+
+summary(count_stepSB)
+
+iris_stepSF$formula
+iris_stepSB$formula
+
+
+#stepAIC in the MASS library will do any of the 3 methods 
+#using an IC to decide the best model
+?stepAIC
+
+#Using forward selection using AIC
+stepAIC(iris_null, direction = "forward",
+        scope=list(lower=formula(iris_null),upper=formula(iris_glm4)))
+
+stepAIC(count_null, direction = "forward",
+        scope=list(lower=formula(count_null),upper=formula(count_7)))
+
+#Using backward selection using AIC
+stepAIC(iris_glm4, direction = "backward",
+        scope=list(lower=formula(iris_null),upper=formula(iris_glm4)))
+
+stepAIC(count_7, direction = "backward",
+        scope=list(lower=formula(count_null),upper=formula(count_7)))
+
+#Stepwise selection using AIC
+stepAIC(iris_glm4, direction = "both")
+
+stepAIC(count_7, direction = "both",
+        scope=list(lower=formula(count_null),upper=formula(count_7)))
+
+
+#using all three methods with BIC instead
+#Getting the BIC penalty
+(bic.pen <- log(nrow(iris_vv)))
+(bic.pen <- log(nrow(bigcount)))
+
+#All three selection methods using BIC
+stepAIC(iris_null, direction = "forward", k=bic.pen,
+        scope=list(lower=formula(iris_null),upper=formula(iris_glm4)))
+
+stepAIC(iris_glm4, direction = "backward", k=bic.pen,
+        scope=list(lower=formula(iris_null),upper=formula(iris_glm4)))
+
+stepAIC(iris_glm4, direction = "both", k=bic.pen,
+        scope=list(lower=formula(iris_null),upper=formula(iris_glm4)))
+
+#All three selection methods using BIC
+stepAIC(count_null, direction = "forward", k=bic.pen,
+        scope=list(lower=formula(count_null),upper=formula(count_7)))
+
+stepAIC(count_7, direction = "backward", k=bic.pen,
+        scope=list(lower=formula(count_null),upper=formula(count_7)))
+
+
+stepAIC(count_null, direction = "both", k=bic.pen,
+        scope=list(lower=formula(count_null),upper=formula(count_7)))
+
+choose.model<-stepAIC(count_7, direction = "both", k=bic.pen,
+        scope=list(lower=formula(count_null),upper=formula(count_7)))
+summary(choose.model)
+
+(hltest <- hoslem.test(td_pbp_logit$y, td_pbp_logit$fitted.values, g = 10))
+#Observed and expected counts in the 10 groups
+hltest2$expected
+hltest2$observed
+
+(hltest <- hoslem.test(choose.model$y, choose.model$fitted.values, g = 10))
+hltest$expected
+
+```
+```{r}
+### plotting probabilities
+X1_range <- seq(from=26, to=86,by =1)
+RW_logit <- -4.78 + 0.0671* X1_range
+DW_logit <- -7.99 + 0.1137* X1_range
+DS_logit <- -8.13 + 0.1146* X1_range
+ 
+# Compute the probibilities (this is what will actually get plotted):
+RW_probs <- exp(RW_logit)/(1 + exp(RW_logit))
+DW_probs <- exp(DW_logit)/(1 + exp(DW_logit))
+DS_probs <- exp(DS_logit)/(1 + exp(DS_logit))
+RS_probs <- 1 - (RW_probs + DW_probs + DS_probs)
+ 
+library(ggplot2); library(tidyr)
+# first you have to get the information into a long dataframe, which is what ggplot likes :)
+plot.data <- data.frame(RepStrong=RS_probs, RepWeak=RW_probs, DemWeak=DW_probs, DemStrong=DS_probs, X1=X1_range)
+plot.data <- gather(plot.data, key=group, value=prob, RepStrong:DemStrong)
+head(plot.data)
+ 
+ggplot(plot.data, aes(x=X1, y=prob, color=group)) + # asking it to set the color by the variable "group" is what makes it draw 4 different lines
+  geom_line(lwd=1) +
+  scale_x_continuous(limits = c(20, 90)) +
+  scale_color_manual(values = c("darkcyan","coral1","darkmagenta", "firebrick")) +
+  labs(x="college percentage of county", y="probability of vote type", title="prob. of county vote type ~ percentage of people with some college education") +
+  theme_bw()
+```
+
+```{r}
+### plotting probabilities
+X1_range <- seq(from=26, to=86,by =1)
+RW_logit <- -4.78 + 0.0671* X1_range
+DW_logit <- -7.99 + 0.1137* X1_range
+DS_logit <- -8.13 + 0.1146* X1_range
+ 
+# Compute the probibilities (this is what will actually get plotted):
+RW_probs <- exp(RW_logit)/(1 + (exp(RW_logit)+ exp(DW_logit) + exp(DS_logit)))
+DW_probs <- exp(DW_logit)/(1 + (exp(RW_logit)+ exp(DW_logit) + exp(DS_logit)))
+DS_probs <- exp(DS_logit)/(1 + (exp(RW_logit)+ exp(DW_logit) + exp(DS_logit)))
+RS_probs <- 1 - (RW_probs + DW_probs + DS_probs)
+ 
+library(ggplot2); library(tidyr)
+# first you have to get the information into a long dataframe, which is what ggplot likes :)
+plot.data <- data.frame(RepWeak=RW_probs, DemWeak=DW_probs, DemStrong=DS_probs, X1=X1_range)
+plot.data <- gather(plot.data, key=group, value=prob, RepWeak:DemStrong)
+head(plot.data)
+ 
+ggplot(plot.data, aes(x=X1, y=prob, color=group)) + # asking it to set the color by the variable "group" is what makes it draw 4 different lines
+  geom_line(lwd=1) +
+  scale_x_continuous(limits = c(20, 90)) +
+  scale_color_manual(values = c("darkcyan","coral1","darkmagenta")) +
+  labs(x="college percentage of county", y="probability of vote type", title="prob. of county vote type ~ percentage of people with some college education") +
+  theme_bw()
+```
+
+```{r}
+### plotting probabilities
+X1_range <- seq(from=26, to=86,by =1)
+RW_logit <- -4.78 + 0.0671* X1_range
+DW_logit <- -7.99 + 0.1137* X1_range
+DS_logit <- -8.13 + 0.1146* X1_range
+ 
+# Compute the probibilities (this is what will actually get plotted):
+RW_probs <- exp(RW_logit)/(1 + (exp(RW_logit)+ exp(DW_logit) + exp(DS_logit)))
+DW_probs <- exp(DW_logit)/(1 + (exp(RW_logit)+ exp(DW_logit) + exp(DS_logit)))
+DS_probs <- exp(DS_logit)/(1 + (exp(RW_logit)+ exp(DW_logit) + exp(DS_logit)))
+RS_probs <- 1 - (RW_probs + DW_probs + DS_probs)
+ 
+library(ggplot2); library(tidyr)
+# first you have to get the information into a long dataframe, which is what ggplot likes :)
+plot.data <- data.frame(RepStrong=RS_probs, RepWeak=RW_probs, DemWeak=DW_probs, DemStrong=DS_probs, X1=X1_range)
+plot.data <- gather(plot.data, key=group, value=prob, RepStrong:DemStrong)
+head(plot.data)
+ 
+ggplot(plot.data, aes(x=X1, y=prob, color=group)) + # asking it to set the color by the variable "group" is what makes it draw 4 different lines
+  geom_line(lwd=1) +
+  scale_x_continuous(limits = c(20, 90)) +
+  scale_color_manual(values = c("darkcyan","coral1","darkmagenta", "firebrick")) +
+  labs(x="college percentage of county", y="probability of vote type", title="prob. of county vote type ~ percentage of people with some college education") +
+  theme_bw()
+```
+

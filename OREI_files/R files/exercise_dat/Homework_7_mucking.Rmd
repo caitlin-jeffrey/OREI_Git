@@ -1,0 +1,109 @@
+---
+title: "Exercise 7"
+author: "Caitlin Jeffrey"
+date: "February 6, 2019"
+output: html_document
+---
+
+##Exercise 7
+
+---
+
+```{r}
+zapus<- read.csv("zapusmorph.csv", header = T, na.strings = ".")
+head(zapus)
+```
+
+
+```{r}
+str(zapus)
+```
+
+---
+
+```{r}
+setwd(path.exercise)
+coyote<- "C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat/coyotebehav.csv"
+save(coyote, file = "coyote.Rdata")
+coyote<- read.csv("coyotebehav.csv", header = T)
+str(coyote)
+```
+
+```{r}
+is.factor(coyote$habitat)
+habitat <- as.factor(c("2", "6")); habitat
+is.factor(habitat)
+```
+
+---
+
+ashma<-as.Date(coyote$date, format = "%m/%d/%Y")
+
+
+```{r}
+install.packages("lubridate")
+library(lubridate)
+```
+
+```{r}
+datez <- mdy(coyote$date)
+save(datez, file = "datez.Rdata")
+```
+
+```{r}
+library(chron)
+Rdate <- dates(c("2/27/1991")); Rdate
+save(Rdate, file = "Rdate.Rdata")
+```
+
+strptime(datetime[1], "%Y-%m-%d %H:%M", tz=Zone[1])
+
+save(datetime, file =)
+
+
+
+```{r}
+install.packages("lubridate")
+library(lubridate)
+```
+
+```{r}
+datez <- mdy(coyote$date)
+save(datez, file = "datez.Rdata")
+```
+
+
+
+
+
+```{r}
+setwd(path.exercise)
+fish<- "C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat/fish_recapture.csv"
+save(fish, file = "fish.Rdata")
+fish<- read.csv("fish_recapture.csv", header = T)
+```
+
+
+
+```{r}
+library(chron)
+initial<-as.Date(fish$X.1, format = "%m/%d/%y")
+second<-as.Date(fish$X.4, format = "%m/%d/%Y")
+days_free<-as.numeric(second) - as.numeric(initial)
+head(days_free)
+```
+> capture<-c(fish$X.1)
+> recap<-c(fish$X.4)
+> as.numeric(second) - as.numeric(initial)
+
+```{r}
+head(initial)
+```
+
+
+
+
+
+
+
+

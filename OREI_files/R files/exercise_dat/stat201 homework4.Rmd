@@ -1,0 +1,343 @@
+---
+title: "stat201 homework4"
+author: "Caitlin Jeffrey"
+date: "June 18, 2020"
+output: html_document
+---
+##module 10 practice
+#question 1
+```{r}
+clinic<- read.csv("C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat/clinical.csv", header=T)
+```
+
+```{r}
+clinic$ldobp<-as.character(clinic$ldobp); clinic$ldobp<-as.Date(clinic$ldobp, "%m/%d/%y"); clinic$bpmonth<-format(clinic$ldobp, "%m"); clinic$bpyear<-format(clinic$ldobp, "%y"); clinic$today<-Sys.Date()
+```
+#Create a new variable within the data.frame called "day" which represents the day of the month (1-31)  of the individuals last blood pressure reading. Then,  using ggplot2 create a bar graph showing the distribution of day of the month, for individuals whose last blood pressure reading was in 2014.
+
+```{r}
+clinic$bpday<-format(clinic$ldobp, "%d")
+ldop14<-filter(clinic, bpyear==14)
+```
+
+```{r}
+ldop14%>%
+  ggplot(aes(x=bpday, color=bpday))+
+  geom_bar()+  
+  labs(title="distribution of day of month for last bp reading in 2014",
+       x="day of month",
+       y="frequency")
+```
+
+#Create a bar graph, using ggplot2, showing the distribution of month, for individuals whose last blood pressure reading was in 2012 or 2015.
+
+```{r}
+ldop1215<-filter(clinic, bpyear==12 | bpyear==15)
+```
+
+```{r}
+ldop1215%>%
+  ggplot(aes(x=bpmonth, color=bpyear))+
+  geom_bar()+  
+  labs(title="distribution of month for last bp reading in 2012 or 2015",
+       x="month",
+       y="frequency")
+```
+
+#question 2
+#Use the three mod10 datasets (a, b, and c) to answer the below questions. You will need to combine these 3 datasets. Be sure to clean the variables (fix typos, correctly classify values as missing, etc.) before conducting your analyses.
+
+#Read in the data sets for question 2
+```{r}
+a<- read_excel("C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat/mod10_a.xlsx")
+b<- read_excel("C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat/mod10_b.xlsx")
+```
+
+```{r}
+c<- read.csv("C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat/mod10_c.csv", header=T)
+```
+
+#change column names to match each other (ie, gender in b to sex)
+```{r}
+#clean A
+a$age[a$age == 999] <-NA
+a$age[a$age == 9999] <-NA
+a$state[a$state == "YN"] <-"NY"
+a$state[a$state == "TV"] <-"VT"
+a$date<-as.Date(a$date)
+```
+
+```{r}
+#clean B
+colnames(b)[colnames(b)=="HGBvalue"]<-"hgbvalue"
+colnames(b)[colnames(b)=="gender"]<-"sex"
+colnames(b)[colnames(b)=="age_years"]<-"age"
+b$age[b$age == 999] <-NA
+b$hgbvalue[b$hgbvalue == 999] <-NA
+b$date<-as.numeric(b$date)
+b$date<-as.Date(b$date, origin="1899-12-30")
+#or could do this
+#b$date<-excel_numeric_to_date(as.numeric(b$date,date_system='modern'))
+#b$date[187]<-as.Date('2016-08-04')
+```
+
+```{r}
+#clean c
+c$state<-as.character(c$state)
+c$sex<-as.character(c$sex)
+c$id<-as.numeric(c$id)
+c$calciumvalue[c$calciumvalue == 999] <-NA
+c$sex[c$sex == "female" | c$sex == "f"] <-"Female"
+c$sex[c$sex == "m"] <-"Male"
+c$sex[c$sex == ""] <-NA
+c$state[c$state == "YN" | c$state =="nyc"] <-"NY"
+```
+
+
+```{r}
+c$date<-as.Date(c$date, format="%m/%d/%y") #change from character, then as.Date
+```
+
+
+```{r}
+bc<-rbind(b,c)
+bc$treatment <- NA #blank column
+bc$treatment<as.character(bc$treatment)
+hw_all<-rbind(bc, a)
+```
+
+```{r}
+mod10_sort<-hw_all %>%
+  arrange(id) %>%
+  group_by(id) %>%
+  mutate(start_date=min(date, na.rm=TRUE)) %>%
+  mutate(end_date=max(date,na.rm=TRUE))
+```
+
+```{r}
+mod10_sort$hgb1<-ifelse(mod10_sort$date == mod10_sort$start_date, mod10_sort$hgb1<-mod10_sort$hgbvalue, NA)
+mod10_sort$hgb2<-ifelse(mod10_sort$date == mod10_sort$end_date, mod10_sort$hgb2<-mod10_sort$hgbvalue, NA)
+mod10_sort$cal1<-ifelse(mod10_sort$date == mod10_sort$start_date, mod10_sort$cal1<-mod10_sort$calciumvalue, NA)
+mod10_sort$cal2<-ifelse(mod10_sort$date == mod10_sort$end_date, mod10_sort$cal2<-mod10_sort$calciumvalue, NA)
+```
+
+#for each person (who has 2 obs each) transfers second obs of both tests to new variable column (by choosing max, it chooses value over NA)
+```{r}
+mod10_sort<-mod10_sort %>%
+  arrange(id) %>%
+  group_by(id) %>%
+  mutate(hgb_post=max(hgb2, na.rm=TRUE)) %>%
+  mutate(cal_post=max(cal2,na.rm=TRUE))
+```
+
+
+```{r}
+mod10_sort$hgbdiff<-(mod10_sort$hgb_post-mod10_sort$hgb1)
+mod10_sort$caldiff<-(mod10_sort$cal_post-mod10_sort$cal1)
+mod10_sort$datediff<-(mod10_sort$end_date-mod10_sort$start_date)
+```
+
+```{r}
+#remove extraneous columns used for calculations to a new "clean" data set
+mod10_clean<-mod10_sort %>%
+  select(id, sex, age, start_date, end_date, datediff, hgb1, hgb_post, hgbdiff, cal1, cal_post, caldiff, treatment, state)
+```
+
+
+## Now use the clean dataset to answer the questions
+
+```{r}
+#a. How any subjects are in the dataset? 
+glimpse(mod10_clean)
+
+#b. What is the distribution of sex? 
+table(mod10_clean$sex)
+
+#c. What is the average & standard deviation of age at initial lab visit? 
+mean(mod10_clean$age, na.rm=TRUE)
+sd(mod10_clean$age, na.rm=TRUE)
+
+#d. What is the 5 number summary (min, 25th percentile, median, 75th percentile, max) of time (in days) between lab visits?
+mod10_clean$datediff<-as.numeric(mod10_clean$datediff)
+summary(mod10_clean$datediff)
+
+#e. What is the distribution of treatment (how many subjects received treatment and how many were untreated)? 
+table(mod10_clean$treatment)
+
+#f. What is the distribution of state (how many patients are from NY vs VT)?
+table(mod10_clean$state)
+
+#g. What is the average & standard deviation of initial hemoglobin level (HGBvalue)? 
+mean(mod10_clean$hgb1, na.rm=TRUE)
+sd(mod10_clean$hgb1, na.rm=TRUE)
+
+
+#h. What is the average & standard deviation of change in hemoglobin level? doesn't work
+mod10_clean$hgbdiff<-as.numeric(mod10_clean$hgbdiff)
+mean(mod10_clean$hgbdiff, na.rm=TRUE)
+sd(mod10_clean$hgbdiff, na.rm=TRUE)
+
+#i. What is the average & standard deviation of initial calcium level?
+sd(mod10_clean$cal1, na.rm=TRUE)
+mean(mod10_clean$cal1, na.rm=TRUE)
+
+#j. What is the average & standard deviation of changing in calcium level? 
+mod10_clean$caldiffreal<-as.numeric(as.character(mod10_clean$caldiff))
+sd(mod10_clean$caldiffreal, na.rm=TRUE)
+mean(mod10_clean$caldiffreal, na.rm=TRUE)
+
+```
+#2. Using ggplot2 create the below graphs. Be sure to include appropriate axis labels and titles on all of your graphs. 
+
+```{r}
+#a. A box and whisker plot that shows the distribution of initial hemoglobin level by treatment type AND follow-up hemoglobin by treatment type. 
+
+mod10_clean %>%
+  ggplot(aes(x=treatment, y=hgb1)) +
+  geom_boxplot()
+
+
+#b. Two histograms that show the distribution of change in calcium level by state 
+mod10_clean %>%
+  ggplot(aes(x=caldiff))+
+  geom_histogram()+
+  facet_grid(~state)
+
+#c. Create a new variable called "increase" which is 1 if an individual's calcium level increased over time, 0 if there was no change or it went down. Then, draw a stacked bar graph to show the relationship between calcium increase/decrease and treatment (yes/no).
+  
+```
+
+
+
+
+
+##module 10 practice questions
+
+```{r}
+gapminder %>%
+  ggplot(aes(x=continent, y=lifeExp))+
+  geom_boxplot()+  
+  facet_wrap(~year)+
+  geom_errorbar()+
+  labs(title="Life expectancy distribution by continent",
+       x=" ",
+       y="life expectancy (in years)")+
+  theme(axis.text.x = element_text(angle = 90))
+```
+
+```{r}
+gapminder07<-filter(gapminder, year==2007)
+gapminder07 %>%
+  ggplot(aes(x=gdpPercap, y=lifeExp, color=continent))+
+  geom_point()+  
+  geom_smooth(se=F)+
+  facet_wrap(~continent)+
+  labs(title="relationship between gdp per capita and life expectancy for the year 2007",
+       x="gdp per capita",
+       y="life expectancy (in years)",
+       color="2007 data by continent")
+theme(legend.position = "right")
+```
+#histogram, don't need y- does frequency
+```{r}
+gapminder87<-filter(gapminder, year==1987)
+gapminder87 %>%
+  ggplot(aes(x=lifeExp, fill=continent))+
+  geom_histogram()+
+  labs(title="distribution of life expectancy 1987",
+       x="life expectancy",
+       y="frequency",
+       color="legend")+
+    theme(legend.position = "right")
+```
+
+
+```{r}
+gapminder%>%
+  ggplot(aes(x=continent))+
+  geom_bar()+  
+  labs(title="distribution of continents in gapminder data",
+       x="continent",
+       y="frequency")
+```
+
+##module 10 video
+
+```{r}
+library(ggplot2)
+data(mpg)
+head(mpg)
+library(dplyr)
+glimpse(mpg)
+```
+
+##using ggplot2- aesthetics, mappings, frame, glyphs, geom, scales, facets
+
+#map variables to aesthetics- start with a frame- no obs or points
+```{r}
+mpg %>%
+  ggplot(aes(x=displ, y=hwy))
+```
+
+#add a geom- different kinds of graphs
+```{r}
+mpg %>%
+  ggplot(aes(x=displ, y=hwy))
+  geom_point() #scatterplot
+```
+
+#assigning more aesthetics- size, alpha (grayscale), shape, color
+```{r}
+mpg %>%
+  ggplot(aes(x=displ, y=hwy, color=class))+ #class is var in mpg data set, turns dots into diff colors for diff classes
+  geom_point() #scatterplot
+```
+
+#exploring facets- groupings on class
+#wrap- facet wrap, explained by class
+```{r}
+mpg %>%
+  ggplot(aes(x=displ, y=hwy, color=class))+
+  geom_point()+  
+  facet_wrap(~class)
+```
+
+```{r}
+mpg %>%
+  ggplot(aes(x=displ, y=hwy, color=class))+
+  geom_point()+  
+  facet_grid(class~.) #makes horizontal
+```
+```{r}
+mpg %>%
+  ggplot(aes(x=displ, y=hwy, color=class))+
+  geom_point()+  
+  facet_grid(.~class) #makes vertical
+```
+
+
+```{r}
+mpg %>%
+  ggplot(aes(x=displ, y=hwy))+
+  geom_point()+  
+  geom_smooth() #loess curve with confidence band, can rid conf band by adding standard error
+```
+
+```{r}
+mpg %>%
+  ggplot(aes(x=displ, y=hwy))+
+  geom_point()+  
+  geom_smooth()+
+  labs(title="Auto data with loess curve",
+       x="Engine displacement in liters",
+       y="Y title") #add a title
+```
+
+
+
+
+
+
+
+
+

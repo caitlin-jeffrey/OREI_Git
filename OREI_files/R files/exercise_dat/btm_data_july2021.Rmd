@@ -1,0 +1,133 @@
+---
+title: "Untitled"
+author: "Caitlin Jeffrey"
+date: "July 1, 2021"
+output: html_document
+---
+
+```{r}
+btm<-read.csv("BTM_data_combined_7_1_2021.csv", na.strings= ".", header = T)
+str(btm)
+```
+
+```{r}
+min(btm$RAW_CFU_ml_1.100)
+max
+median(btm$SCC_1.1000)
+quantile
+fivenum(btm$SCC_1.1000) #mean, 25%, 50%, 75%, max
+summary(btm$SCC_1.1000)
+```
+
+```{r}
+boxplot(btm$SCC_1.1000)
+boxplot(btm$RAW_CFU_ml_1.100)
+
+btm %>%
+  ggplot(aes(btm, x=Mycoplasma, y=SCC_1.1000)) +
+    geom_boxplot() +
+    geom_jitter(color="black", size=0.9, alpha=0.9)
+
+btm %>%
+  ggplot(aes(btm, x=Mycoplasma, y=SCC_1.1000)) +
+    geom_boxplot() +
+    geom_jitter(color="black", size=0.9, alpha=0.9)
+
+btm %>%
+  ggplot(aes(x=SCC_1.1000)) +
+    geom_histogram(binwidth = 10000)
+
+btm %>%
+  ggplot(aes(x=Staph_aureus)) +
+    geom_histogram()
+
+btm$log_SCC<-log(btm$SCC_1.1000, base = 10)
+
+btm %>%
+  ggplot(aes(x=log_SCC)) +
+    geom_histogram(binwidth = 0.5)
+    
+
+PAST_CFU_ml_1.10
+PI__CFU_ml__1.1000
+Total_Coli__CFU_ml__1.1
+E._coli__CFU_ml__1.1
+Staph__CFU_ml__1.10
+perc_BF
+perc_Protein
+perc_Lactose
+perc_Other.Solids
+MUN
+SCC_1.1000
+Coliforms
+Non_ag_Strep
+Staph_aureus
+Staph_sp
+Strep_ag
+Mycoplasma
+```
+```{r}
+
+library(ggplot2)
+library(dplyr)
+library(RColorBrewer)
+library(hrbrthemes)
+
+btm %>%
+  ggplot(aes(x=Sample_ID, y=SCC_1.1000)) +
+    geom_point() +
+    scale_color_manual(values = c("#ff2b2b", "#30ba8f"))+
+    #scale_fill_brewer(palette="Blues")+
+    #geom_jitter(color="black", size=0.4, alpha=0.9) +
+    labs(title="SCC",
+       x="Farm",
+       y="SCC")+
+    theme(plot.title = element_text(hjust = 0.5))+
+    theme(axis.title.x = element_text(margin = margin(t = 20)))+
+    theme(axis.title.y = element_text(margin = margin(r = 20)))+
+    theme(plot.title = element_text(margin = margin(b = 20)))+
+    #theme(legend.position="none")+
+    #theme_bw()
+    theme(panel.grid.major = element_line(colour = "grey"))+
+    theme(panel.grid.minor = element_blank())+
+    theme(panel.background = element_blank())+
+    theme(axis.line = element_line(colour = "grey"))
+#dev.off()
+
+btm %>%
+  ggplot(aes(btm, x=Mycoplasma, y=SCC_1.1000)) +
+    geom_boxplot() +
+    geom_jitter(color="black", size=0.9, alpha=0.9)
+
+
+
+btm %>%
+  ggplot(aes(x=Sample_ID, y=ls, fill=NAS_species)) +
+    geom_boxplot() +
+    scale_fill_manual(values=c("#9aceeb", "#324ab2", "#c5d0e6", "#3bb08f", "#2b6cc4", "#979aaa", "#1f75fe", "#93dfb8", "#c8385a"), labels = paste(counts$NAS_species, "n =", counts$n))+ 
+    geom_jitter(color="black", size=0.4, alpha=0.9) +
+    geom_hline(yintercept=4, linetype="dashed", color = "red", size=0.9)+
+    labs(title="Linear score by NAS species",
+       x="NAS species causing IMI",
+       y="Linear score")+
+    theme(plot.title = element_text(hjust = 0.5))+
+    theme(axis.text.x=element_blank())+
+    theme(axis.ticks.x=element_blank())+
+    theme(axis.title.x = element_blank())+
+    theme(axis.title.y = element_text(margin = margin(r = 20)))+
+    theme(plot.title = element_text(margin = margin(b = 20)))+
+    #theme(legend.position="none")+
+    #theme_bw()
+    theme(panel.grid.major = element_line(colour = "grey"))+
+    theme(panel.grid.minor = element_blank())+
+    theme(panel.background = element_blank())+
+    theme(axis.line = element_line(colour = "grey"))
+
+btm %>%
+  ggplot(aes(x=Sample_ID, y=ls, fill=NAS_species)) +
+    geom_boxplot() +
+    scale_fill_manual(values=c("#9aceeb", "#324ab2", "#c5d0e6", "#3bb08f", "#2b6cc4", "#979aaa", "#1f75fe", "#93dfb8", "#c8385a"), labels = paste(counts$NAS_species, "n =", counts$n))+ 
+    geom_jitter(color="black", size=0.4, alpha=0.9) +
+    geom_hline(yintercept=4, linetype="dashed", color = "red", size=0.9)+
+```
+

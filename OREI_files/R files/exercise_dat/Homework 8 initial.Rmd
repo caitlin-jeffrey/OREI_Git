@@ -1,0 +1,25 @@
+---
+title: "Exercise 8"
+author: "Caitlin Jeffrey"
+date: "February 13, 2019"
+output: html_document
+---
+
+##Exercise 8
+
+```{r}
+rodent <- "C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat/rodents_seedchoice.csv"
+rodent<- read.csv("rodents_seedchoice.csv", header = T)
+```
+
+```{r}
+install.packages("reshape", dependencies = T, repos = 'http://cran.us.r-project.org')
+library(reshape)
+```
+
+```{r}
+r2 <- melt(rodent, id = c("date", "spp", "mix", "trtmt"))
+names(r2)[5:6] <- c("seed", "diff"); r2
+save(r2, file = "rodents_seedchoice.Rdata")
+```
+

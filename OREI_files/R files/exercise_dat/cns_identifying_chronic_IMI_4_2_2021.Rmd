@@ -1,0 +1,104 @@
+---
+title: "Untitled"
+author: "Caitlin Jeffrey"
+date: "April 2, 2021"
+output: html_document
+---
+
+# Identifying more CNS infections (minimum 2 visit duration) to find chromogenes chronic high scc and low scc infections
+
+```{r}
+library(dplyr)
+```
+
+
+##getting numbers for CNS IMI, chronics
+
+```{r}
+#get all CNS infections
+
+all_cns<-filter(all_trim, (first_path_1=="cns" | first_path_2=="cns" | first_path_3=="cns" | first_path_4=="cns" | second_path_1=="cns" | second_path_2=="cns" | second_path_3=="cns" | second_path_4=="cns" | third_path_1=="cns" | third_path_2=="cns" | third_path_3=="cns" | third_path_4=="cns" | fourth_path_1=="cns" | fourth_path_2=="cns" | fourth_path_3=="cns" | fourth_path_4=="cns")) #349 quarters had CNS isolated from them at some time; used to be 360; on 2 April 2021 went through old and new lists to make sure that all changes in cns infection numbers checked out. they did - excel file detailing isolate changes and quarters added and deleted is saved in USDA grant folder
+
+
+cns_anyIMI<-filter(all_cns, (first_quarter_code == "1" | first_quarter_code == "2" | first_quarter_code == "21" | first_quarter_code == "24" | first_quarter_code == "27" | first_quarter_code == "29" | first_quarter_code =="35") | (second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code == "24" | second_quarter_code == "27" | second_quarter_code == "29" | second_quarter_code =="35") | (third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code == "24" | third_quarter_code == "27" | third_quarter_code == "29" | third_quarter_code =="35") | (fourth_quarter_code == "1" | fourth_quarter_code == "2" | fourth_quarter_code == "21" | fourth_quarter_code == "24" | fourth_quarter_code == "27" | fourth_quarter_code == "29" | fourth_quarter_code =="35")) #327 quarters that at some point had an IMI, and at some point had a cns (was 332 before ID changes, outlined in code chunk above)
+
+# 2 April 2021 - not going to add this extra filter, don't want to miss out on any CNS infections
+
+# no mixed infection (24, 27) or single in series/mixed in parallel (29)... take out 21? might be mixed...
+#cns_stricterIMI<-filter(all_cns, (first_quarter_code == "1" | first_quarter_code == "2" | first_quarter_code == "21" | first_quarter_code =="35") | (second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code =="35") | (third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code =="35") | (fourth_quarter_code == "1" | fourth_quarter_code == "2" | fourth_quarter_code == "21" | fourth_quarter_code == "24" | fourth_quarter_code == "27" | fourth_quarter_code == "29" | fourth_quarter_code =="35")) #307 quarters that at some point had a IMI attributable to a single pathogen, and at some point had cns- BUT not all cns may be causing IMI
+
+#take out choiniere to make coding easier
+cns_withoutCF<-filter(cns_anyIMI, (first_farm != "Choiniere" | second_farm != "Choiniere" | third_farm != "Choiniere" | fourth_farm != "Choiniere")) #now 298 observations (was 280 obs - huh).
+
+#get quarters that were "yes"-"yes"-?, ?-"yes"-"yes", and "yes"-"yes"-"yes"
+
+cns_chron_nocf<-filter(cns_withoutCF, ((first_quarter_code == "1" | first_quarter_code == "2" | first_quarter_code == "21" | first_quarter_code == "24" | first_quarter_code == "27" | first_quarter_code == "29" | first_quarter_code =="35") & (second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code == "24" | second_quarter_code == "27" | second_quarter_code == "29" | second_quarter_code =="35")) | ((second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code == "24" | second_quarter_code == "27" | second_quarter_code == "29" | second_quarter_code =="35") & (third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code == "24" | third_quarter_code == "27" | third_quarter_code == "29" | third_quarter_code =="35"))) #199 IMI at least two in a row, NOT NECESSARILY DUE TO CNS - yes-yes-X; or X-yes-yes
+
+
+#do same thing as above, but for choiniere- so, yes-yes-?-?, ?-yes-yes-?, ?-?-yes-yes
+
+cns_anyIMI_cfonly<-filter(cns_anyIMI, first_farm == "Choiniere" | second_farm == "Choiniere" | third_farm == "Choiniere" | fourth_farm == "Choiniere") #now 29 observations (was 27 obs)
+
+cns_chron_cf<-filter(cns_anyIMI_cfonly, ((first_quarter_code == "1" | first_quarter_code == "2" | first_quarter_code == "21" | first_quarter_code == "24" | first_quarter_code == "27" | first_quarter_code == "29" | first_quarter_code =="35") & (second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code == "24" | second_quarter_code == "27" | second_quarter_code == "29" | second_quarter_code =="35")) | ((second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code == "24" | second_quarter_code == "27" | second_quarter_code == "29" | second_quarter_code =="35") & (third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code == "24" | third_quarter_code == "27" | third_quarter_code == "29" | third_quarter_code =="35")) | ((third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code == "24" | third_quarter_code == "27" | third_quarter_code == "29" | third_quarter_code =="35") & (fourth_quarter_code == "1" | fourth_quarter_code == "2" | fourth_quarter_code == "21" | fourth_quarter_code == "24" | fourth_quarter_code == "27" |fourth_quarter_code == "29" | fourth_quarter_code =="35"))) #now 16 observations with IMI at least two in a row, NOT NECESSARILY DUE TO CNS
+
+#combine 2 lists of quarters that at some point had cns isolated from them, and at some point had an IMI
+cns_chron_all<-rbind(cns_chron_nocf, cns_chron_cf) # 215 observations (was 190 quarters) 
+
+#now, find any where cns may have been isolated, BUT was not causing the IMI, and remove from list
+write.csv(cns_chron_all, "cns_chron_all_4_2021.csv", row.names = T) #wrote out csv to clean by hand in excel
+
+cns_chron_cleaned<-read.csv("cns_chron_cleaned.csv", na.strings= ".", header = T)
+
+table(cns_anyIMI$first_farm)
+```
+
+```{r}
+cns_one_two_three_four<-filter(cns_chron_cleaned, X1_2_3_4 == "y") #5 observations
+write.csv(cns_one_two_three_four, "cns_one_two_three_four.csv", row.names = T)
+#table(cns_one_two_three_four$first_quarter_code); table(cns_one_two_three_four$second_quarter_code); table(cns_one_two_three_four$third_quarter_code); table(cns_one_two_three_four$fourth_quarter_code) #see which categories quarters fall into: all 1 and 2
+
+cns_one_two<-filter(cns_chron_cleaned, X1_2 == "y") #36 observations
+#table(cns_one_two$first_quarter_code); table(cns_one_two$second_quarter_code) #see which categories quarters fall into: all 1 and 2
+write.csv(cns_one_two, "cns_one_two.csv", row.names = T)
+
+cns_two_three<-filter(cns_chron_cleaned, X2_3 == "y") #24 observations
+#table(cns_two_three$second_quarter_code); table(cns_two_three$third_quarter_code) #see which categories quarters fall into: all 1 and 2
+write.csv(cns_two_three, "cns_two_three.csv", row.names = T)
+
+cns_three_four<-filter(cns_chron_cleaned, X3_4 == "y") #2 observations
+table(cns_three_four$third_quarter_code); table(cns_three_four$fourth_quarter_code) #see which categories quarters fall into: all 2
+write.csv(cns_three_four, "cns_three_four.csv", row.names = T)
+
+cns_one_two_three<-filter(cns_chron_cleaned, X1_2_3 == "y") #113 observations
+table(cns_one_two_three$first_quarter_code); table(cns_one_two_three$second_quarter_code); #table(cns_one_two_three$third_quarter_code); table(cns_one_two_three$fourth_quarter_code) #see which categories quarters fall into: first, mostly 1/2, and one in 35; second, mostly 1/2 and one in 21; third, all 1/2
+write.csv(cns_one_two_three, "cns_one_two_three.csv", row.names = T)
+
+cns_two_three_four<-filter(cns_chron_cleaned, X2_3_4 == "y") #1 observation
+table(cns_two_three_four$first_quarter_code); table(cns_two_three_four$second_quarter_code); table(cns_two_three_four$third_quarter_code); table(cns_two_three_four$fourth_quarter_code) #see which categories quarters fall into: all 2
+write.csv(cns_two_three_four, "cns_two_three_four.csv", row.names = T)
+
+```
+
+```{r}
+#get counts for scc above 200k and 100k for larger lists
+cns_one_two<-read.csv("cns_one_two.csv", na.strings= ".", header = T)
+table(cns_one_two$first_scc_eq_above_200k)
+table(cns_one_two$first_scc_eq_above_100k)
+table(cns_one_two$second_scc_eq_above_200k)
+table(cns_one_two$second_scc_eq_above_100k)
+
+cns_two_three<-read.csv("cns_two_three.csv", na.strings= ".", header = T)
+table(cns_two_three$second_scc_eq_above_200k)
+table(cns_two_three$second_scc_eq_above_100k)
+table(cns_two_three$third_scc_eq_above_200k)
+table(cns_two_three$third_scc_eq_above_100k)
+
+cns_one_two_three<-read.csv("cns_one_two_three.csv", na.strings= ".", header = T)
+table(cns_one_two_three$first_scc_eq_above_200k)
+table(cns_one_two_three$first_scc_eq_above_100k)
+table(cns_one_two_three$second_scc_eq_above_200k)
+table(cns_one_two_three$second_scc_eq_above_100k)
+table(cns_one_two_three$third_scc_eq_above_200k)
+table(cns_one_two_three$third_scc_eq_above_100k)
+
+```

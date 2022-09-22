@@ -1,0 +1,49 @@
+---
+title: "Untitled"
+author: "Caitlin Jeffrey"
+date: "May 23, 2019"
+output: html_document
+---
+
+```{r}
+setwd(path.exercise)
+bath<-read.csv("13104525.csv", na.strings= ".", header = T)
+str(bath)
+```
+
+
+
+```{r}
+test_4<-subset(bath, Test.Date =="4/25/2019" & SCC>0); test_4
+test_3<-subset(bath, Test.Date =="3/23/2019" & SCC>0); test_3
+```
+
+```{r}
+marchtest<-data.frame(test_3$ID, test_3$Test.Date, test_3$SCC)
+apriltest<-data.frame(test_4$ID, test_4$Test.Date, test_4$SCC)
+names(marchtest)[1] <- "ID"; names(marchtest)[2] <- "Test.Date"; names(marchtest)[3]<- "SCC"
+names(apriltest)[1] <- "ID"; names(apriltest)[2] <- "Test.Date"; names(apriltest)[3]<- "SCC"
+```
+
+```{r}
+library(na.tools)
+both_test<-merge(marchtest, apriltest, by="ID", all=T)
+#nas<-which_na(both_test); length(nas)
+which(is.na(both_test), arr.ind = T)
+```
+
+```{r}
+noNA<-na.omit(both_test)
+```
+
+
+```{r}
+uninf<-subset(noNA, SCC.x<200 & SCC.y<200); uninf
+chronic<-subset(noNA, SCC.x>200 & SCC.y>200); chronic
+new<-subset(noNA, SCC.x<200 & SCC.y>200); new
+cure<-subset(noNA, SCC.x>200 & SCC.y<200); cure
+```
+```{r}
+high<-subset(apriltest, SCC>200); high
+```
+

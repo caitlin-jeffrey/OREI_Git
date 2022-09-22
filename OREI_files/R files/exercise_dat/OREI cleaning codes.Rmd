@@ -1,0 +1,85 @@
+---
+title: "cleaning codes"
+author: "Caitlin Jeffrey"
+date: "June 9, 2020"
+output: html_document
+---
+
+```{r}
+library(plyr)
+```
+
+
+## read in culture data csv
+
+```{r}
+setwd(path.exercise)
+OREI<-read.csv("OREIculture_results_csv.csv", na.strings= ".", header = T)
+str(OREI)
+```
+
+##find a specific value and row
+
+```{r}
+which(OREI$path_2 =="coryne"); OREI[3657,]
+```
+
+##pull out counts for each level of path type 1-4, rename with common column type, merge into 1 long list
+
+```{r}
+path1<-count(OREI$path_1); 
+path2<-count(OREI$path_2); 
+path3<-count(OREI$path_3);
+path4<-count(OREI$path_4);
+names(path1)[1] <- "pathID"; names(path1)[2] <- "freq";
+names(path2)[1] <- "pathID"; names(path2)[2] <- "freq";
+names(path3)[1] <- "pathID"; names(path3)[2] <- "freq";
+names(path4)[1] <- "pathID"; names(path4)[2] <- "freq";
+pathnum<-rbind(path1, path2, path3, path4)
+```
+
+##write out CSV
+
+```{r}
+write.csv(pathnum, "pathnum.csv", row.names = F)
+```
+
+##pull out counts for each level of path type 1-4 ONLY YES IMI, rename with common column type, merge into 1 long list
+
+```{r}
+path1a<-count(strictIMI$path_1); 
+path2a<-count(strictIMI$path_2); 
+path3a<-count(strictIMI$path_3);
+path4a<-count(strictIMI$path_4);
+names(path1a)[1] <- "pathID"; names(path1a)[2] <- "freq";
+names(path2a)[1] <- "pathID"; names(path2a)[2] <- "freq";
+names(path3a)[1] <- "pathID"; names(path3a)[2] <- "freq";
+names(path4a)[1] <- "pathID"; names(path4a)[2] <- "freq";
+pathnuma<-rbind(path1a, path2a, path3a, path4a)
+```
+
+##write out CSV
+
+```{r}
+write.csv(pathnuma, "pathnuma.csv", row.names = F)
+```
+
+##combine cowID, quarter, visit for unique ID for each data point
+
+```{r}
+OREI1<-(within(OREI, uniqueID <- paste(OREI$cow_id, OREI$quarter, OREI$visit, sep='_')))
+```
+
+##write out CSV with unique ID
+```{r}
+write.csv(OREI1, "OREI_culture_with_newID.csv", row.names = F)
+```
+ 
+ #checking blind quarters
+```{r}
+blind<-filter(all_trim, (first_blind=="yes" | second_blind=="yes" | third_blind=="yes" | fourth_blind == "yes"))
+write.csv(blind, "blind.csv", row.names = T)
+blind<-filter(never_all_withblind, (first_blind=="yes" | second_blind=="yes" | third_blind=="yes" | fourth_blind == "yes"))
+```
+ 
+ 

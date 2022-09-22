@@ -1,0 +1,75 @@
+---
+title: "Exercise 6"
+author: "Caitlin Jeffrey"
+date: "February 1, 2019"
+output: html_document
+---
+
+```{r}
+getwd()
+setwd("C:/Users/caitl/OneDrive/Documents/BaseR/data/powerpoint_dat")
+```
+
+```{r}
+coyoteb <- "C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat/coyotebehav.xlsx"
+zapus <- "C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat/zapusmorph.csv"
+fishcap <- "C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat/fish_recapture.xlsx"
+tmax <- "C:/Users/caitl/OneDrive/Documents/BaseR/data/exercise_dat/tmax_all.dbf"
+save(coyoteb, file = "coyoteb.Rdata")
+save(zapus, file = "zapus.Rdata")
+save(tmax, file = "tmax.Rdata")
+save(fishcap, file = "fishcap.Rdata")
+```
+
+
+```{r}
+library(xlsx)
+library(rJava)
+coyoteb<- read.xlsx("coyotebehav.xlsx", "10227AMF", header = T)
+str(coyoteb)
+```
+In Excel, "time" is just "13:08 PM," but in the R data object file the time variable reads as "1899-12-30 13:08:40".
+coyoteb is 675 obs. of 5 variables
+
+```{r}
+zapus<- read.csv("zapusmorph.csv", header = T)
+str(zapus)
+```
+
+zapus is 107 obs of 20 variables
+
+```{r}
+fishcap<- read.xlsx("fish_recapture.xlsx", "Sheet1", header = T, startRow = 2)
+str(fishcap)
+```
+Recap date in xlsx is in a date format, but it's read as a factor with 1420 levels in r instead of a date.
+fishcap is 3000 obs of 6 variables
+
+```{r}
+install.packages("foreign", repos = 'http://cran.us.r-project.org')
+library(foreign)
+```
+
+```{r}
+tmax<- read.dbf("tmax_all.dbf")
+str(tmax)
+```
+tmax is 116441 obs of 15 variables
+
+```{r}
+m1 <- "C:/Users/caitl/OneDrive/Documents/BaseR/data/powerpoint_dat/m1.csv" 
+m2 <- "C:/Users/caitl/OneDrive/Documents/BaseR/data/powerpoint_dat/m2.csv" 
+m3 <- "C:/Users/caitl/OneDrive/Documents/BaseR/data/powerpoint_dat/m3.csv" 
+m4 <- "C:/Users/caitl/OneDrive/Documents/BaseR/data/powerpoint_dat/m2.csv" 
+t1 <- "C:/Users/caitl/OneDrive/Documents/BaseR/data/powerpoint_dat/t1.csv" 
+w1 <- "C:/Users/caitl/OneDrive/Documents/BaseR/data/powerpoint_dat/w1.csv" 
+f1 <- "C:/Users/caitl/OneDrive/Documents/BaseR/data/powerpoint_dat/f1.csv" 
+setwd("C:/Users/caitl/OneDrive/Documents/BaseR/data/powerpoint_dat")
+m1 <- read.csv("m2.csv", header = T)
+m2 <- read.csv("m2.csv", header = T)
+m3 <- read.csv("m3.csv", header = T)
+m4 <- read.csv("m4.csv", header = T)
+t1 <- read.csv("t1.csv", header = T)
+w1 <- read.csv("w1.csv", header = T)
+f1 <- read.csv("f1.csv", header = T)
+```

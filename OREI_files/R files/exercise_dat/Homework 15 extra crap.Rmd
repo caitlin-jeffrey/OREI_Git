@@ -1,0 +1,65 @@
+---
+title: "stuff"
+author: "Caitlin Jeffrey"
+date: "March 15, 2019"
+output: html_document
+---
+
+
+
+```{r}
+t_1m <- mean(tmax$tmax_1, na.rm = T); t_1m <- round(t_1m, digits = 0)
+t_2m <- mean(tmax$tmax_2, na.rm = T); t_2m <- round(t_2m, digits = 0)
+t_3m <- mean(tmax$tmax_3, na.rm = T); t_3m <- round(t_3m, digits = 0)
+t_4m <- mean(tmax$tmax_4, na.rm = T); t_4m <- round(t_4m, digits = 0)
+t_5m <- mean(tmax$tmax_5, na.rm = T); t_5m <- round(t_5m, digits = 0)
+t_6m <- mean(tmax$tmax_6, na.rm = T); t_6m <- round(t_6m, digits = 0)
+t_7m <- mean(tmax$tmax_7, na.rm = T); t_7m <- round(t_7m, digits = 0)
+t_8m <- mean(tmax$tmax_8, na.rm = T); t_8m <- round(t_8m, digits = 0)
+t_9m <- mean(tmax$tmax_9, na.rm = T); t_9m <- round(t_9m, digits = 0)
+t_10m <- mean(tmax$tmax_10, na.rm = T); t_10m <- round(t_10m, digits = 0)
+t_11m <- mean(tmax$tmax_11, na.rm = T); t_11m <- round(t_11m, digits = 0)
+t_12m <- mean(tmax$tmax_12, na.rm = T); t_12m <- round(t_12m, digits = 0)
+new_mean_monthly <- c(t_1m, t_2m, t_3m, t_4m, t_5m, t_6m, t_7m, t_8m, t_9m, t_10m, t_11m, t_12m); new_mean_monthly
+```
+
+
+```{r}
+poppy$LANDFORM <- as.character(poppy$LANDFORM); poppy$LANDFORM <- ifelse(poppy$LANDFORM == "af", "af_type", poppy$LANDFORM); poppy$LANDFORM <- ifelse(poppy$LANDFORM == "aflb", "af_type", poppy$LANDFORM); poppy$LANDFORM <- ifelse(poppy$LANDFORM == "afub", "af_type", poppy$LANDFORM); poppy$LANDFORM <- ifelse(poppy$LANDFORM == "afwb", "af_type", poppy$LANDFORM); poppy$LANDFORM <- ifelse(poppy$LANDFORM == "afws", "af_type", poppy$LANDFORM);
+poppy$LANDFORM <- as.factor(poppy$LANDFORM); levels(poppy$LANDFORM)
+```
+
+
+```{r}
+poppy$LANDFORM <- as.character(poppy$LANDFORM); poppy$LANDFORM <- ifelse(poppy$LANDFORM == "lb", "lb_type", poppy$LANDFORM); poppy$LANDFORM <- ifelse(poppy$LANDFORM == "lbaf", "lb_type", poppy$LANDFORM); poppy$LANDFORM <- ifelse(poppy$LANDFORM == "lbub", "lb_type", poppy$LANDFORM); poppy$LANDFORM <- ifelse(poppy$LANDFORM == "lbwb", "lb_type", poppy$LANDFORM); 
+poppy$LANDFORM <- as.factor(poppy$LANDFORM); levels(poppy$LANDFORM)
+```
+
+```{r}
+poppy$LANDFORM <- as.character(poppy$LANDFORM); poppy$LANDFORM <- ifelse(poppy$LANDFORM == "wb", "ws_type", poppy$LANDFORM); poppy$LANDFORM <- ifelse(poppy$LANDFORM == "wblb", "ws_type", poppy$LANDFORM); poppy$LANDFORM <- ifelse(poppy$LANDFORM == "wbub", "ws_type", poppy$LANDFORM); poppy$LANDFORM <- ifelse(poppy$LANDFORM == "wbws", "ws_type", poppy$LANDFORM); poppy$LANDFORM <- ifelse(poppy$LANDFORM == "ws", "ws_type", poppy$LANDFORM); poppy$LANDFORM <- ifelse(poppy$LANDFORM == "wslb", "ws_type", poppy$LANDFORM);
+poppy$LANDFORM <- as.factor(poppy$LANDFORM); levels(poppy$LANDFORM)
+```
+
+
+```{r}
+poppy$LANDFORM <- if(poppy$LANDFORM == "bfr" | poppy$LANDFORM == "bfrlb") subset(poppy, poppy$LANDFORM == "bf_type")
+```
+
+
+```{r}
+poppy$LANDFORM <- as.character(poppy$LANDFORM); poppy$LANDFORM <- ifelse(poppy$LANDFORM == "af", "af_type", poppy$LANDFORM); poppy$LANDFORM <- ifelse(poppy$LANDFORM == "aflb", "af_type", poppy$LANDFORM); poppy$LANDFORM <- ifelse(poppy$LANDFORM == "afub", "af_type", poppy$LANDFORM); poppy$LANDFORM <- ifelse(poppy$LANDFORM == "afwb", "af_type", poppy$LANDFORM); poppy$LANDFORM <- ifelse(poppy$LANDFORM == "afws", "af_type", poppy$LANDFORM);
+poppy$LANDFORM <- as.factor(poppy$LANDFORM); levels(poppy$LANDFORM)
+```
+
+```{r}
+poppy$LANDFORM <- as.character(poppy$LANDFORM); poppy$LANDFORM <- ifelse(poppy$LANDFORM == "bfr", "bf_type", poppy$LANDFORM); poppy$LANDFORM <- ifelse(poppy$LANDFORM == "bfrlb", "bf_type", poppy$LANDFORM); poppy$LANDFORM <- ifelse(poppy$LANDFORM == "bfrwbws", "bf_type", poppy$LANDFORM); poppy$LANDFORM <- ifelse(poppy$LANDFORM == "bfrws", "bf_type", poppy$LANDFORM); poppy$LANDFORM <- ifelse(poppy$LANDFORM == "bfrwb", "bf_type", poppy$LANDFORM); poppy$LANDFORM <- as.factor(poppy$LANDFORM); levels(poppy$LANDFORM)
+```
+
+
+```{r}
+install.packages("dplyr", dependencies = T, repos = 'http://cran.us.r-project.org')
+```
+
+```{r}
+library(dplyr)
+```

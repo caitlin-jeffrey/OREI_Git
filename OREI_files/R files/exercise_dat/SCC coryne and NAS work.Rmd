@@ -1,0 +1,369 @@
+---
+title: "Untitled"
+author: "Caitlin Jeffrey"
+date: "August 28, 2020"
+output: html_document
+---
+
+
+```{r}
+#chi square for cns
+cns_200k <- matrix(c(192,425, 108,2180),nrow=2,ncol=2)
+chisq.test(cns_200k)
+
+cns_100k <- matrix(c(319,298, 181,2107),nrow=2,ncol=2)
+chisq.test(cns_100k)
+
+cns_chron200k <- matrix(c(165,321, 108,2180),nrow=2,ncol=2)
+chisq.test(cns_chron200k)
+
+cns_chron100k <- matrix(c(278,208, 181,2107),nrow=2,ncol=2)
+chisq.test(cns_chron100k)
+
+
+#chi square for coryne
+coryne_200k <- matrix(c(6,76, 108,2180),nrow=2,ncol=2)
+chisq.test(coryne_200k)
+
+coryne_100k <- matrix(c(7,75, 181,2107),nrow=2,ncol=2)
+chisq.test(coryne_100k)
+
+coryne_chron200k <- matrix(c(2,11, 108,2180),nrow=2,ncol=2)
+chisq.test(coryne_chron200k)
+
+coryne_chron100k <- matrix(c(2,11, 181,2107),nrow=2,ncol=2)
+chisq.test(coryne_chron100k)
+```
+
+```{r}
+mosaicplot(x=cns_200k,
+           col=c("goldenrod", "grey", "black"),
+           shade=FALSE)
+```
+
+
+
+```{r}
+library(epitools)
+
+#cns
+epi.tests(cns_200k, conf.level=0.95)
+
+epi.tests(cns_100k, conf.level=0.95)
+
+epi.tests(cns_chron200k, conf.level=0.95)
+
+epi.tests(cns_chron100k, conf.level=0.95)
+
+#coryne
+epi.tests(coryne_200k, conf.level=0.95)
+
+epi.tests(coryne_100k, conf.level=0.95)
+
+epi.tests(coryne_chron200k, conf.level=0.95)
+
+epi.tests(coryne_chron100k, conf.level=0.95)
+```
+
+## read in culture data csv
+
+```{r}
+setwd(path.exercise)
+OREI<-read.csv("OREIculture_results_csv.csv", na.strings= ".", header = T)
+#make SCC column numeric
+OREI$scc<-as.numeric(as.character(OREI$scc))
+str(OREI)
+```
+
+```{r}
+all_trim_fromcsv<-read.csv("all_trim.csv", na.strings= ".", header = T) #hopefully can just use this csv vs. making a new one each time from OREI csv
+```
+
+##getting numbers for CNS IMI, chronics
+
+```{r}
+#get all CNS infections
+all_cns<-filter(all_trim_fromcsv, (first_path_1=="cns" | first_path_2=="cns" | first_path_3=="cns" | first_path_4=="cns" | second_path_1=="cns" | second_path_2=="cns" | second_path_3=="cns" | second_path_4=="cns" | third_path_1=="cns" | third_path_2=="cns" | third_path_3=="cns" | third_path_4=="cns" | fourth_path_1=="cns" | fourth_path_2=="cns" | fourth_path_3=="cns" | fourth_path_4=="cns")) #360 quarters had CNS isolated from them
+
+cns_anyIMI<-filter(all_cns, (first_quarter_code == "1" | first_quarter_code == "2" | first_quarter_code == "21" | first_quarter_code == "24" | first_quarter_code == "27" | first_quarter_code == "29" | first_quarter_code =="35") | (second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code == "24" | second_quarter_code == "27" | second_quarter_code == "29" | second_quarter_code =="35") | (third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code == "24" | third_quarter_code == "27" | third_quarter_code == "29" | third_quarter_code =="35") | (fourth_quarter_code == "1" | fourth_quarter_code == "2" | fourth_quarter_code == "21" | fourth_quarter_code == "24" | fourth_quarter_code == "27" | fourth_quarter_code == "29" | fourth_quarter_code =="35")) #332 quarters that at some point had an IMI, and at some point had a cns
+
+
+#no mixed infection (24, 27) or single in series/mixed in parallel (29)... take out 21? might be mixed...
+cns_stricterIMI<-filter(all_cns, (first_quarter_code == "1" | first_quarter_code == "2" | first_quarter_code == "21" | first_quarter_code =="35") | (second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code =="35") | (third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code =="35") | (fourth_quarter_code == "1" | fourth_quarter_code == "2" | fourth_quarter_code == "21" | fourth_quarter_code == "24" | fourth_quarter_code == "27" | fourth_quarter_code == "29" | fourth_quarter_code =="35")) #307 quarters that at some point had a IMI attributable to a single pathogen, and at some point had cns- BUT not all cns may be causing IMI
+
+#take out choiniere to make coding easier
+cns_stricterIMI_nocf<-filter(cns_stricterIMI,  (first_farm != "Choiniere" & second_farm != "Choiniere" & third_farm != "Choiniere" & fourth_farm !="Choiniere")) #280 obs
+
+#get quarters that were "yes"-"yes"-?, ?-"yes"-"yes", and "yes"-"yes"-"yes"
+
+cns_chron_nocf<-filter(cns_stricterIMI_nocf, ((first_quarter_code == "1" | first_quarter_code == "2" | first_quarter_code == "21" | first_quarter_code =="35") & (second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code =="35")) | ((second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code =="35") & (third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code =="35"))) #175 IMI at least two in a row, NOT NECESSARILY DUE TO CNS
+
+
+#do same thing as above, but for choiniere- so, yes-yes-?-?, ?-yes-yes-?, ?-?-yes-yes
+
+cns_stricterIMI_cfonly<-filter(cns_stricterIMI, first_farm == "Choiniere" | second_farm == "Choiniere" | third_farm == "Choiniere" | fourth_farm == "Choiniere") #27 obs
+
+cns_chron_cf<-filter(cns_stricterIMI_cfonly, ((first_quarter_code == "1" | first_quarter_code == "2" | first_quarter_code == "21" | first_quarter_code =="35") & (second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code =="35")) | ((second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code =="35") & (third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code =="35")) | ((third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code =="35") & (fourth_quarter_code == "1" | fourth_quarter_code == "2" | fourth_quarter_code == "21" | fourth_quarter_code =="35"))) #15 IMI at least two in a row, NOT NECESSARILY DUE TO CNS
+
+#combine 2 lists of quarters that at some point had cns isolated from them, and at some point had an IMI
+cns_chron_all<-rbind(cns_chron_nocf, cns_chron_cf) #190 quarters
+
+#now, find any where cns may have been isolated, BUT was not causing the IMI, and remove from list
+write.csv(cns_chron_all, "cns_chron_all.csv", row.names = T) #wrote out csv to clean by hand in excel
+
+cns_chron_cleaned<-read.csv("cns_chron_cleaned.csv", na.strings= ".", header = T)
+```
+
+```{r}
+cns_one_two_three_four<-filter(cns_chron_cleaned, X1_2_3_4 == "y") #5 observations
+write.csv(cns_one_two_three_four, "cns_one_two_three_four.csv", row.names = T)
+#table(cns_one_two_three_four$first_quarter_code); table(cns_one_two_three_four$second_quarter_code); table(cns_one_two_three_four$third_quarter_code); table(cns_one_two_three_four$fourth_quarter_code) #see which categories quarters fall into: all 1 and 2
+
+cns_one_two<-filter(cns_chron_cleaned, X1_2 == "y") #36 observations
+#table(cns_one_two$first_quarter_code); table(cns_one_two$second_quarter_code) #see which categories quarters fall into: all 1 and 2
+write.csv(cns_one_two, "cns_one_two.csv", row.names = T)
+
+cns_two_three<-filter(cns_chron_cleaned, X2_3 == "y") #24 observations
+#table(cns_two_three$second_quarter_code); table(cns_two_three$third_quarter_code) #see which categories quarters fall into: all 1 and 2
+write.csv(cns_two_three, "cns_two_three.csv", row.names = T)
+
+cns_three_four<-filter(cns_chron_cleaned, X3_4 == "y") #2 observations
+table(cns_three_four$third_quarter_code); table(cns_three_four$fourth_quarter_code) #see which categories quarters fall into: all 2
+write.csv(cns_three_four, "cns_three_four.csv", row.names = T)
+
+cns_one_two_three<-filter(cns_chron_cleaned, X1_2_3 == "y") #113 observations
+table(cns_one_two_three$first_quarter_code); table(cns_one_two_three$second_quarter_code); #table(cns_one_two_three$third_quarter_code); table(cns_one_two_three$fourth_quarter_code) #see which categories quarters fall into: first, mostly 1/2, and one in 35; second, mostly 1/2 and one in 21; third, all 1/2
+write.csv(cns_one_two_three, "cns_one_two_three.csv", row.names = T)
+
+cns_two_three_four<-filter(cns_chron_cleaned, X2_3_4 == "y") #1 observation
+table(cns_two_three_four$first_quarter_code); table(cns_two_three_four$second_quarter_code); table(cns_two_three_four$third_quarter_code); table(cns_two_three_four$fourth_quarter_code) #see which categories quarters fall into: all 2
+write.csv(cns_two_three_four, "cns_two_three_four.csv", row.names = T)
+
+```
+
+```{r}
+#get counts for scc above 200k and 100k for larger lists
+cns_one_two<-read.csv("cns_one_two.csv", na.strings= ".", header = T)
+table(cns_one_two$first_scc_eq_above_200k)
+table(cns_one_two$first_scc_eq_above_100k)
+table(cns_one_two$second_scc_eq_above_200k)
+table(cns_one_two$second_scc_eq_above_100k)
+
+cns_two_three<-read.csv("cns_two_three.csv", na.strings= ".", header = T)
+table(cns_two_three$second_scc_eq_above_200k)
+table(cns_two_three$second_scc_eq_above_100k)
+table(cns_two_three$third_scc_eq_above_200k)
+table(cns_two_three$third_scc_eq_above_100k)
+
+cns_one_two_three<-read.csv("cns_one_two_three.csv", na.strings= ".", header = T)
+table(cns_one_two_three$first_scc_eq_above_200k)
+table(cns_one_two_three$first_scc_eq_above_100k)
+table(cns_one_two_three$second_scc_eq_above_200k)
+table(cns_one_two_three$second_scc_eq_above_100k)
+table(cns_one_two_three$third_scc_eq_above_200k)
+table(cns_one_two_three$third_scc_eq_above_100k)
+
+```
+
+
+##getting numbers for corynebac IMI, chronics
+
+```{r}
+#get all corynebac infections
+
+all_corynebac<-filter(all_trim_fromcsv, (first_path_1=="corynebac" | first_path_2=="corynebac" | first_path_3=="corynebac" | first_path_4=="corynebac" | second_path_1=="corynebac" | second_path_2=="corynebac" | second_path_3=="corynebac" | second_path_4=="corynebac" | third_path_1=="corynebac" | third_path_2=="corynebac" | third_path_3=="corynebac" | third_path_4=="corynebac" | fourth_path_1=="corynebac" | fourth_path_2=="corynebac" | fourth_path_3=="corynebac" | fourth_path_4=="corynebac")) #123 quarters had corynebac isolated at some point
+
+corynebac_anyIMI<-filter(all_corynebac, (first_quarter_code == "1" | first_quarter_code == "2" | first_quarter_code == "21" | first_quarter_code == "24" | first_quarter_code == "27" | first_quarter_code == "29" | first_quarter_code =="35") | (second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code == "24" | second_quarter_code == "27" | second_quarter_code == "29" | second_quarter_code =="35") | (third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code == "24" | third_quarter_code == "27" | third_quarter_code == "29" | third_quarter_code =="35") | (fourth_quarter_code == "1" | fourth_quarter_code == "2" | fourth_quarter_code == "21" | fourth_quarter_code == "24" | fourth_quarter_code == "27" | fourth_quarter_code == "29" | fourth_quarter_code =="35")) #106 quarters that at some point had an IMI, and at some point had a corynebac
+
+
+#no mixed infection (24, 27) or single in series/mixed in parallel (29)... take out 21? might be mixed...
+corynebac_stricterIMI<-filter(all_corynebac, (first_quarter_code == "1" | first_quarter_code == "2" | first_quarter_code == "21" | first_quarter_code =="35") | (second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code =="35") | (third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code =="35") | (fourth_quarter_code == "1" | fourth_quarter_code == "2" | fourth_quarter_code == "21" | fourth_quarter_code == "24" | fourth_quarter_code == "27" | fourth_quarter_code == "29" | fourth_quarter_code =="35")) #91 quarters that at some point had a IMI attributable to a single pathogen, and at some point had corynebac- BUT not all corynebac may be causing IMI
+
+
+#take out choiniere to make coding easier
+corynebac_stricterIMI_nocf<-filter(corynebac_stricterIMI,  (first_farm != "Choiniere" & second_farm != "Choiniere" & third_farm != "Choiniere" & fourth_farm !="Choiniere")) #54 obs
+
+#get quarters that were "yes"-"yes"-?, ?-"yes"-"yes", and "yes"-"yes"-"yes"
+corynebac_chron_nocf<-filter(corynebac_stricterIMI_nocf, ((first_quarter_code == "1" | first_quarter_code == "2" | first_quarter_code == "21" | first_quarter_code =="35") & (second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code =="35")) | ((second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code =="35") & (third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code =="35"))) #7 IMI at least two in a row, NOT NECESSARILY DUE TO CORYNEBAC
+
+
+#do same thing as above, but for choiniere- so, yes-yes-?-?, ?-yes-yes-?, ?-?-yes-yes
+
+corynebac_stricterIMI_cfonly<-filter(corynebac_stricterIMI, first_farm == "Choiniere" | second_farm == "Choiniere" | third_farm == "Choiniere" | fourth_farm == "Choiniere") #37 obs
+
+corynebac_chron_cf<-filter(corynebac_stricterIMI_cfonly, ((first_quarter_code == "1" | first_quarter_code == "2" | first_quarter_code == "21" | first_quarter_code =="35") & (second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code =="35")) | ((second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code =="35") & (third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code =="35")) | ((third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code =="35") & (fourth_quarter_code == "1" | fourth_quarter_code == "2" | fourth_quarter_code == "21" | fourth_quarter_code =="35"))) #6 IMI at least two in a row, NOT NECESSARILY DUE TO CORYNEBAC
+
+#combine 2 lists of quarters that at some point had cns isolated from them, and at some point had an IMI
+corynebac_chron_all<-rbind(corynebac_chron_nocf, corynebac_chron_cf) #13 quarters
+
+#now, find any where cns may have been isolated, BUT was not causing the IMI, and remove from list
+write.csv(corynebac_chron_all, "corynebac_chron_all.csv", row.names = T) #wrote out csv to clean by hand in excel
+
+corynebac_chron_cleaned<-read.csv("corynebac_chron_cleaned.csv", na.strings= ".", header = T)
+```
+
+
+
+##getting numbers for CNS and corynebac IMI, transients
+
+```{r}
+#for farms with 3 visits: neg(quarter code 3, 5, 6)--pos(quarter code 1, 2, 21, 35)--neg(quarter code 3, 5, 6)
+
+all_trans<-filter(all_trim_fromcsv, ((first_quarter_code == "3" | first_quarter_code == "5" | first_quarter_code == "6") & (second_quarter_code == "1" | second_quarter_code == "2" | second_quarter_code == "21" | second_quarter_code =="35") & (third_quarter_code == "3" | third_quarter_code == "5" | third_quarter_code == "6"))) #8 observations
+cns_trans<-filter(all_trans, second_path_1 == "cns") #3 observations
+
+#for choiniere 2-3-4
+addnl_trans<-filter(all_trim_fromcsv, ((second_quarter_code == "3" | second_quarter_code == "5" | second_quarter_code == "6") & (third_quarter_code == "1" | third_quarter_code == "2" | third_quarter_code == "21" | third_quarter_code == "35") & (fourth_quarter_code == "3" | fourth_quarter_code == "5" | fourth_quarter_code == "6"))) #1 observation- will keep, bc IS CNS
+
+both_trans<-rbind(cns_trans, addnl_trans) #4 observations, quarters that were no-yes-no at some point from CNS
+
+
+#trans corynebac, only farms with 3 visits (trans from CF 2-3-4 already know is CNS)
+coryne_trans<-filter(all_trans, second_path_1 =="corynebac") #4 observations
+```
+
+
+##find number of negative quarters per visit
+
+```{r}
+visit1_neg<-filter(OREI, visit == "first" & (quarter_code == "3" | quarter_code == "5" | quarter_code =="6")) #694 observations
+visit2_neg<-filter(OREI, visit == "second" & (quarter_code == "3" | quarter_code == "5" | quarter_code =="6")) #833 observations
+visit3_neg<-filter(OREI, visit == "third" & (quarter_code == "3" | quarter_code == "5" | quarter_code =="6")) #714 observations
+visit4_neg<-filter(OREI, visit == "fourth" & (quarter_code == "3" | quarter_code == "5" | quarter_code =="6")) #50 observations
+
+#find neg quarters by visit, put in above 200k and 100k column
+OREI$scc<-as.numeric(as.character(OREI$scc))
+all_orei_neg<-filter(OREI, (quarter_code == "3" | quarter_code == "5" | quarter_code =="6")) 
+
+all_orei_neg$scc_eq_above_200k<-ifelse(all_orei_neg$scc >= 200000, all_orei_neg$scc_eq_above_200k<-"yes", "no")
+
+all_orei_neg$scc_eq_above_100k<-ifelse(all_orei_neg$scc >= 100000, all_orei_neg$scc_eq_above_100k<-"yes", "no")
+
+total_neg1<-filter(all_orei_neg, visit=="first") #694 observations
+total_neg2<-filter(all_orei_neg, visit=="second") #833 observations
+total_neg3<-filter(all_orei_neg, visit=="third") #714 observations
+total_neg4<-filter(all_orei_neg, visit=="fourth") #50 observations
+
+table(total_neg1$scc_eq_above_200k)
+table(total_neg1$scc_eq_above_100k)
+
+table(total_neg2$scc_eq_above_200k)
+table(total_neg2$scc_eq_above_100k)
+
+table(total_neg3$scc_eq_above_200k)
+table(total_neg3$scc_eq_above_100k)
+
+table(total_neg4$scc_eq_above_200k)
+table(total_neg4$scc_eq_above_100k)
+```
+
+##getting number of total corynebac and cns by visit, adding scc above 200k and 100k
+
+```{r}
+##corynebac all quarters over time
+corynebac_all_orei<-filter(OREI, (path_1=="corynebac" | path_2=="corynebac" | path_3=="corynebac" | path_4=="corynebac")) #141 observations- these are single quarters from a single visit! differs from total number corynebac isolated bc some quarters have 2 corynebac each
+
+corynebac_orei_strictIMI<-filter(corynebac_all_orei, (quarter_code == "1" | quarter_code == "2" | quarter_code == "21" | quarter_code =="35")) #83 observations, over 4 visits
+
+#now, find any where coryne may have been isolated, BUT was not causing the IMI, and remove from list
+write.csv(corynebac_orei_strictIMI, "corynebac_orei_strictIMI.csv", row.names = T) #wrote out csv to clean by hand in excel
+
+corynebac_orei_strictIMI_cleaned<-read.csv("corynebac_orei_strictIMI_cleaned.csv", na.strings= ".", header = T) #only had to remove one observation, so down to 82
+
+#create column for scc over 200 and scc over 100 yes/no
+corynebac_orei_strictIMI_cleaned$scc_eq_above_200k<-ifelse(corynebac_orei_strictIMI_cleaned$scc >= 200000, corynebac_orei_strictIMI_cleaned$scc_eq_above_200k<-"yes", "no")
+
+corynebac_orei_strictIMI_cleaned$scc_eq_above_100k<-ifelse(corynebac_orei_strictIMI_cleaned$scc >= 100000, corynebac_orei_strictIMI_cleaned$scc_eq_above_100k<-"yes", "no")
+
+total_coryne1<-filter(corynebac_orei_strictIMI_cleaned, visit=="first") #24 observations
+total_coryne2<-filter(corynebac_orei_strictIMI_cleaned, visit=="second") #26 observations
+total_coryne3<-filter(corynebac_orei_strictIMI_cleaned, visit=="third") #20 observations
+total_coryne4<-filter(corynebac_orei_strictIMI_cleaned, visit=="fourth") #12 observations
+
+table(total_coryne1$scc_eq_above_200k)
+table(total_coryne1$scc_eq_above_100k)
+
+table(total_coryne2$scc_eq_above_200k)
+table(total_coryne2$scc_eq_above_100k)
+
+table(total_coryne3$scc_eq_above_200k)
+table(total_coryne3$scc_eq_above_100k)
+
+table(total_coryne4$scc_eq_above_200k)
+table(total_coryne4$scc_eq_above_100k)
+```
+
+
+
+```{r}
+##cns all quarters over time
+cns_all_orei<-filter(OREI, (path_1=="cns" | path_2=="cns" | path_3=="cns" | path_4=="cns")) #748 observations- these are single quarters from a single visit! differs from total number cns isolated bc some quarters have 2 cns each
+
+cns_orei_strictIMI<-filter(cns_all_orei, (quarter_code == "1" | quarter_code == "2" | quarter_code == "21" | quarter_code =="35")) #618 observations, over 4 visits
+
+#now, find any where cns may have been isolated, BUT was not causing the IMI, and remove from list
+write.csv(cns_orei_strictIMI, "cns_orei_strictIMI.csv", row.names = T) #wrote out csv to clean by hand in excel
+
+
+cns_orei_strictIMI_cleaned<-read.csv("cns_orei_strictIMI_cleaned.csv", na.strings= ".", header = T) #only had to remove one observation, so down to 617
+
+#create column for scc over 200 and scc over 100 yes/no
+cns_orei_strictIMI_cleaned$scc_eq_above_200k<-ifelse(cns_orei_strictIMI_cleaned$scc >= 200000, cns_orei_strictIMI_cleaned$scc_eq_above_200k<-"yes", "no")
+
+cns_orei_strictIMI_cleaned$scc_eq_above_100k<-ifelse(cns_orei_strictIMI_cleaned$scc >= 100000, cns_orei_strictIMI_cleaned$scc_eq_above_100k<-"yes", "no")
+
+total_cns1<-filter(cns_orei_strictIMI_cleaned, visit=="first") #205 observations
+total_cns2<-filter(cns_orei_strictIMI_cleaned, visit=="second") #206 observations
+total_cns3<-filter(cns_orei_strictIMI_cleaned, visit=="third") #193 observations
+total_cns4<-filter(cns_orei_strictIMI_cleaned, visit=="fourth") #13 observations
+
+table(total_cns1$scc_eq_above_200k)
+table(total_cns1$scc_eq_above_100k)
+
+table(total_cns2$scc_eq_above_200k)
+table(total_cns2$scc_eq_above_100k)
+
+table(total_cns3$scc_eq_above_200k)
+table(total_cns3$scc_eq_above_100k)
+
+table(total_cns4$scc_eq_above_200k)
+table(total_cns4$scc_eq_above_100k)
+```
+
+
+##prevalence of corynebac and cns by visit, overall
+
+```{r}
+#find total number quarters cns/coryne over ALL quarters that either are def yes or def no IMI; include mixed infections in denominator?
+
+mixed<-filter(OREI, quarter_code=="27") #wow, there's 92 truly mixed infections!
+
+denom_IMIandnoIMI<-filter(OREI, (quarter_code == "1" | quarter_code == "2" | quarter_code == "21" | quarter_code =="35" | quarter_code == "3" | quarter_code == "5" | quarter_code =="6")) #3231 quarters can definitively ID as yes or no IMI
+denom_withmixed<-filter(OREI, (quarter_code == "1" | quarter_code == "2" | quarter_code == "21" | quarter_code =="35" | quarter_code == "3" | quarter_code == "5" | quarter_code =="6" | quarter_code == "27")) #with mixed infections...
+
+table(denom_IMIandnoIMI$visit)
+table(denom_IMIandnoIMI$path_1)
+
+#corynebac
+coryne_fromdenom<-filter(denom_IMIandnoIMI, (quarter_code == "1" | quarter_code == "2" | quarter_code == "21" | quarter_code =="35") & (path_1 == "corynebac" | path_2 == "corynebac" | path_3 =="corynebac" | path_4 == "corynebac")) #83 observations, write to csv to clean by hand in excel
+write.csv(coryne_fromdenom, "coryne_fromdenom.csv", row.names = T)
+coryne_fromdenom_cleaned<-read.csv("coryne_fromdenom_cleaned.csv", na.strings= ".", header = T) #82 observations
+
+table(coryne_fromdenom_cleaned$visit)
+
+#cns
+cns_fromdenom<-filter(denom_IMIandnoIMI, (quarter_code == "1" | quarter_code == "2" | quarter_code == "21" | quarter_code =="35") & (path_1 == "cns" | path_2 == "cns" | path_3 =="cns" | path_4 == "cns")) #618 observations, write to csv to clean by hand in excel
+
+write.csv(cns_fromdenom, "cns_fromdenom.csv", row.names = T)
+cns_fromdenom_cleaned<-read.csv("cns_fromdenom_cleaned.csv", na.strings= ".", header = T) #617 observations, had to drop one
+
+table(cns_fromdenom_cleaned$visit)
+
+denom_any_IMI<-filter(denom_IMIandnoIMI, (quarter_code == "1" | quarter_code == "2" | quarter_code == "21" | quarter_code =="35")) #940 IMI
+table(denom_any_IMI$visit)
+
+denom_noIMI<-filter(denom_IMIandnoIMI, (quarter_code == "3" | quarter_code == "5" | quarter_code == "6")) #2291
+table(denom_noIMI$visit)
+```
+
+
