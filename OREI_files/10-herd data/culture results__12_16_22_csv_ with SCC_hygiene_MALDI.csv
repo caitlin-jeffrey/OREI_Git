@@ -44,7 +44,7 @@ date,visit,farm,order,cow_id,quarter,path_1,path1_imi,path_2,path2_imi,path_3,pa
 2.19.2020,second,Glennview,7,193,RF,corynebac,yes1,,,,,,,1,gv058,corynebacterium casei,,,,,,,,,,,,,,,no,,yes,m,3,c,3,,,,2000,,,12,1,
 2.19.2020,second,Glennview,23,165,RH,cns,yes1,,,,,,,1,gv080,staphylococcus devriesei,yes_from_?_to_cns,,,,,,,,,,,,,,no,,yes,m,3,c,2,,,,110000,,,30,17,
 2.19.2020,second,Glennview,27,169,LF,cns,yes1,,,,,,,1,gv085,staphylococcus equorum,,,,,,,,,,,,,,,no,,yes,m,3,c,3,,,,10000,,,5,10,
-2.19.2020,second,Glennview,30,207,LH,cns,yes1,,,,,,,1,gv089,no id,yes_nochange,,,,,,,,,,,,,,no,,yes,m,2,c,3,,,,66000,,,24,20,
+2.19.2020,second,Glennview,30,207,LH,cns,yes1,,,,,,,1,gv089,staphylococcus cohnii,yes_noID_to_CNS,,,,,,,,,,,,,,no,,yes,m,2,c,3,,,,66000,,,24,20,
 3.19.2020,third,Glennview,4,193,RF,corynebac,yes1,,,,,,,1,gv105,corynebacterium species,,,,,,,,,,,,,,,no,,yes,j,4,c,4,,,,2000,,,4,1,
 3.19.2020,third,Glennview,6,173,RH,cns,yes1,,,,,,,1,gv110,staphylococcus chromogenes,,,,,,,,,,,,,,,no,,yes,j,4,c,4,,,,130000,,,tntc,tntc,
 3.19.2020,third,Glennview,15,128,RH,cns,yes1,corynebac,no5,,,,,1,gv131,staphylococcus equorum,,gv132,corynebacterium species,,,,,,,,,,,,no,,yes,j,2,c,3,,,,12000,,,,,yes
@@ -469,7 +469,7 @@ date,visit,farm,order,cow_id,quarter,path_1,path1_imi,path_2,path2_imi,path_3,pa
 3.19.2020,third,Glennview,11,137,RH,corynebac,yes2,,,,,,,2,gv118,corynebacterium casei,,,,,,,,,,,,,,,no,,yes,j,2,c,2,,,,9000,,,3,1,
 3.19.2020,third,Glennview,12,79,RH,cns,yes2,,,,,,,2,gv120,staphylococcus chromogenes,,,,,,,,,,,,,,,no,,yes,j,3,c,4,,,,200000,,,30,50,
 3.19.2020,third,Glennview,19,185,RH,corynebac,yes2,,,,,,,2,gv135,corynebacterium species,,,,,,,,,,,,,,,no,,yes,j,2,c,2,,,,18000,,,5,1,
-3.19.2020,third,Glennview,23,207,LH,cns,yes2,,,,,,,2,gv136,no id,yes_nochange,,,,,,,,,,,,,,no,,yes,j,2,c,4,,,,110000,,,30,30,
+3.19.2020,third,Glennview,23,207,LH,cns,yes2,,,,,,,2,gv136,staphylococcus cohnii,yes_noID_to_CNS,,,,,,,,,,,,,,no,,yes,j,2,c,4,,,,110000,,,30,30,
 3.19.2020,third,Glennview,25,43,LH,strep,yes2,,,,,,,2,gv139,streptococcus dysgalactiae,,,,,,,,,,,,,,,no,,yes,j,3,c,4,,,,1600000,,,8,6,
 3.19.2020,third,Glennview,25,43,LF,corynebac,yes2,,,,,,,2,gv140,corynebacterium species,,,,,,,,,,,,,,,no,,yes,j,3,c,4,,,,60000,,,1,2,
 3.19.2020,third,Glennview,25,43,RH,strep,yes2,,,,,,,2,gv141,streptococcus dysgalactiae,,,,,,,,,,,,,,,no,,yes,j,3,c,4,,,,16000000,,,tntc,tntc,
@@ -4150,7 +4150,7 @@ date,visit,farm,order,cow_id,quarter,path_1,path1_imi,path_2,path2_imi,path_3,pa
 3.19.2020,third,Glennview,26,27,LH,strep,yes27,sa,yes27,,,,,27,gv142,streptococcus uberis,,gv143,staphylococcus aureus,,,,,,,,,,,,yes,,yes,j,1,c,3,,,,850000,,,,,
 3.19.2020,third,Glennview,28,70,LH,e.coli,yes27,strep,yes27,,,,,27,gv148,escherichia coli,yes_from_?_to_ecoli,gv149,streptococcus uberis,,,,,,,,,,,,yes,,yes,j,3,c,3,,,,140000,,,,,yes
 1.3.2020,first,OughtaBe,10,korny,LH,cns,yes27,strep,yes27,,,,,27,ob009,staphylococcus chromogenes,,ob010,streptococcus uberis,,,,,,,,,,,,yes,,yes,j,4,c,4,,,,120000,,,,,yes
-1.3.2020,first,OughtaBe,14,peonie,RH,corynebac,yes27,strep,yes27,,,,,27,ob016,no id,yes_nochange,ob017,aerococcus viridans,,,,,,,,,,,,yes,,yes,j,.,c,.,,,,8000,,,,,yes
+1.3.2020,first,OughtaBe,14,peonie,RH,cns,yes27,strep,yes27,,,,,27,ob016,staphylococcus agnetis,yes_from_noID_to_CNS,ob017,aerococcus viridans,,,,,,,,,,,,yes,,yes,j,.,c,.,,,,8000,,,,,yes
 1.3.2020,first,OughtaBe,15,jersey,LH,strep,yes27,corynebac,yes27,,,,,27,ob020,streptococcus uberis,,ob021,corynebacterium amycolatum,,,,,,,,,,,,yes,,yes,j,3,c,3,,,,130000,,,,,yes
 1.3.2020,first,OughtaBe,19,karla,LH,strep,yes27,cns,yes27,,,,,27,ob024,streptococcus uberis,,ob025,staphylococcus chromogenes,,,,,,,,,,,,yes,,yes,j,2,c,3,,,,130000,,,,,yes
 1.3.2020,first,OughtaBe,28,tiktac,RH,strep,yes27,cns,yes27,,,,,27,ob036,streptococcus uberis,,ob037,staphylococcus chromogenes,,,,,,,,,,,,yes,,yes,j,3,c,2,,,,210000,,,,,yes
